@@ -1,322 +1,320 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<meta name="description" content="オタ活遠征に特化した宿泊・双眼鏡・パッキング管理ツール">
-<title>V-MAP — オタ活遠征ナビ</title>
+<meta name="theme-color" content="#0d0d14">
+<meta name="description" content="準備さえも、推し事になる。あなたの遠征を、一生の宝物に。">
+<title>ENSEI PASS — 遠征特化ナビ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
-/* ═══ TOKENS ═══════════════════════════════════ */
 :root {
-  --accent:       #E8547A;
-  --accent-light: #fde8ef;
-  --accent-text:  #b03058;
-  --line:         #1a1a1a;
-  --bg:           #FFFFFF;
-  --surface:      #FAFAF8;
-  --muted:        #909088;
-  --muted2:       #C4C4BC;
-  --border:       #E4E4DE;
-  --border-dark:  #C4C4BC;
-  --font-serif:  'Noto Serif JP', serif;
-  --font-sans:   'Noto Sans JP', sans-serif;
-  --font-mono:   'DM Mono', monospace;
-  --ease-out:    cubic-bezier(0.16,1,0.3,1);
+  --accent: #E8547A;
+  --accent-rgb: 232,84,122;
+  --accent-light: rgba(232,84,122,0.12);
+  --accent-text: #ffd6e3;
+  --aura-a: #E8547A;
+  --aura-b: #b03058;
+  --bg: #0d0d14;
+  --surface: #13131f;
+  --surface2: #1a1a2e;
+  --border: rgba(255,255,255,0.08);
+  --border-bright: rgba(255,255,255,0.14);
+  --muted: rgba(255,255,255,0.45);
+  --muted2: rgba(255,255,255,0.22);
+  --text: #f0f0f8;
+  --font-serif: 'Noto Serif JP', serif;
+  --font-sans: 'Noto Sans JP', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
   --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
-  --nav-h:       52px;
-  --bnav-h:      64px;
-  --safe-b:      env(safe-area-inset-bottom, 0px);
+  --nav-h: 56px;
+  --bnav-h: 68px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{
   font-family:var(--font-sans);
-  background:var(--bg);color:var(--line);
+  background:var(--bg);color:var(--text);
   font-weight:300;letter-spacing:0.02em;line-height:1.8;
   overscroll-behavior:none;-webkit-font-smoothing:antialiased;
-  padding-bottom:calc(var(--bnav-h) + var(--safe-b) + 16px);
+  padding-bottom:calc(var(--bnav-h) + var(--safe-b) + 24px);
+  min-height:100dvh;
 }
 h1,h2,h3{font-family:var(--font-serif);font-weight:300;letter-spacing:0.08em;}
 button,a,[role="button"]{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 img,svg{display:block;}
 
-/* ═══ UTILS ════════════════════════════════════ */
-.mono{font-family:var(--font-mono);font-weight:300;}
-.rule{border:none;border-top:0.5px solid var(--line);}
-.rule-light{border:none;border-top:0.5px solid var(--border);}
+/* AURA BG */
+.aura-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.aura-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;transition:background 1.2s ease;animation:auraPulse 6s ease-in-out infinite alternate;}
+.aura-orb-1{width:440px;height:440px;top:-140px;left:-100px;background:var(–aura-a);animation-delay:0s;}
+.aura-orb-2{width:320px;height:320px;top:40%;right:-80px;background:var(–aura-b);animation-delay:-2s;opacity:0.12;}
+.aura-orb-3{width:260px;height:260px;bottom:20%;left:25%;background:var(–aura-a);animation-delay:-4s;opacity:0.07;}
+@keyframes auraPulse{from{transform:scale(1) translateY(0);opacity:0.18;}to{transform:scale(1.15) translateY(-20px);opacity:0.25;}}
+
+/* LAYOUT */
+.container{max-width:680px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+@media(min-width:640px){.container{padding:0 40px;}}
+section{padding:56px 0 48px;}
+section+section{border-top:0.5px solid var(–border);}
+
+/* TOP NAV */
+.top-nav{
+position:sticky;top:0;z-index:40;height:var(–nav-h);
+background:rgba(13,13,20,0.8);
+backdrop-filter:blur(20px) saturate(1.8);
+-webkit-backdrop-filter:blur(20px) saturate(1.8);
+border-bottom:0.5px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+}
+.nav-logo{font-family:var(–font-mono);font-size:12px;letter-spacing:0.3em;color:var(–text);text-decoration:none;font-weight:400;display:flex;align-items:center;gap:10px;}
+.nav-logo-dot{width:7px;height:7px;border-radius:50%;background:var(–accent);box-shadow:0 0 8px var(–accent);transition:background 0.6s,box-shadow 0.6s;animation:logoPulse 2.4s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 6px var(–accent);transform:scale(1);}50%{box-shadow:0 0 14px var(–accent);transform:scale(1.2);}}
+.nav-links{display:flex;gap:20px;list-style:none;}
+.nav-links a{font-family:var(–font-mono);font-size:10px;letter-spacing:0.18em;text-decoration:none;color:var(–muted);transition:color 0.15s;}
+.nav-links a:hover{color:var(–text);}
+
+/* BOTTOM NAV */
+.bottom-nav{
+position:fixed;bottom:0;left:0;right:0;z-index:50;
+height:calc(var(–bnav-h) + var(–safe-b));
+padding-bottom:var(–safe-b);
+background:rgba(13,13,20,0.92);
+backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+border-top:0.5px solid var(–border);
+display:flex;align-items:stretch;
+}
+.bnav-item{
+flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+text-decoration:none;color:var(–muted2);
+font-family:var(–font-mono);font-size:9px;letter-spacing:0.12em;
+cursor:pointer;border:none;background:transparent;padding:0;position:relative;
+transition:color 0.2s;
+}
+.bnav-item:active{transform:scale(0.9);}
+.bnav-item.active{color:var(–accent);}
+.bnav-icon{width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.bnav-dot{position:absolute;top:8px;right:calc(50% - 14px);width:5px;height:5px;border-radius:50%;background:var(–accent);display:none;box-shadow:0 0 6px var(–accent);}
+.bnav-dot.show{display:block;}
+
+/* UTILS */
+.mono{font-family:var(–font-mono);font-weight:300;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
-.section-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
-.pill{display:inline-flex;align-items:center;background:var(--accent-light);color:var(--accent-text);font-size:10px;font-family:var(--font-mono);padding:2px 10px;border-radius:999px;letter-spacing:0.1em;font-weight:400;}
+.section-label{font-family:var(–font-mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(–muted);}
+.pill{display:inline-flex;align-items:center;background:rgba(var(–accent-rgb),0.15);color:var(–accent-text);font-size:10px;font-family:var(–font-mono);padding:2px 10px;border-radius:999px;letter-spacing:0.1em;font-weight:400;border:0.5px solid rgba(var(–accent-rgb),0.3);}
 .hidden{display:none!important;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-.fade-in{animation:fadeIn 0.35s var(--ease-out) both;}
-.stagger-1{animation:fadeUp 0.7s var(--ease-out) 0.08s both;}
-.stagger-2{animation:fadeUp 0.7s var(--ease-out) 0.22s both;}
-.stagger-3{animation:fadeUp 0.7s var(--ease-out) 0.36s both;}
-.stagger-4{animation:fadeUp 0.7s var(--ease-out) 0.50s both;}
+.fade-in{animation:fadeIn 0.35s var(–ease-out) both;}
+.stagger-1{animation:fadeUp 0.7s var(–ease-out) 0.08s both;}
+.stagger-2{animation:fadeUp 0.7s var(–ease-out) 0.22s both;}
+.stagger-3{animation:fadeUp 0.7s var(–ease-out) 0.36s both;}
+.stagger-4{animation:fadeUp 0.7s var(–ease-out) 0.50s both;}
 
-/* ═══ TOP NAV ══════════════════════════════════ */
-.top-nav{
-  position:sticky;top:0;z-index:40;height:var(--nav-h);
-  background:rgba(255,255,255,0.9);
-  backdrop-filter:blur(14px) saturate(1.6);
-  -webkit-backdrop-filter:blur(14px) saturate(1.6);
-  border-bottom:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+/* HERO */
+.hero{padding:80px 0 64px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(–font-mono);font-size:10px;letter-spacing:0.28em;color:var(–accent);margin-bottom:20px;}
+.hero-eyebrow-line{width:24px;height:0.5px;background:var(–accent);}
+.hero-title{
+font-size:clamp(36px,8vw,64px);line-height:1.1;margin-bottom:20px;letter-spacing:0.04em;
+background:linear-gradient(135deg,var(–text) 40%,rgba(var(–accent-rgb),0.7));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+transition:background 0.8s;
 }
-.nav-logo{font-family:var(--font-mono);font-size:13px;letter-spacing:0.24em;color:var(--line);text-decoration:none;font-weight:400;}
-.nav-links{display:flex;gap:20px;list-style:none;}
-.nav-links a{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-decoration:none;color:var(--muted);transition:color 0.15s;}
-.nav-links a:hover{color:var(--line);}
-
-/* ═══ BOTTOM NAV ═══════════════════════════════ */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:50;
-  height:calc(var(--bnav-h) + var(--safe-b));
-  padding-bottom:var(--safe-b);
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(18px) saturate(2);
-  -webkit-backdrop-filter:blur(18px) saturate(2);
-  border-top:0.5px solid var(--border);
-  display:flex;align-items:stretch;
+.hero-subtitle{font-size:13px;color:var(–muted);line-height:2;max-width:360px;}
+.hero-tagline{
+margin-top:32px;font-family:var(–font-serif);font-size:12px;color:var(–muted);
+letter-spacing:0.12em;display:flex;align-items:center;gap:12px;
 }
-.bnav-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  text-decoration:none;color:var(--muted);font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;
-  cursor:pointer;border:none;background:transparent;padding:0;position:relative;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:color 0.15s;
-}
-.bnav-item:active{transform:scale(0.9);}
-.bnav-item.active{color:var(--accent);}
-.bnav-icon{width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
-.bnav-dot{position:absolute;top:8px;right:calc(50% - 14px);width:5px;height:5px;border-radius:50%;background:var(--accent);display:none;}
-.bnav-dot.show{display:block;}
+.hero-tagline::before,.hero-tagline::after{content:’’;flex:1;height:0.5px;background:linear-gradient(to right,transparent,var(–border-bright));}
+.hero-tagline::after{background:linear-gradient(to left,transparent,var(–border-bright));}
 
-/* ═══ LAYOUT ═══════════════════════════════════ */
-.container{max-width:680px;margin:0 auto;padding:0 24px;}
-@media(min-width:640px){.container{padding:0 40px;}}
-section{padding:56px 0 48px;}
-section+section{border-top:0.5px solid var(--border);}
-.section-header{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
-
-/* ═══ HERO ══════════════════════════════════════ */
-.hero{padding:72px 0 56px;}
-.hero-title{font-size:clamp(34px,7vw,58px);line-height:1.15;margin:20px 0 20px;letter-spacing:0.06em;}
-.hero-subtitle{font-size:13px;color:var(--muted);line-height:1.9;max-width:380px;}
-.scroll-hint{display:flex;align-items:center;gap:8px;margin-top:40px;opacity:0;animation:fadeUp 0.8s var(--ease-out) 1.2s forwards;}
-.scroll-hint-line{width:32px;height:0.5px;background:var(--muted2);position:relative;overflow:hidden;}
-.scroll-hint-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:scanLine 1.6s ease-in-out 1.4s infinite;}
-@keyframes scanLine{0%{left:-100%;}100%{left:200%;}}
-
-/* ═══ COLOR SWATCHES ════════════════════════════ */
-.color-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+/* COLOR SWATCHES */
+.color-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
 .color-swatch{
-  width:32px;height:32px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;
-  transition:transform 0.2s var(--ease-spring),border-color 0.15s,box-shadow 0.15s;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;
+transition:transform 0.2s var(–ease-spring),box-shadow 0.2s;position:relative;
 }
-.color-swatch:active{transform:scale(0.88)!important;}
-.color-swatch.active{border-color:var(--line);box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--line);}
+.color-swatch::after{content:’’;position:absolute;inset:-4px;border-radius:50%;border:1.5px solid transparent;transition:border-color 0.2s;}
+.color-swatch.active::after{border-color:var(–accent);}
+.color-swatch.active{box-shadow:0 0 16px var(–accent);transform:scale(1.12);}
 .color-swatch:not(.active):hover{transform:scale(1.18);}
+.color-swatch:active{transform:scale(0.88)!important;}
 
-/* ═══ INPUTS ════════════════════════════════════ */
+/* INPUTS */
 .input-row{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:40px;}
 @media(max-width:480px){.input-row{grid-template-columns:1fr;gap:24px;}}
 .field-label{margin-bottom:8px;}
-.budget-input{
-  border:none;border-bottom:0.5px solid var(--line);font-size:28px;
-  font-family:var(--font-mono);font-weight:300;width:100%;outline:none;
-  background:transparent;color:var(--line);padding:4px 0;transition:border-color 0.2s;
+.glass-input-wrap{
+background:var(–surface);border:0.5px solid var(–border-bright);
+border-radius:8px;padding:12px 14px;
+transition:border-color 0.2s,box-shadow 0.2s;
 }
-.budget-input:focus{border-bottom-color:var(--accent);}
-.venue-input{
-  border:none;border-bottom:0.5px solid var(--line);font-size:15px;
-  font-family:var(--font-serif);width:100%;outline:none;
-  background:transparent;color:var(--line);padding:6px 0;transition:border-color 0.2s;
+.glass-input-wrap:focus-within{
+border-color:rgba(var(–accent-rgb),0.5);
+box-shadow:0 0 0 3px rgba(var(–accent-rgb),0.08),inset 0 0 20px rgba(var(–accent-rgb),0.04);
 }
-.venue-input:focus{border-bottom-color:var(--accent);}
+.budget-input{border:none;font-size:28px;font-family:var(–font-mono);font-weight:300;width:100%;outline:none;background:transparent;color:var(–text);padding:2px 0;}
+.venue-input{border:none;font-size:15px;font-family:var(–font-serif);width:100%;outline:none;background:transparent;color:var(–text);padding:2px 0;}
+::placeholder{color:var(–muted2);}
 
-/* ═══ VENUE QUICK LINKS ════════════════════════ */
+/* VENUE SEARCH */
+.venue-search-wrap{position:relative;}
+.venue-dropdown{
+position:absolute;top:calc(100% + 6px);left:0;right:0;
+background:var(–surface2);border:0.5px solid var(–border-bright);
+border-radius:8px;z-index:20;overflow:hidden;
+box-shadow:0 16px 40px rgba(0,0,0,0.5);max-height:280px;overflow-y:auto;
+}
+.venue-dropdown-item{
+padding:12px 14px;cursor:pointer;
+border-bottom:0.5px solid var(–border);transition:background 0.12s;
+display:flex;flex-direction:column;gap:2px;
+}
+.venue-dropdown-item:last-child{border-bottom:none;}
+.venue-dropdown-item:hover,.venue-dropdown-item.focused{background:rgba(var(–accent-rgb),0.1);}
+.venue-dropdown-item .venue-name{font-size:14px;}
+.venue-dropdown-item .venue-meta{font-size:11px;color:var(–muted);font-family:var(–font-mono);letter-spacing:0.06em;}
+.venue-dropdown-empty{padding:14px;font-size:13px;color:var(–muted);text-align:center;}
+.venue-info-panel{
+margin-top:10px;background:var(–surface);
+border:0.5px solid var(–border-bright);border-radius:8px;padding:14px 16px;
+}
+.venue-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.venue-chip{font-size:10px;font-family:var(–font-mono);padding:3px 10px;border-radius:999px;border:0.5px solid var(–border-bright);color:var(–muted);letter-spacing:0.06em;display:inline-flex;align-items:center;gap:4px;}
+.venue-chip.warn{border-color:rgba(255,200,50,0.3);color:#ffc832;background:rgba(255,200,50,0.07);}
+.venue-chip.good{border-color:rgba(var(–accent-rgb),0.3);color:var(–accent-text);background:var(–accent-light);}
+.venue-chip.silver{border-color:rgba(200,200,220,0.25);color:#c8c8dc;background:rgba(200,200,220,0.07);}
 .venue-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-height:28px;}
 .venue-link-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:10px;font-family:var(--font-mono);letter-spacing:0.08em;
-  color:var(--muted);border:0.5px solid var(--border);
-  padding:4px 10px;border-radius:999px;text-decoration:none;
-  transition:all 0.15s;background:var(--bg);cursor:pointer;touch-action:manipulation;
+display:inline-flex;align-items:center;gap:5px;
+font-size:10px;font-family:var(–font-mono);letter-spacing:0.08em;
+color:var(–muted);border:0.5px solid var(–border-bright);
+padding:4px 10px;border-radius:999px;text-decoration:none;
+transition:all 0.15s;background:transparent;cursor:pointer;
 }
-.venue-link-btn:hover,.venue-link-btn:active{border-color:var(--accent);color:var(--accent-text);background:var(--accent-light);}
-.venue-link-btn svg{width:11px;height:11px;flex-shrink:0;}
+.venue-link-btn:hover{border-color:var(–accent);color:var(–accent-text);background:var(–accent-light);}
 
-/* ═══ SEGMENT CONTROL ═══════════════════════════ */
-.seg-control{display:inline-flex;border:0.5px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:36px;}
-.seg-btn{
-  padding:8px 20px;font-size:11px;letter-spacing:0.12em;cursor:pointer;
-  background:var(--bg);color:var(--muted);transition:background 0.15s,color 0.15s;
-  font-family:var(--font-mono);border:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
-}
-.seg-btn:active{opacity:0.7;}
-.seg-btn.active{background:var(--line);color:white;}
-.seg-btn+.seg-btn{border-left:0.5px solid var(--line);}
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.section-num{font-family:var(–font-mono);font-size:10px;letter-spacing:0.2em;color:var(–muted);}
 
-/* ═══ CARDS ═════════════════════════════════════ */
-.card{border:0.5px solid var(--border);padding:16px 20px;background:var(--bg);transition:border-color 0.2s;}
-.card:hover{border-color:var(--border-dark);}
+/* CARDS */
+.card{background:var(–surface);border:0.5px solid var(–border-bright);border-radius:10px;padding:16px 20px;transition:border-color 0.2s,box-shadow 0.2s;}
+.card:hover{border-color:rgba(var(–accent-rgb),0.3);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
 .card-grid{display:grid;gap:10px;}
-.hotel-card{text-decoration:none;color:var(--line);display:block;}
-.hotel-card .card:hover{border-color:var(--line);}
-.area-badge{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--accent);margin-bottom:4px;display:block;}
+.hotel-card{text-decoration:none;color:var(–text);display:block;}
+.hotel-card .card:hover{box-shadow:0 0 0 1px rgba(var(–accent-rgb),0.2),0 8px 32px rgba(0,0,0,0.3);}
+.area-badge{font-family:var(–font-mono);font-size:10px;letter-spacing:0.12em;color:var(–accent);margin-bottom:4px;display:block;}
 .aff-card{
-  border:0.5px solid var(--border);padding:12px 16px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  text-decoration:none;color:var(--line);transition:border-color 0.2s;background:var(--bg);
-  touch-action:manipulation;
+border:0.5px solid var(–border-bright);border-radius:10px;padding:14px 16px;
+display:flex;align-items:center;justify-content:space-between;gap:16px;
+text-decoration:none;color:var(–text);transition:all 0.2s;background:var(–surface);
 }
-.aff-card:hover{border-color:var(--line);}
-.aff-card:active{background:var(--surface);}
+.aff-card:hover{border-color:rgba(var(–accent-rgb),0.4);background:var(–surface2);}
 
-/* ═══ SEAT BUTTONS ══════════════════════════════ */
-.seat-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;}
-.seat-btn{
-  padding:9px 14px;font-size:12px;border:0.5px solid var(--border);
-  cursor:pointer;background:var(--bg);color:var(--line);
-  transition:all 0.15s;letter-spacing:0.04em;
-  font-family:var(--font-sans);font-weight:300;border-radius:4px;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
-}
+/* SEGMENT */
+.seg-control{display:inline-flex;background:var(–surface);border:0.5px solid var(–border-bright);border-radius:8px;overflow:hidden;margin-bottom:36px;padding:3px;gap:2px;}
+.seg-btn{padding:8px 20px;font-size:11px;letter-spacing:0.12em;cursor:pointer;background:transparent;color:var(–muted);transition:background 0.2s,color 0.2s;font-family:var(–font-mono);border:none;border-radius:6px;}
+.seg-btn.active{background:rgba(var(–accent-rgb),0.2);color:var(–accent-text);}
+
+/* SEAT BUTTONS */
+.seat-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.seat-btn{padding:9px 14px;font-size:12px;border:0.5px solid var(–border-bright);cursor:pointer;background:var(–surface);color:var(–text);transition:all 0.15s;letter-spacing:0.04em;font-family:var(–font-sans);font-weight:300;border-radius:6px;}
 .seat-btn:active{transform:scale(0.94);}
-.seat-btn.selected{background:var(--line);color:white;border-color:var(--line);}
-.seat-btn:hover:not(.selected){border-color:var(--border-dark);}
+.seat-btn.selected{background:rgba(var(–accent-rgb),0.2);color:var(–accent-text);border-color:rgba(var(–accent-rgb),0.5);box-shadow:0 0 12px rgba(var(–accent-rgb),0.15);}
 
-/* Bino panel */
-.bino-panel{border:0.5px solid var(--line);background:var(--surface);padding:24px;}
+/* CONCIERGE CHIPS */
+.concierge-strip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;min-height:28px;}
+.concierge-chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:var(–font-mono);padding:4px 10px;border-radius:999px;letter-spacing:0.06em;animation:chipPop 0.3s var(–ease-spring);}
+@keyframes chipPop{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.concierge-chip.alert{background:rgba(255,100,80,0.12);border:0.5px solid rgba(255,100,80,0.3);color:#ff8878;}
+.concierge-chip.silver{background:rgba(200,200,220,0.1);border:0.5px solid rgba(200,200,220,0.25);color:#c8c8dc;}
+.concierge-chip.trolley{background:rgba(100,200,150,0.1);border:0.5px solid rgba(100,200,150,0.25);color:#80d8a0;}
+.concierge-chip.view{background:rgba(var(–accent-rgb),0.1);border:0.5px solid rgba(var(–accent-rgb),0.25);color:var(–accent-text);}
+
+/* BINO PANEL */
+.bino-panel{background:var(–surface);border:0.5px solid var(–border-bright);border-radius:12px;padding:24px;}
 .bino-metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;}
-.bino-metric-val{font-size:44px;font-family:var(--font-mono);font-weight:300;line-height:1;transition:all 0.3s var(--ease-out);}
-.bino-metric-note{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.bino-metric-val{font-size:44px;font-family:var(–font-mono);font-weight:300;line-height:1;transition:all 0.3s var(–ease-out);color:var(–accent-text);}
+.bino-metric-note{font-size:11px;color:var(–muted);margin-top:5px;line-height:1.5;}
 .stage-bar-wrap{margin-bottom:24px;}
-.stage-labels{display:flex;justify-content:space-between;font-size:9px;font-family:var(--font-mono);color:var(--muted);margin-bottom:5px;letter-spacing:0.1em;}
-.stage-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;position:relative;}
-.stage-fill{height:100%;background:var(--line);border-radius:2px;transition:width 0.5s var(--ease-out);}
-.stage-cursor{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:var(--accent);border-radius:50%;border:2px solid var(--bg);transition:left 0.5s var(--ease-out);}
+.stage-labels{display:flex;justify-content:space-between;font-size:9px;font-family:var(–font-mono);color:var(–muted);margin-bottom:6px;letter-spacing:0.1em;}
+.stage-bar{height:3px;background:var(–border-bright);border-radius:2px;overflow:visible;position:relative;}
+.stage-fill{height:100%;background:linear-gradient(to right,var(–aura-a),var(–aura-b));border-radius:2px;transition:width 0.5s var(–ease-out);}
+.stage-cursor{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:var(–accent);border-radius:50%;border:2px solid var(–bg);transition:left 0.5s var(–ease-out);box-shadow:0 0 8px var(–accent);}
+select.minimal{border:0.5px solid var(–border-bright);font-size:13px;padding:8px 30px 8px 12px;background:var(–surface);color:var(–text);outline:none;cursor:pointer;font-family:var(–font-sans);font-weight:300;border-radius:6px;-webkit-appearance:none;appearance:none;background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘10’ height=‘6’%3E%3Cpath d=‘M0 0l5 6 5-6z’ fill=’%23888’/%3E%3C/svg%3E”);background-repeat:no-repeat;background-position:right 10px center;transition:border-color 0.2s;}
+select.minimal:focus{border-color:rgba(var(–accent-rgb),0.5);}
 
-/* Select */
-select.minimal{
-  border:0.5px solid var(--border);font-size:13px;padding:8px 30px 8px 12px;
-  background:var(--bg);color:var(--line);outline:none;cursor:pointer;
-  font-family:var(--font-sans);font-weight:300;border-radius:4px;
-  -webkit-appearance:none;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;
-  touch-action:manipulation;
-}
-select.minimal:focus{border-color:var(--line);}
-
-/* ═══ PACKING ═══════════════════════════════════ */
-.pack-tab-bar{
-  display:flex;border-bottom:0.5px solid var(--border);margin-bottom:20px;
-  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-}
+/* PACKING */
+.pack-tab-bar{display:flex;border-bottom:0.5px solid var(–border);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .pack-tab-bar::-webkit-scrollbar{display:none;}
-.pack-tab{
-  flex-shrink:0;padding:10px 16px;font-size:11px;font-family:var(--font-mono);
-  letter-spacing:0.12em;cursor:pointer;border:none;background:transparent;
-  color:var(--muted);border-bottom:1.5px solid transparent;
-  transition:color 0.15s,border-color 0.15s;touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;margin-bottom:-0.5px;
-}
-.pack-tab.active{color:var(--line);border-bottom-color:var(--line);}
+.pack-tab{flex-shrink:0;padding:10px 16px;font-size:11px;font-family:var(–font-mono);letter-spacing:0.12em;cursor:pointer;border:none;background:transparent;color:var(–muted2);border-bottom:1.5px solid transparent;transition:color 0.15s,border-color 0.15s;margin-bottom:-0.5px;}
+.pack-tab.active{color:var(–accent-text);border-bottom-color:var(–accent);}
 .progress-row{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.progress-bar-wrap{flex:1;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--accent);border-radius:1px;transition:width 0.4s var(--ease-out);}
-.progress-count{font-size:11px;font-family:var(--font-mono);color:var(--muted);white-space:nowrap;}
-.check-item{
-  display:flex;align-items:center;gap:12px;padding:12px 0;
-  border-bottom:0.5px solid var(--border);cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
+.progress-bar-wrap{flex:1;height:3px;background:var(–border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(to right,var(–aura-a),var(–aura-b));border-radius:2px;transition:width 0.4s var(–ease-out);}
+.progress-count{font-size:11px;font-family:var(–font-mono);color:var(–muted);white-space:nowrap;}
+.check-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:0.5px solid var(–border);cursor:pointer;}
 .check-item:last-child{border-bottom:none;}
-.check-item input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+.check-item input[type=checkbox]{width:18px;height:18px;accent-color:var(–accent);cursor:pointer;flex-shrink:0;}
 .check-label{flex:1;font-size:14px;cursor:pointer;transition:color 0.2s;user-select:none;}
-.check-item.checked .check-label{text-decoration:line-through;color:var(--muted2);}
-.amazon-link{
-  flex-shrink:0;font-size:10px;font-family:var(--font-mono);color:var(--accent);
-  text-decoration:none;letter-spacing:0.06em;
-  padding:3px 8px;border:0.5px solid var(--accent-light);border-radius:999px;
-  touch-action:manipulation;transition:opacity 0.2s;opacity:1;
-}
-@media(hover:hover){
-  .check-item:not(.checked) .amazon-link{opacity:0;}
-  .check-item:not(.checked):hover .amazon-link{opacity:1;}
-}
-@keyframes celebrate{0%{transform:scale(1);}30%{transform:scale(1.04);}60%{transform:scale(0.98);}100%{transform:scale(1);}}
-.celebrate{animation:celebrate 0.5s var(--ease-spring);}
+.check-item.checked .check-label{text-decoration:line-through;color:var(–muted2);}
+.amazon-link{flex-shrink:0;font-size:10px;font-family:var(–font-mono);color:var(–accent-text);text-decoration:none;letter-spacing:0.06em;padding:3px 8px;border:0.5px solid rgba(var(–accent-rgb),0.3);border-radius:999px;transition:opacity 0.2s;}
+@media(hover:hover){.check-item:not(.checked) .amazon-link{opacity:0;}.check-item:not(.checked):hover .amazon-link{opacity:1;}}
 
-/* ═══ ROUTE MAP ═════════════════════════════════ */
-.map-container{border:0.5px solid var(--line);padding:28px 20px;background:var(--surface);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+/* MAP */
+.map-container{border:0.5px solid var(–border-bright);border-radius:12px;padding:28px 20px;background:var(–surface);overflow-x:auto;}
 
-/* ═══ SHARE ═════════════════════════════════════ */
-.summary-card{border:0.5px solid var(--line);padding:24px;background:var(--surface);margin-bottom:24px;}
-.summary-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:8px 0;border-bottom:0.5px solid var(--border);}
+/* SHARE */
+.summary-card{background:var(–surface);border:0.5px solid var(–border-bright);border-radius:12px;padding:24px;margin-bottom:24px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:10px 0;border-bottom:0.5px solid var(–border);}
 .summary-row:last-child{border-bottom:none;}
-.summary-key{color:var(--muted);}
+.summary-key{color:var(–muted);}
 .btn-group{display:flex;gap:10px;flex-wrap:wrap;}
-.share-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:11px 22px;
-  border:0.5px solid var(--line);font-size:11px;cursor:pointer;
-  background:var(--bg);color:var(--line);letter-spacing:0.1em;
-  font-family:var(--font-mono);transition:background 0.15s,color 0.15s,transform 0.1s;
-  text-decoration:none;border-radius:4px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
-}
-.share-btn:hover{background:var(--line);color:white;}
-.share-btn:active{transform:scale(0.97);}
-.share-btn.accent{background:var(--accent);border-color:var(--accent);color:white;}
-.share-btn.accent:hover{opacity:0.88;background:var(--accent);}
+.share-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:0.5px solid var(–border-bright);font-size:11px;cursor:pointer;background:var(–surface);color:var(–text);letter-spacing:0.1em;font-family:var(–font-mono);transition:all 0.15s;text-decoration:none;border-radius:6px;}
+.share-btn:hover{border-color:rgba(var(–accent-rgb),0.5);color:var(–accent-text);}
+.share-btn.accent{background:rgba(var(–accent-rgb),0.15);border-color:rgba(var(–accent-rgb),0.4);color:var(–accent-text);}
+.share-btn.accent:hover{background:rgba(var(–accent-rgb),0.25);}
 .url-share-wrap{display:flex;gap:8px;margin-top:16px;align-items:center;}
-.url-display{
-  flex:1;font-size:10px;font-family:var(--font-mono);color:var(--muted);
-  background:var(--surface);border:0.5px solid var(--border);
-  padding:8px 12px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:all;
-}
+.url-display{flex:1;font-size:10px;font-family:var(–font-mono);color:var(–muted);background:var(–surface2);border:0.5px solid var(–border);padding:8px 12px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:all;}
 
-/* ═══ TOAST ══════════════════════════════════════ */
-#toast{
-  position:fixed;bottom:calc(var(--bnav-h) + var(--safe-b) + 16px);left:50%;
-  transform:translateX(-50%) translateY(12px);
-  background:var(--line);color:white;padding:10px 22px;
-  font-size:11px;font-family:var(--font-mono);letter-spacing:0.1em;
-  opacity:0;pointer-events:none;transition:opacity 0.25s,transform 0.25s var(--ease-out);
-  z-index:100;border-radius:4px;white-space:nowrap;
-}
+/* TOAST */
+#toast{position:fixed;bottom:calc(var(–bnav-h) + var(–safe-b) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(–surface2);border:0.5px solid rgba(var(–accent-rgb),0.4);color:var(–accent-text);padding:10px 22px;font-size:11px;font-family:var(–font-mono);letter-spacing:0.1em;opacity:0;pointer-events:none;transition:opacity 0.25s,transform 0.25s var(–ease-out);z-index:100;border-radius:8px;white-space:nowrap;box-shadow:0 0 20px rgba(var(–accent-rgb),0.2);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ═══ FOOTER ═════════════════════════════════════ */
-footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
+/* FOOTER */
+footer{padding:32px 0;border-top:0.5px solid var(–border);margin-top:40px;}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 
-/* ═══ RESPONSIVE ════════════════════════════════ */
-@media(max-width:480px){
-  .top-nav .nav-links{display:none;}
-  .bino-metric-val{font-size:36px;}
-  .hero-title{letter-spacing:0.04em;}
-}
-@media(min-width:768px){
-  .bottom-nav{display:none;}
-  body{padding-bottom:80px;}
-}
+@keyframes celebrate{0%{transform:scale(1);}30%{transform:scale(1.04);}60%{transform:scale(0.98);}100%{transform:scale(1);}}
+.celebrate{animation:celebrate 0.5s var(–ease-spring);}
+
+@media(max-width:480px){.top-nav .nav-links{display:none;}.bino-metric-val{font-size:36px;}}
+@media(min-width:768px){.bottom-nav{display:none;}body{padding-bottom:80px;}}
 </style>
+
 </head>
 <body>
 
+<div class="aura-bg" aria-hidden="true">
+  <div class="aura-orb aura-orb-1"></div>
+  <div class="aura-orb aura-orb-2"></div>
+  <div class="aura-orb aura-orb-3"></div>
+</div>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
-<!-- TOP NAV -->
 <nav class="top-nav" aria-label="メインナビゲーション">
-  <a href="#" class="nav-logo" aria-label="V-MAP トップへ">V-MAP</a>
+  <a href="#" class="nav-logo" aria-label="ENSEI PASS トップへ">
+    <div class="nav-logo-dot"></div>
+    ENSEI PASS
+  </a>
   <ul class="nav-links" role="list">
     <li><a href="#hotel">HOTEL</a></li>
     <li><a href="#bino">BINO</a></li>
@@ -329,163 +327,104 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
 <main>
 <div class="container">
 
-<!-- ═══ HERO ═══════════════════════════════════ -->
 <section class="hero" aria-labelledby="heroTitle">
-  <div class="section-label stagger-1">遠征特化ナビ / Expedition Navigator</div>
+  <div class="hero-eyebrow stagger-1">
+    <span class="hero-eyebrow-line"></span>
+    PHASE 1 — EXPEDITION NAVIGATOR
+  </div>
   <h1 class="hero-title stagger-2" id="heroTitle">推しに会いに<br>行くための地図</h1>
-  <p class="hero-subtitle stagger-3">宿泊ナビ・双眼鏡選び・荷造りチェック。<br>遠征に必要なすべてを、一画面で。</p>
+  <p class="hero-subtitle stagger-3">会場ナビ・宿泊・双眼鏡・荷造りチェック。<br>遠征に必要なすべてを、一画面で。</p>
+  <div class="hero-tagline stagger-4">準備さえも、推し事になる</div>
 
-  <!-- Mencolor -->
-  <div class="stagger-4" style="margin-top:40px;">
-    <div class="section-label field-label">推し色 / Men-Color</div>
+  <!-- 推し色 -->
+
+  <div style="margin-top:40px;" class="stagger-4">
+    <div class="section-label field-label">推し色 / Oshi Color</div>
     <div class="color-grid" role="radiogroup" aria-label="推し色選択">
-      <button class="color-swatch active" role="radio" aria-checked="true" data-color="#E8547A" data-name="ピンク" data-text="#b03058" data-light="#fde8ef" style="background:#E8547A" aria-label="ピンク" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#5B8CDB" data-name="ブルー" data-text="#1e4d9a" data-light="#e6eefb" style="background:#5B8CDB" aria-label="ブルー" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#52C27A" data-name="グリーン" data-text="#1a5e30" data-light="#e2f7ea" style="background:#52C27A" aria-label="グリーン" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#9B6AD4" data-name="パープル" data-text="#5a2699" data-light="#f2ecfc" style="background:#9B6AD4" aria-label="パープル" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#F0A020" data-name="オレンジ" data-text="#7a4c00" data-light="#fef3dc" style="background:#F0A020" aria-label="オレンジ" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#3EC4D4" data-name="水色" data-text="#12697a" data-light="#e0f7fb" style="background:#3EC4D4" aria-label="水色" onclick="setAccent(this)"></button>
-      <button class="color-swatch" role="radio" aria-checked="false" data-color="#E8547A" data-name="レインボー" data-text="#7a1a2e" data-light="#ffe0e8" style="background:linear-gradient(135deg,#e8547a,#9b6ad4,#3ec4d4)" aria-label="レインボー" onclick="setAccent(this)"></button>
+      <button class="color-swatch active" role="radio" aria-checked="true" data-color="#E8547A" data-name="ピンク" data-text="#ffd6e3" data-light="rgba(232,84,122,0.12)" data-rgb="232,84,122" data-aura-a="#E8547A" data-aura-b="#b03058" style="background:#E8547A" aria-label="ピンク" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#5B8CDB" data-name="ブルー" data-text="#c8dcff" data-light="rgba(91,140,219,0.12)" data-rgb="91,140,219" data-aura-a="#5B8CDB" data-aura-b="#1e4d9a" style="background:#5B8CDB" aria-label="ブルー" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#52C27A" data-name="グリーン" data-text="#b8f0cc" data-light="rgba(82,194,122,0.12)" data-rgb="82,194,122" data-aura-a="#52C27A" data-aura-b="#1a5e30" style="background:#52C27A" aria-label="グリーン" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#9B6AD4" data-name="パープル" data-text="#dcc8ff" data-light="rgba(155,106,212,0.12)" data-rgb="155,106,212" data-aura-a="#9B6AD4" data-aura-b="#5a2699" style="background:#9B6AD4" aria-label="パープル" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#F0A020" data-name="オレンジ" data-text="#ffe0a0" data-light="rgba(240,160,32,0.12)" data-rgb="240,160,32" data-aura-a="#F0A020" data-aura-b="#7a4c00" style="background:#F0A020" aria-label="オレンジ" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#3EC4D4" data-name="水色" data-text="#b0f0f8" data-light="rgba(62,196,212,0.12)" data-rgb="62,196,212" data-aura-a="#3EC4D4" data-aura-b="#12697a" style="background:#3EC4D4" aria-label="水色" onclick="setAccent(this)"></button>
+      <button class="color-swatch" role="radio" aria-checked="false" data-color="#FF6EB4" data-name="レインボー" data-text="#ffddee" data-light="rgba(255,110,180,0.12)" data-rgb="255,110,180" data-aura-a="#FF6EB4" data-aura-b="#9B6AD4" style="background:linear-gradient(135deg,#e8547a,#9b6ad4,#3ec4d4)" aria-label="レインボー" onclick="setAccent(this)"></button>
     </div>
   </div>
 
-  <!-- Inputs -->
   <div class="input-row stagger-4">
     <div>
       <div class="section-label field-label">遠征予算</div>
-      <div style="display:flex;align-items:baseline;gap:6px;">
-        <span style="font-size:18px;font-family:var(--font-mono);">¥</span>
-        <input class="budget-input" id="budgetInput" type="number" inputmode="numeric" value="50000" min="0" step="1000" aria-label="遠征予算（円）" placeholder="50000">
+      <div class="glass-input-wrap">
+        <div style="display:flex;align-items:baseline;gap:6px;">
+          <span style="font-size:18px;font-family:var(--font-mono);color:var(--muted);">¥</span>
+          <input class="budget-input" id="budgetInput" type="number" inputmode="numeric" value="50000" min="0" step="1000" aria-label="遠征予算（円）" placeholder="50000" oninput="onBudgetChange()">
+        </div>
       </div>
     </div>
     <div>
-      <div class="section-label field-label">会場名</div>
-      <input class="venue-input" id="venueInput" type="text" value="さいたまスーパーアリーナ" placeholder="会場名を入力" aria-label="会場名" autocomplete="off">
+      <div class="section-label field-label">
+        会場名
+        <span style="color:var(--accent);font-size:9px;letter-spacing:0.06em;margin-left:6px;">あいまい検索対応</span>
+      </div>
+      <div class="glass-input-wrap venue-search-wrap">
+        <input class="venue-input" id="venueInput" type="text" value="さいたまスーパーアリーナ" placeholder="会場名・略称で検索…" aria-label="会場名" autocomplete="off" oninput="onVenueInput()" onfocus="onVenueFocus()" onblur="onVenueBlur()">
+        <div class="venue-dropdown hidden" id="venueDropdown" role="listbox"></div>
+      </div>
+      <div id="venueInfoPanel" class="venue-info-panel" style="margin-top:10px;"></div>
       <div class="venue-links" id="venueLinks" role="group" aria-label="会場周辺を検索"></div>
     </div>
   </div>
-
-  <div class="scroll-hint" aria-hidden="true">
-    <div class="scroll-hint-line"></div>
-    <span style="font-size:10px;font-family:var(--font-mono);letter-spacing:0.18em;color:var(--muted2);">SCROLL</span>
-  </div>
 </section>
 
-<!-- ═══ HOTEL ═══════════════════════════════════ -->
+<!-- HOTEL -->
+
 <section id="hotel" aria-labelledby="hotelTitle">
   <div class="section-header">
-    <div class="section-label">01 / 宿泊ナビ</div>
+    <div class="section-num">01 / 宿泊ナビ</div>
     <span class="pill">HOTEL</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 6px;" id="hotelTitle">どこに泊まるか</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">チケット確保のタイミングで戦略が変わります</p>
-
   <div class="seg-control" role="group" aria-label="宿泊フェーズ切替">
     <button class="seg-btn active" id="btnEarly" onclick="setHotelStatus('early')" aria-pressed="true">発表直後</button>
     <button class="seg-btn" id="btnLast" onclick="setHotelStatus('last')" aria-pressed="false">開催直前</button>
   </div>
-
   <div id="hotelEarly" class="fade-in" aria-live="polite">
     <div class="section-label" style="margin-bottom:14px;">会場周辺 王道ホテル</div>
     <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.85;">発表直後はまだ空室あり。会場近くの定番ホテルを今すぐ押さえるのが正解。</p>
     <div class="card-grid">
       <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_nen1=2024&f_no1=1" target="_blank" rel="nofollow noopener" class="hotel-card">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:start;gap:16px;">
-            <div>
-              <div style="font-size:14px;font-weight:500;margin-bottom:3px;">ホテルメトロポリタン さいたま新都心</div>
-              <div style="font-size:12px;color:var(--muted);">さいたまSSAまで徒歩3分</div>
-              <div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">楽天トラベル</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div>
-              <div style="font-size:19px;font-family:var(--font-mono);">¥12,000</div>
-              <div style="font-size:10px;color:var(--accent);margin-top:3px;">→ 予約する</div>
-            </div>
-          </div>
-        </div>
+        <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ホテルメトロポリタン さいたま新都心</div><div style="font-size:12px;color:var(--muted);">さいたまSSAまで徒歩3分</div><div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">楽天トラベル</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div><div style="font-size:19px;font-family:var(--font-mono);">¥12,000</div><div style="font-size:10px;color:var(--accent-text);margin-top:3px;">→ 予約する</div></div></div></div>
       </a>
       <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_no1=2" target="_blank" rel="nofollow noopener" class="hotel-card">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:start;gap:16px;">
-            <div>
-              <div style="font-size:14px;font-weight:500;margin-bottom:3px;">ヴィアイン さいたま新都心</div>
-              <div style="font-size:12px;color:var(--muted);">徒歩5分・コスパ最強ビジホ</div>
-              <div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">楽天トラベル</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div>
-              <div style="font-size:19px;font-family:var(--font-mono);">¥8,500</div>
-              <div style="font-size:10px;color:var(--accent);margin-top:3px;">→ 予約する</div>
-            </div>
-          </div>
-        </div>
+        <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ヴィアイン さいたま新都心</div><div style="font-size:12px;color:var(--muted);">徒歩5分・コスパ最強ビジホ</div><div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">楽天トラベル</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div><div style="font-size:19px;font-family:var(--font-mono);">¥8,500</div><div style="font-size:10px;color:var(--accent-text);margin-top:3px;">→ 予約する</div></div></div></div>
       </a>
       <a href="https://www.jalan.net/yad372918/" target="_blank" rel="nofollow noopener" class="hotel-card">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:start;gap:16px;">
-            <div>
-              <div style="font-size:14px;font-weight:500;margin-bottom:3px;">ドーミーイン大宮</div>
-              <div style="font-size:12px;color:var(--muted);">大浴場あり・電車5分でアクセス可</div>
-              <div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">じゃらん</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div>
-              <div style="font-size:19px;font-family:var(--font-mono);">¥7,800</div>
-              <div style="font-size:10px;color:var(--accent);margin-top:3px;">→ 予約する</div>
-            </div>
-          </div>
-        </div>
+        <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ドーミーイン大宮</div><div style="font-size:12px;color:var(--muted);">大浴場あり・電車5分でアクセス可</div><div style="font-size:10px;margin-top:5px;color:var(--muted2);font-family:var(--font-mono);">じゃらん</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);">FROM</div><div style="font-size:19px;font-family:var(--font-mono);">¥7,800</div><div style="font-size:10px;color:var(--accent-text);margin-top:3px;">→ 予約する</div></div></div></div>
       </a>
     </div>
   </div>
-
   <div id="hotelLast" class="hidden fade-in" aria-live="polite">
     <div class="section-label" style="margin-bottom:14px;">穴場エリア戦略</div>
     <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.85;">開催直前は会場周辺が満室・高騰。以下の「逆算エリア」が穴場です。</p>
     <div class="card-grid">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
-          <div><span class="area-badge">AREA 01</span><div style="font-size:15px;font-weight:500;">赤羽・王子エリア</div></div>
-          <span class="pill">始発確保</span>
-        </div>
-        <p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">京浜東北線の始発駅。終電後も帰宅可。さいたま新都心まで乗り換えなし25分。競合少なく料金も安定。</p>
-        <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E8%B5%A4%E7%BE%BD" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent);text-decoration:none;">→ このエリアで検索</a>
-      </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
-          <div><span class="area-badge">AREA 02</span><div style="font-size:15px;font-weight:500;">川口・浦和美園エリア</div></div>
-          <span class="pill">逆走ルート</span>
-        </div>
-        <p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">帰りに混雑する大宮方面と逆走。埼玉スタジアム線を逆向き利用。価格が会場近隣の半額以下になることも。</p>
-        <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E5%B7%9D%E5%8F%A3" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent);text-decoration:none;">→ このエリアで検索</a>
-      </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
-          <div><span class="area-badge">AREA 03</span><div style="font-size:15px;font-weight:500;">熊谷・行田エリア</div></div>
-          <span class="pill">超穴場</span>
-        </div>
-        <p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">新幹線利用なら熊谷から大宮まで約15分。開催日当日朝に移動するプランで、前泊費用を最小化できる。</p>
-        <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E7%86%8A%E8%B0%B7" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent);text-decoration:none;">→ このエリアで検索</a>
-      </div>
+      <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;"><div><span class="area-badge">AREA 01</span><div style="font-size:15px;font-weight:500;">赤羽・王子エリア</div></div><span class="pill">始発確保</span></div><p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">京浜東北線の始発駅。終電後も帰宅可。さいたま新都心まで乗り換えなし25分。競合少なく料金も安定。</p><a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E8%B5%A4%E7%BE%BD" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent-text);text-decoration:none;">→ このエリアで検索</a></div>
+      <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;"><div><span class="area-badge">AREA 02</span><div style="font-size:15px;font-weight:500;">川口・浦和美園エリア</div></div><span class="pill">逆走ルート</span></div><p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">帰りに混雑する大宮方面と逆走。埼玉スタジアム線を逆向き利用。価格が会場近隣の半額以下になることも。</p><a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E5%B7%9D%E5%8F%A3" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent-text);text-decoration:none;">→ このエリアで検索</a></div>
+      <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;"><div><span class="area-badge">AREA 03</span><div style="font-size:15px;font-weight:500;">熊谷・行田エリア</div></div><span class="pill">超穴場</span></div><p style="font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 12px;">新幹線利用なら熊谷から大宮まで約15分。開催日当日朝に移動するプランで、前泊費用を最小化できる。</p><a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E7%86%8A%E8%B0%B7" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--font-mono);color:var(--accent-text);text-decoration:none;">→ このエリアで検索</a></div>
     </div>
-    <div style="margin-top:24px;padding:16px 20px;border:0.5px solid var(--border);background:var(--surface);">
-      <div class="section-label" style="margin-bottom:8px;">夜行バス</div>
-      <p style="font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.85;">開催前夜に乗って会場近くで朝を迎えるプラン。宿泊費0円戦略。</p>
-      <a href="https://www.bushikaku.net/" target="_blank" rel="nofollow noopener" class="share-btn" style="font-size:11px;">→ 夜行バスを比較する</a>
-    </div>
+    <div style="margin-top:24px;" class="card"><div class="section-label" style="margin-bottom:8px;">夜行バス</div><p style="font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.85;">開催前夜に乗って会場近くで朝を迎えるプラン。宿泊費0円戦略。</p><a href="https://www.bushikaku.net/" target="_blank" rel="nofollow noopener" class="share-btn" style="font-size:11px;">→ 夜行バスを比較する</a></div>
   </div>
 </section>
 
-<!-- ═══ BINOCULARS ════════════════════════════ -->
+<!-- BINO -->
+
 <section id="bino" aria-labelledby="binoTitle">
   <div class="section-header">
-    <div class="section-label">02 / 双眼鏡ナビ</div>
+    <div class="section-num">02 / 双眼鏡ナビ</div>
     <span class="pill">BINOCULARS</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 6px;" id="binoTitle">どこから見るか</h2>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">座席エリアを選ぶと最適な倍率を提案します</p>
-
+  <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">座席エリアを選ぶと最適な倍率と座席コンシェルジュを表示します</p>
   <div style="margin-bottom:20px;">
     <div class="section-label field-label">会場タイプ</div>
     <select class="minimal" id="venueType" onchange="updateBino()" aria-label="会場タイプを選択">
@@ -495,7 +434,6 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
       <option value="outdoor">野外フェス・スタジアム</option>
     </select>
   </div>
-
   <div class="section-label field-label">座席エリア</div>
   <div class="seat-grid" role="group" aria-label="座席エリアを選択" id="seatBtns">
     <button class="seat-btn selected" onclick="selectSeat(this,'ss')" aria-pressed="true">SS席（前方）</button>
@@ -504,19 +442,12 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
     <button class="seat-btn" onclick="selectSeat(this,'stand_high')" aria-pressed="false">スタンド上段</button>
     <button class="seat-btn" onclick="selectSeat(this,'back')" aria-pressed="false">バック</button>
   </div>
-
+  <!-- 座席コンシェルジュ -->
+  <div class="concierge-strip" id="conciergeStrip" aria-live="polite"></div>
   <div class="bino-panel">
     <div class="bino-metric-grid">
-      <div>
-        <div class="section-label" style="margin-bottom:5px;">推奨倍率</div>
-        <div class="bino-metric-val" id="binoMag">6×</div>
-        <div class="bino-metric-note" id="binoNote">手ブレしにくく初心者にも◎</div>
-      </div>
-      <div>
-        <div class="section-label" style="margin-bottom:5px;">推定距離</div>
-        <div class="bino-metric-val" id="binoDistance">20m</div>
-        <div class="bino-metric-note" id="binoView">顔のアップが見える</div>
-      </div>
+      <div><div class="section-label" style="margin-bottom:5px;">推奨倍率</div><div class="bino-metric-val" id="binoMag">6×</div><div class="bino-metric-note" id="binoNote">手ブレしにくく初心者にも◎</div></div>
+      <div><div class="section-label" style="margin-bottom:5px;">推定距離</div><div class="bino-metric-val" id="binoDistance">20m</div><div class="bino-metric-note" id="binoView">顔のアップが見える</div></div>
     </div>
     <div class="stage-bar-wrap">
       <div class="stage-labels"><span>STAGE</span><span>あなたの席</span><span>後方</span></div>
@@ -527,157 +458,112 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
     </div>
     <div class="section-label" style="margin-bottom:10px;">レンタル・購入</div>
     <div style="display:grid;gap:8px;">
-      <a href="https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="aff-card">
-        <div>
-          <div style="font-size:13px;font-weight:500;margin-bottom:2px;">DMMレンタル — 双眼鏡</div>
-          <div style="font-size:11px;color:var(--muted);" id="dmmText">防振 ケンコー 8×30</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          <div style="font-size:16px;font-family:var(--font-mono);" id="dmmPrice">¥1,800</div>
-          <div style="font-size:10px;color:var(--accent);">→ レンタル</div>
-        </div>
-      </a>
-      <a href="https://www.amazon.co.jp/s?k=%E9%98%B2%E6%8C%AF+%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="aff-card">
-        <div>
-          <div style="font-size:13px;font-weight:500;margin-bottom:2px;">Amazon — 防振双眼鏡</div>
-          <div style="font-size:11px;color:var(--muted);" id="amazonBinoText">ニコン スポーツスター 6×15</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          <div style="font-size:16px;font-family:var(--font-mono);" id="amazonBinoPrice">¥9,800</div>
-          <div style="font-size:10px;color:var(--accent);">→ 購入</div>
-        </div>
-      </a>
+      <a href="https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">DMMレンタル — 双眼鏡</div><div style="font-size:11px;color:var(--muted);" id="dmmText">防振 ケンコー 8×30</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:16px;font-family:var(--font-mono);" id="dmmPrice">¥1,800</div><div style="font-size:10px;color:var(--accent-text);">→ レンタル</div></div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E9%98%B2%E6%8C%AF+%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">Amazon — 防振双眼鏡</div><div style="font-size:11px;color:var(--muted);" id="amazonBinoText">ニコン スポーツスター 6×15</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:16px;font-family:var(--font-mono);" id="amazonBinoPrice">¥9,800</div><div style="font-size:10px;color:var(--accent-text);">→ 購入</div></div></a>
     </div>
   </div>
 </section>
 
-<!-- ═══ PACKING ════════════════════════════════ -->
+<!-- PACKING -->
+
 <section id="pack" aria-labelledby="packTitle">
   <div class="section-header">
-    <div class="section-label">03 / パッキング</div>
+    <div class="section-num">03 / パッキング</div>
     <span class="pill">PACKING</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 6px;" id="packTitle">持ち物チェック</h2>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">タップでチェック。未チェック項目のリンクが表示されます。</p>
-
+  <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">タップでチェック。未チェック項目のAmazonリンクが表示されます。</p>
   <div class="progress-row">
     <div class="progress-bar-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="packProgressEl">
       <div class="progress-fill" id="packProgress" style="width:0%;"></div>
     </div>
     <span class="progress-count" id="packCount">0 / 0</span>
   </div>
-
   <div class="pack-tab-bar" role="tablist" aria-label="カテゴリ">
     <button class="pack-tab active" role="tab" aria-selected="true" id="tabEssential" onclick="switchPackTab('essential')">ESSENTIAL</button>
     <button class="pack-tab" role="tab" aria-selected="false" id="tabWeather" onclick="switchPackTab('weather')">WEATHER</button>
     <button class="pack-tab" role="tab" aria-selected="false" id="tabGoods" onclick="switchPackTab('goods')">GOODS</button>
     <button class="pack-tab" role="tab" aria-selected="false" id="tabRecovery" onclick="switchPackTab('recovery')">RECOVERY</button>
   </div>
-
   <div id="packList" role="list" aria-label="持ち物リスト"></div>
-
   <div id="celebrationMsg" class="hidden" style="text-align:center;padding:32px 0;" aria-live="polite">
-    <div style="font-size:28px;margin-bottom:8px;" aria-hidden="true">✦</div>
+    <div style="font-size:28px;margin-bottom:8px;color:var(--accent);" aria-hidden="true">✦</div>
     <div style="font-family:var(--font-serif);font-size:16px;letter-spacing:0.1em;margin-bottom:4px;">準備完了</div>
     <div style="font-size:12px;color:var(--muted);">全アイテムのチェックが完了しました</div>
   </div>
 </section>
 
-<!-- ═══ ROUTE ══════════════════════════════════ -->
+<!-- ROUTE -->
+
 <section id="route" aria-labelledby="routeTitle">
   <div class="section-header">
-    <div class="section-label">04 / 路線図</div>
+    <div class="section-num">04 / 路線図</div>
     <span class="pill">ROUTE</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 6px;" id="routeTitle">勝てる宿泊エリアマップ</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">会場と「泊まるべき3駅」だけのシンプルな路線図</p>
-
   <div class="map-container">
     <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:480px;max-width:600px;display:block;margin:0 auto;" role="img" aria-label="さいたまスーパーアリーナ周辺の宿泊エリアマップ">
       <title>宿泊エリアルートマップ</title>
-      <line x1="40" y1="130" x2="560" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
-      <line x1="300" y1="130" x2="300" y2="220" stroke="#C4C4BC" stroke-width="1" stroke-dasharray="4,3"/>
-      <circle cx="90" cy="130" r="8" fill="white" stroke="#1a1a1a" stroke-width="1.5"/>
-      <text x="90" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP, sans-serif" fill="#1a1a1a">赤羽</text>
-      <text x="90" y="100" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#909088">始発確保</text>
-      <circle cx="210" cy="130" r="5" fill="white" stroke="#C4C4BC" stroke-width="1"/>
-      <text x="210" y="112" text-anchor="middle" font-size="10" font-family="Noto Sans JP, sans-serif" fill="#C4C4BC">浦和</text>
-      <rect x="271" y="112" width="58" height="28" rx="3" fill="#1a1a1a"/>
-      <text x="300" y="130" text-anchor="middle" font-size="10" font-family="Noto Sans JP, sans-serif" fill="white" font-weight="500">新都心</text>
-      <text x="300" y="158" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#909088">VENUE</text>
-      <circle cx="400" cy="130" r="8" fill="white" stroke="#1a1a1a" stroke-width="1.5"/>
-      <text x="400" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP, sans-serif" fill="#1a1a1a">大宮</text>
-      <text x="400" y="100" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#909088">王道エリア</text>
-      <circle cx="510" cy="130" r="8" fill="white" stroke-width="1.8" id="mapAccentCircle" stroke="#E8547A"/>
-      <text x="510" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP, sans-serif" fill="#1a1a1a">川口</text>
-      <text x="510" y="100" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" id="mapAccentLabel" fill="#E8547A">穴場</text>
-      <circle cx="300" cy="220" r="5" fill="white" stroke="#C4C4BC" stroke-width="1"/>
-      <text x="300" y="242" text-anchor="middle" font-size="10" font-family="Noto Sans JP, sans-serif" fill="#C4C4BC">浦和美園</text>
-      <text x="300" y="254" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#C4C4BC">逆走ルート</text>
-      <text x="150" y="145" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#C4C4BC">25min</text>
-      <text x="350" y="145" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#C4C4BC">5min</text>
-      <text x="455" y="145" text-anchor="middle" font-size="9" font-family="DM Mono, monospace" fill="#C4C4BC">12min</text>
-      <line x1="30" y1="14" x2="52" y2="14" stroke="#1a1a1a" stroke-width="1.5"/>
-      <text x="58" y="18" font-size="9" font-family="DM Mono, monospace" fill="#909088">メイン路線</text>
-      <line x1="150" y1="14" x2="172" y2="14" stroke="#C4C4BC" stroke-width="1" stroke-dasharray="4,3"/>
-      <text x="178" y="18" font-size="9" font-family="DM Mono, monospace" fill="#909088">支線</text>
-      <circle cx="268" cy="14" r="4.5" fill="white" stroke-width="1.5" id="mapLegendDot" stroke="#E8547A"/>
-      <text x="278" y="18" font-size="9" font-family="DM Mono, monospace" fill="#909088">穴場エリア</text>
+      <line x1="40" y1="130" x2="560" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="300" y1="130" x2="300" y2="220" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,3"/>
+      <circle cx="90" cy="130" r="8" fill="#13131f" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <text x="90" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">赤羽</text>
+      <text x="90" y="100" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.4)">始発確保</text>
+      <circle cx="210" cy="130" r="5" fill="#13131f" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="210" y="112" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.3)">浦和</text>
+      <rect x="271" y="112" width="58" height="28" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="0.5"/>
+      <text x="300" y="130" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.9)">新都心</text>
+      <text x="300" y="158" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.4)">VENUE</text>
+      <circle cx="400" cy="130" r="8" fill="#13131f" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <text x="400" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">大宮</text>
+      <text x="400" y="100" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.4)">王道エリア</text>
+      <circle cx="510" cy="130" r="8" fill="#13131f" stroke-width="1.8" id="mapAccentCircle" stroke="#E8547A"/>
+      <text x="510" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">川口</text>
+      <text x="510" y="100" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" id="mapAccentLabel" fill="#E8547A">穴場</text>
+      <circle cx="300" cy="220" r="5" fill="#13131f" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="300" y="242" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.3)">浦和美園</text>
+      <text x="300" y="254" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.25)">逆走ルート</text>
+      <text x="150" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">25min</text>
+      <text x="350" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">5min</text>
+      <text x="455" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">12min</text>
     </svg>
   </div>
-  <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.8;">※ さいたまスーパーアリーナ開催時の参考図です。会場変更時は路線を確認ください。</p>
+  <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.8;">※ さいたまスーパーアリーナ開催時の参考図です。</p>
 </section>
 
-<!-- ═══ GOODS ══════════════════════════════════ -->
+<!-- GOODS -->
+
 <section aria-labelledby="goodsTitle">
   <div class="section-header">
-    <div class="section-label">05 / 遠征グッズ</div>
+    <div class="section-num">05 / 遠征グッズ</div>
     <span class="pill">GOODS</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 24px;" id="goodsTitle">オタクに刺さるアイテム</h2>
   <div style="display:grid;gap:8px;">
-    <a href="https://www.amazon.co.jp/s?k=%E3%82%B3%E3%83%B3%E3%83%97%E3%83%AC%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3+%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9" target="_blank" rel="nofollow noopener" class="aff-card">
-      <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">ライブ後のむくみ解消ソックス</div><div style="font-size:11px;color:var(--muted);">段階圧迫・クルーソックス。帰りの電車で既に回復。</div></div>
-      <div style="font-size:10px;color:var(--accent);flex-shrink:0;">Amazon →</div>
-    </a>
-    <a href="https://www.amazon.co.jp/s?k=%E6%8E%A8%E3%81%97%E8%89%B2+%E5%85%89%E3%82%8B+%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC" target="_blank" rel="nofollow noopener" class="aff-card">
-      <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">推し色に光るモバイルバッテリー</div><div style="font-size:11px;color:var(--muted);">RGBライト搭載・推し色に変更できる10000mAh。</div></div>
-      <div style="font-size:10px;color:var(--accent);flex-shrink:0;">Amazon →</div>
-    </a>
-    <a href="https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3+%E9%81%A0%E5%BE%81" target="_blank" rel="nofollow noopener" class="aff-card">
-      <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">遠征用ネッククッション</div><div style="font-size:11px;color:var(--muted);">夜行バス・新幹線の睡眠質が全然違う。</div></div>
-      <div style="font-size:10px;color:var(--accent);flex-shrink:0;">Amazon →</div>
-    </a>
-    <a href="https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4+%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B" target="_blank" rel="nofollow noopener" class="aff-card">
-      <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">ヘアスタイル撥水スプレー</div><div style="font-size:11px;color:var(--muted);">突然の雨でも推し様に会う髪型を守る。</div></div>
-      <div style="font-size:10px;color:var(--accent);flex-shrink:0;">Amazon →</div>
-    </a>
+    <a href="https://www.amazon.co.jp/s?k=%E3%82%B3%E3%83%B3%E3%83%97%E3%83%AC%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3+%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">ライブ後のむくみ解消ソックス</div><div style="font-size:11px;color:var(--muted);">段階圧迫・クルーソックス。帰りの電車で既に回復。</div></div><div style="font-size:10px;color:var(--accent-text);flex-shrink:0;">Amazon →</div></a>
+    <a href="https://www.amazon.co.jp/s?k=%E6%8E%A8%E3%81%97%E8%89%B2+%E5%85%89%E3%82%8B+%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">推し色に光るモバイルバッテリー</div><div style="font-size:11px;color:var(--muted);">RGBライト搭載・推し色に変更できる10000mAh。</div></div><div style="font-size:10px;color:var(--accent-text);flex-shrink:0;">Amazon →</div></a>
+    <a href="https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3+%E9%81%A0%E5%BE%81" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">遠征用ネッククッション</div><div style="font-size:11px;color:var(--muted);">夜行バス・新幹線の睡眠質が全然違う。</div></div><div style="font-size:10px;color:var(--accent-text);flex-shrink:0;">Amazon →</div></a>
+    <a href="https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4+%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B" target="_blank" rel="nofollow noopener" class="aff-card"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">ヘアスタイル撥水スプレー</div><div style="font-size:11px;color:var(--muted);">突然の雨でも推し様に会う髪型を守る。</div></div><div style="font-size:10px;color:var(--accent-text);flex-shrink:0;">Amazon →</div></a>
   </div>
 </section>
 
-<!-- ═══ SHARE ═══════════════════════════════════ -->
+<!-- SHARE -->
+
 <section id="share" aria-labelledby="shareTitle">
   <div class="section-header">
-    <div class="section-label">06 / シェア</div>
+    <div class="section-num">06 / シェア</div>
     <span class="pill">SHARE</span>
   </div>
   <h2 style="font-size:22px;margin:6px 0 6px;" id="shareTitle">遠征プランを共有する</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:28px;">チェック状態を保ったまま友人に共有できます</p>
-
   <div class="summary-card" aria-label="遠征サマリー">
     <div class="section-label" style="margin-bottom:14px;">EXPEDITION SUMMARY</div>
     <div class="summary-row"><span class="summary-key">会場</span><span style="font-weight:500;" id="summaryVenue">さいたまスーパーアリーナ</span></div>
     <div class="summary-row"><span class="summary-key">予算</span><span style="font-family:var(--font-mono);" id="summaryBudget">¥50,000</span></div>
-    <div class="summary-row">
-      <span class="summary-key">推し色</span>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:13px;height:13px;border-radius:50%;background:var(--accent);" id="summaryColorDot"></div>
-        <span id="summaryColorName">ピンク</span>
-      </div>
-    </div>
+    <div class="summary-row"><span class="summary-key">推し色</span><div style="display:flex;align-items:center;gap:8px;"><div style="width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);" id="summaryColorDot"></div><span id="summaryColorName">ピンク</span></div></div>
     <div class="summary-row"><span class="summary-key">パック完了</span><span style="font-family:var(--font-mono);" id="summaryPack">0%</span></div>
   </div>
-
   <div class="btn-group">
     <button class="share-btn accent" onclick="shareToX()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -686,25 +572,22 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
     <button class="share-btn" onclick="copyShareURL()">URLをコピー</button>
     <button class="share-btn" onclick="copyText()">テキストコピー</button>
   </div>
-
   <div class="url-share-wrap" id="urlShareWrap" style="display:none;">
     <div class="url-display" id="urlDisplay" title="クリックして全選択"></div>
   </div>
 </section>
 
-</div><!-- /container -->
-</main>
+</div></main>
 
 <div class="container">
   <footer>
     <div class="footer-inner">
-      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--muted);">V-MAP © 2024</span>
-      <span style="font-size:11px;color:var(--muted2);">本サイトはアフィリエイトリンクを含みます</span>
+      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--muted);">ENSEI PASS © 2025</span>
+      <span style="font-size:11px;color:var(--muted2);">準備さえも、推し事になる。</span>
     </div>
   </footer>
 </div>
 
-<!-- BOTTOM NAV (mobile) -->
 <nav class="bottom-nav" aria-label="ボトムナビゲーション">
   <a href="#hotel" class="bnav-item" onclick="activateBnav(this)">
     <div class="bnav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
@@ -730,386 +613,354 @@ footer{padding:32px 0;border-top:0.5px solid var(--line);margin-top:40px;}
 </nav>
 
 <script>
-/* ═══ STATE ══════════════════════════════════ */
-const state = {
-  accentColor:'#E8547A', accentText:'#b03058', accentLight:'#fde8ef',
-  colorName:'ピンク', venue:'さいたまスーパーアリーナ', budget:50000,
-  seat:'ss', venueType:'arena', hotelStatus:'early', packTab:'essential',
-  checks:{}
-};
+/* ═══ VENUE DB ═══════════════════════════════ */
+const VENUES = [
+  {name:'さいたまスーパーアリーナ',aliases:['SSA','さいたまアリーナ','さいたま','スーパーアリーナ','saitama'],type:'arena',cap:'37,000',area:'埼玉・さいたま市',note:'大宮徒歩10分',chips:[{type:'alert',icon:'⚠',label:'埋もれ注意（前方）'},{type:'silver',icon:'✦',label:'銀テ飛距離大'},{type:'trolley',icon:'🎪',label:'トロッコ近接（下段）'}]},
+  {name:'東京ドーム',aliases:['東ドー','ドーム','TokyoDome','TDC','とうきょうどーむ'],type:'dome',cap:'55,000',area:'東京・文京区',note:'水道橋徒歩5分',chips:[{type:'alert',icon:'⚠',label:'埋もれ注意（全域）'},{type:'silver',icon:'✦',label:'銀テ飛距離MAX'},{type:'view',icon:'👁',label:'スタンド上段は全体見やすい'}]},
+  {name:'横浜アリーナ',aliases:['横アリ','ヨコアリ','YA','よこあり'],type:'arena',cap:'17,000',area:'神奈川・横浜市',note:'新横浜徒歩5分',chips:[{type:'good',icon:'✦',label:'銀テ届きやすい'},{type:'trolley',icon:'🎪',label:'トロッコ全席近い'}]},
+  {name:'国立代々木競技場',aliases:['代々木','よよこん','代々木競技場','代々木体育館'],type:'hall',cap:'13,000',area:'東京・渋谷区',note:'原宿・千駄ヶ谷徒歩8分',chips:[{type:'view',icon:'👁',label:'全席ステージ近め'},{type:'silver',icon:'✦',label:'銀テ飛距離小'}]},
+  {name:'京セラドーム大阪',aliases:['京セラ','大阪ドーム','きょうせら'],type:'dome',cap:'55,000',area:'大阪・西区',note:'ドーム前千代崎徒歩3分',chips:[{type:'alert',icon:'⚠',label:'埋もれ注意（全域）'},{type:'silver',icon:'✦',label:'銀テ飛距離大'}]},
+  {name:'マリンメッセ福岡',aliases:['マリメ','マリンメッセ','福岡','福岡アリーナ'],type:'arena',cap:'15,000',area:'福岡・博多区',note:'ベイサイドプレイス近く',chips:[{type:'good',icon:'✦',label:'銀テ届きやすい'},{type:'trolley',icon:'🎪',label:'トロッコ近接'}]},
+  {name:'日本ガイシホール',aliases:['ガイシ','ガイシホール','名古屋','名古屋レインボーホール'],type:'arena',cap:'10,000',area:'愛知・名古屋市',note:'笠寺駅徒歩3分',chips:[{type:'view',icon:'👁',label:'コンパクトで全席神席'},{type:'silver',icon:'✦',label:'銀テ届く確率高'}]},
+  {name:'幕張メッセ',aliases:['幕メ','幕張','まくはり'],type:'outdoor',cap:'30,000',area:'千葉・幕張市',note:'海浜幕張徒歩5分',chips:[{type:'alert',icon:'⚠',label:'野外 雨対策必須'},{type:'alert',icon:'⚠',label:'フェス配置は埋もれ注意'}]},
+  {name:'大阪城ホール',aliases:['城ホ','大阪城','おおさかじょう'],type:'arena',cap:'16,000',area:'大阪・中央区',note:'大阪城公園駅徒歩8分',chips:[{type:'good',icon:'✦',label:'銀テ届きやすい'},{type:'trolley',icon:'🎪',label:'トロッコ定番ルート'}]},
+  {name:'Zepp Tokyo',aliases:['Zepp','ゼップ','ぜっぷ'],type:'hall',cap:'2,700',area:'東京・江東区',note:'青海駅すぐ',chips:[{type:'view',icon:'👁',label:'全席神席レベル'}]},
+];
 
-/* ═══ ACCENT COLOR ════════════════════════════
-   Auto-contrast: luminance check ensures
-   --accent-text always has 4.5:1+ ratio on white
-═════════════════════════════════════════════ */
-function setAccent(el) {
-  document.querySelectorAll('.color-swatch').forEach(s => {
-    s.classList.remove('active'); s.setAttribute('aria-checked','false');
-  });
-  el.classList.add('active'); el.setAttribute('aria-checked','true');
-
-  const {color, name, text, light} = el.dataset;
-  Object.assign(state, {accentColor:color, accentText:text, accentLight:light, colorName:name});
-
-  const r = document.documentElement;
-  r.style.setProperty('--accent', color);
-  r.style.setProperty('--accent-text', text);
-  r.style.setProperty('--accent-light', light);
-
-  // Update SVG map accent
-  ['mapAccentCircle','mapLegendDot'].forEach(id => {
-    const el2 = document.getElementById(id);
-    if(el2) el2.setAttribute('stroke', color);
-  });
-  const lbl = document.getElementById('mapAccentLabel');
-  if(lbl) lbl.setAttribute('fill', color);
-
-  document.getElementById('summaryColorName').textContent = name;
-  document.getElementById('summaryColorDot').style.background = color;
-  updateShareURL();
+function fuzzySearch(q){
+  if(!q.trim()) return [];
+  const query=q.toLowerCase().replace(/\s/g,'');
+  return VENUES.filter(v=>{
+    const hay=[v.name,...v.aliases].map(s=>s.toLowerCase().replace(/\s/g,'')).join(' ');
+    if(hay.includes(query)) return true;
+    let idx=0;
+    for(const ch of query){const f=hay.indexOf(ch,idx);if(f===-1)return false;idx=f+1;}
+    return true;
+  }).slice(0,6);
 }
 
-/* ═══ VENUE QUICK LINKS ═══════════════════════
-   Auto-generates Google Maps search buttons
-   for every venue name typed
-═════════════════════════════════════════════ */
-function buildVenueLinks(venue) {
+/* ═══ STATE ══════════════════════════════════ */
+const state={
+  accentColor:'#E8547A',accentText:'#ffd6e3',accentRgb:'232,84,122',
+  accentLight:'rgba(232,84,122,0.12)',auraA:'#E8547A',auraB:'#b03058',
+  colorName:'ピンク',venue:'さいたまスーパーアリーナ',budget:50000,
+  seat:'ss',venueType:'arena',hotelStatus:'early',packTab:'essential',
+  checks:{},selectedVenueData:VENUES[0]
+};
+
+function saveState(){
+  try{localStorage.setItem('enseipass_v1',JSON.stringify({
+    accentColor:state.accentColor,accentRgb:state.accentRgb,accentText:state.accentText,
+    accentLight:state.accentLight,auraA:state.auraA,auraB:state.auraB,
+    colorName:state.colorName,venue:state.venue,budget:state.budget,checks:state.checks
+  }));}catch(e){}
+}
+
+function loadState(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('enseipass_v1')||'null');
+    if(!saved) return;
+    Object.assign(state,saved);
+    applyAccent(state.accentColor,state.accentRgb,state.accentText,state.accentLight,state.colorName,state.auraA,state.auraB,true);
+    document.getElementById('venueInput').value=state.venue;
+    document.getElementById('budgetInput').value=state.budget;
+    onBudgetChange();
+    updateSummaryVenue();
+    const found=VENUES.find(v=>v.name===state.venue);
+    if(found){state.selectedVenueData=found;renderVenueInfo(found);}
+    buildVenueLinks(state.venue);
+  }catch(e){}
+}
+
+/* ═══ ACCENT COLOR ════════════════════════════ */
+function setAccent(el){
+  document.querySelectorAll('.color-swatch').forEach(s=>{s.classList.remove('active');s.setAttribute('aria-checked','false');});
+  el.classList.add('active');el.setAttribute('aria-checked','true');
+  const{color,name,text,light,rgb,auraA,auraB}=el.dataset;
+  applyAccent(color,rgb,text,light,name,auraA,auraB,false);
+  saveState();
+}
+
+function applyAccent(color,rgb,text,light,name,auraA,auraB,restoreSwatch){
+  Object.assign(state,{accentColor:color,accentText:text,accentRgb:rgb,accentLight:light,colorName:name,auraA,auraB});
+  const r=document.documentElement;
+  r.style.setProperty('--accent',color);r.style.setProperty('--accent-rgb',rgb);
+  r.style.setProperty('--accent-text',text);r.style.setProperty('--accent-light',light);
+  r.style.setProperty('--aura-a',auraA);r.style.setProperty('--aura-b',auraB);
+  if(restoreSwatch){
+    document.querySelectorAll('.color-swatch').forEach(s=>{
+      const m=s.dataset.color===color&&s.dataset.name===name;
+      s.classList.toggle('active',m);s.setAttribute('aria-checked',m?'true':'false');
+    });
+  }
+  const mc=document.getElementById('mapAccentCircle');if(mc)mc.setAttribute('stroke',color);
+  const ml=document.getElementById('mapAccentLabel');if(ml)ml.setAttribute('fill',color);
+  document.getElementById('summaryColorName').textContent=name;
+  const dot=document.getElementById('summaryColorDot');
+  dot.style.background=color;dot.style.boxShadow='0 0 6px '+color;
+}
+
+/* ═══ VENUE SEARCH ════════════════════════════ */
+let venueBlurTimer=null;
+function onVenueInput(){const q=document.getElementById('venueInput').value;state.venue=q;updateSummaryVenue();buildVenueLinks(q);showVenueDropdown(q);saveState();}
+function onVenueFocus(){showVenueDropdown(document.getElementById('venueInput').value);}
+function onVenueBlur(){venueBlurTimer=setTimeout(()=>document.getElementById('venueDropdown').classList.add('hidden'),180);}
+
+function showVenueDropdown(q){
+  const dd=document.getElementById('venueDropdown');
+  if(!q.trim()){dd.classList.add('hidden');return;}
+  const res=fuzzySearch(q);
+  if(res.length===0){dd.innerHTML=`<div class="venue-dropdown-empty">「${q}」に一致する会場が見つかりません</div>`;dd.classList.remove('hidden');return;}
+  const typeLabel={dome:'🏟 ドーム',arena:'🎪 アリーナ',hall:'🎵 ホール',outdoor:'🌿 野外'};
+  dd.innerHTML=res.map(v=>`<div class="venue-dropdown-item" onmousedown="selectVenue('${v.name.replace(/'/g,"\\'")}')"><span class="venue-name">${v.name}</span><span class="venue-meta">${typeLabel[v.type]||''} · ${v.area} · ${v.cap}人</span></div>`).join('');
+  dd.classList.remove('hidden');
+}
+
+function selectVenue(name){
+  clearTimeout(venueBlurTimer);
+  document.getElementById('venueInput').value=name;
+  document.getElementById('venueDropdown').classList.add('hidden');
+  state.venue=name;updateSummaryVenue();buildVenueLinks(name);
+  const found=VENUES.find(v=>v.name===name);
+  if(found){state.selectedVenueData=found;renderVenueInfo(found);}
+  saveState();showToastMsg('✦ '+name+' を選択しました');
+}
+
+function renderVenueInfo(v){
+  const p=document.getElementById('venueInfoPanel');
+  const typeLabel={dome:'ドーム',arena:'アリーナ',hall:'ホール',outdoor:'野外'};
+  p.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="font-size:13px;font-weight:500;">${v.name}</div><span class="pill">${v.cap}人収容</span></div><div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-bottom:10px;">${v.area} · ${v.note} · ${typeLabel[v.type]||''}</div><div class="venue-chips">${(v.chips||[]).map(c=>`<span class="venue-chip ${c.type}">${c.icon} ${c.label}</span>`).join('')}</div>`;
+}
+
+function buildVenueLinks(venue){
   if(!venue.trim()) return;
-  const queries = [
-    {label:'コインロッカー', q:`${venue} コインロッカー`},
-    {label:'コンビニ',       q:`${venue} コンビニ`},
-    {label:'駐車場',         q:`${venue} 駐車場`},
-    {label:'アクセス',       q:`${venue} 最寄り駅`},
-  ];
-  const c = document.getElementById('venueLinks');
-  c.innerHTML = '';
-  queries.forEach(({label, q}) => {
-    const a = document.createElement('a');
-    a.className = 'venue-link-btn';
-    a.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
-    a.target = '_blank'; a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', `${venue}の${label}をGoogleマップで検索`);
-    a.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>${label}`;
+  const queries=[{label:'コインロッカー',q:`${venue} コインロッカー`},{label:'コンビニ',q:`${venue} コンビニ`},{label:'駐車場',q:`${venue} 駐車場`},{label:'アクセス',q:`${venue} 最寄り駅`}];
+  const c=document.getElementById('venueLinks');c.innerHTML='';
+  queries.forEach(({label,q})=>{
+    const a=document.createElement('a');a.className='venue-link-btn';
+    a.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    a.target='_blank';a.rel='noopener noreferrer';
+    a.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>${label}`;
     c.appendChild(a);
   });
 }
 
+function updateSummaryVenue(){document.getElementById('summaryVenue').textContent=state.venue;}
+
 /* ═══ HOTEL ══════════════════════════════════ */
-function setHotelStatus(s) {
-  const early = s === 'early';
-  document.getElementById('hotelEarly').classList.toggle('hidden', !early);
-  document.getElementById('hotelLast').classList.toggle('hidden', early);
-  document.getElementById('btnEarly').classList.toggle('active', early);
-  document.getElementById('btnLast').classList.toggle('active', !early);
-  document.getElementById('btnEarly').setAttribute('aria-pressed', early);
-  document.getElementById('btnLast').setAttribute('aria-pressed', !early);
-  if(!early) {
-    const el = document.getElementById('hotelLast');
-    el.classList.remove('hidden');
-    void el.offsetWidth; // reflow to restart animation
-    el.classList.add('fade-in');
-  }
-  state.hotelStatus = s;
+function setHotelStatus(s){
+  const early=s==='early';
+  document.getElementById('hotelEarly').classList.toggle('hidden',!early);
+  document.getElementById('hotelLast').classList.toggle('hidden',early);
+  document.getElementById('btnEarly').classList.toggle('active',early);
+  document.getElementById('btnLast').classList.toggle('active',!early);
+  document.getElementById('btnEarly').setAttribute('aria-pressed',early);
+  document.getElementById('btnLast').setAttribute('aria-pressed',!early);
+  state.hotelStatus=s;
 }
 
-/* ═══ BINOCULARS ══════════════════════════════ */
-const binoData = {
+/* ═══ BINOCULARS + CONCIERGE ════════════════ */
+const binoData={
   dome:{
-    ss:        {mag:'8×', dist:'15m',  note:'防振タイプ推奨',       view:'表情がっつり見える',  prog:15, dmmText:'防振 ケンコー 8×30',    dmmPrice:'¥1,800', amText:'ケンコー SE8×21',         amPrice:'¥14,800'},
-    arena:     {mag:'10×',dist:'30m',  note:'防振があると安定',      view:'全身＋表情が見える',  prog:35, dmmText:'防振 ニコン 10×30',    dmmPrice:'¥2,200', amText:'ニコン モナーク 10×42',    amPrice:'¥38,500'},
-    stand_low: {mag:'10×',dist:'50m',  note:'防振必須・手ブレ注意',  view:'全身が見える',        prog:55, dmmText:'防振 ニコン 12×32',    dmmPrice:'¥2,400', amText:'コーワ紫陽 12×32',         amPrice:'¥54,780'},
-    stand_high:{mag:'12×',dist:'80m',  note:'防振タイプ強く推奨',    view:'ステージ全体が見える',prog:75, dmmText:'防振 ビクセン 12×50',   dmmPrice:'¥2,800', amText:'キャノン IS 12×36',        amPrice:'¥68,000'},
-    back:      {mag:'16×',dist:'120m', note:'三脚付き防振が理想',    view:'ステージ概要のみ',    prog:90, dmmText:'防振 キャノン 15×50',  dmmPrice:'¥3,500', amText:'キャノン IS 15×50',        amPrice:'¥98,000'}
+    ss:{mag:'8×',dist:'15m',note:'防振タイプ推奨',view:'表情がっつり見える',prog:15,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥1,800',amText:'ケンコー SE8×21',amPrice:'¥14,800'},
+    arena:{mag:'10×',dist:'30m',note:'防振があると安定',view:'全身＋表情が見える',prog:35,dmmText:'防振 ニコン 10×30',dmmPrice:'¥2,200',amText:'ニコン モナーク 10×42',amPrice:'¥38,500'},
+    stand_low:{mag:'10×',dist:'50m',note:'防振必須・手ブレ注意',view:'全身が見える',prog:55,dmmText:'防振 ニコン 12×32',dmmPrice:'¥2,400',amText:'コーワ紫陽 12×32',amPrice:'¥54,780'},
+    stand_high:{mag:'12×',dist:'80m',note:'防振タイプ強く推奨',view:'ステージ全体が見える',prog:75,dmmText:'防振 ビクセン 12×50',dmmPrice:'¥2,800',amText:'キャノン IS 12×36',amPrice:'¥68,000'},
+    back:{mag:'16×',dist:'120m',note:'三脚付き防振が理想',view:'ステージ概要のみ',prog:90,dmmText:'防振 キャノン 15×50',dmmPrice:'¥3,500',amText:'キャノン IS 15×50',amPrice:'¥98,000'}
   },
   arena:{
-    ss:        {mag:'6×', dist:'20m',  note:'手ブレしにくく初心者にも◎',view:'顔のアップが見える', prog:20,dmmText:'防振 ケンコー 8×30', dmmPrice:'¥1,800', amText:'ニコン スポーツスター 6×15',amPrice:'¥9,800'},
-    arena:     {mag:'8×', dist:'35m',  note:'定番のバランス倍率',    view:'上半身が見える',       prog:38,dmmText:'防振 ケンコー 8×30', dmmPrice:'¥2,000', amText:'ニコン モナーク 8×42',     amPrice:'¥34,200'},
-    stand_low: {mag:'10×',dist:'60m',  note:'防振があると安定',       view:'全身が見える',         prog:55,dmmText:'防振 ニコン 10×30', dmmPrice:'¥2,200', amText:'ニコン モナーク 10×42',    amPrice:'¥38,500'},
-    stand_high:{mag:'12×',dist:'90m',  note:'防振タイプ強く推奨',     view:'ステージ全体が見える', prog:80,dmmText:'防振 ニコン 12×32', dmmPrice:'¥2,600', amText:'コーワ紫陽 12×32',         amPrice:'¥54,780'},
-    back:      {mag:'12×',dist:'100m', note:'防振必須',               view:'ステージ概要のみ',     prog:88,dmmText:'防振 ビクセン 12×50',dmmPrice:'¥2,800',amText:'コーワ紫陽 12×32',          amPrice:'¥54,780'}
+    ss:{mag:'6×',dist:'20m',note:'手ブレしにくく初心者にも◎',view:'顔のアップが見える',prog:20,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥1,800',amText:'ニコン スポーツスター 6×15',amPrice:'¥9,800'},
+    arena:{mag:'8×',dist:'35m',note:'定番のバランス倍率',view:'上半身が見える',prog:38,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥2,000',amText:'ニコン モナーク 8×42',amPrice:'¥34,200'},
+    stand_low:{mag:'10×',dist:'60m',note:'防振があると安定',view:'全身が見える',prog:55,dmmText:'防振 ニコン 10×30',dmmPrice:'¥2,200',amText:'ニコン モナーク 10×42',amPrice:'¥38,500'},
+    stand_high:{mag:'12×',dist:'90m',note:'防振タイプ強く推奨',view:'ステージ全体が見える',prog:80,dmmText:'防振 ニコン 12×32',dmmPrice:'¥2,600',amText:'コーワ紫陽 12×32',amPrice:'¥54,780'},
+    back:{mag:'12×',dist:'100m',note:'防振必須',view:'ステージ概要のみ',prog:88,dmmText:'防振 ビクセン 12×50',dmmPrice:'¥2,800',amText:'コーワ紫陽 12×32',amPrice:'¥54,780'}
   },
   hall:{
-    ss:        {mag:'4×', dist:'8m',   note:'裸眼でも見えるが感動',  view:'毛穴まで見える',      prog:8,  dmmText:'ニコン 4×10 超小型',  dmmPrice:'¥1,200', amText:'ニコン ポロプリズム 4×10',amPrice:'¥5,800'},
-    arena:     {mag:'6×', dist:'15m',  note:'軽量タイプで十分',      view:'顔のアップが見える',  prog:18, dmmText:'ケンコー 6×21',       dmmPrice:'¥1,500', amText:'ニコン スポーツスター 6×15',amPrice:'¥9,800'},
-    stand_low: {mag:'8×', dist:'25m',  note:'この倍率から防振を検討', view:'上半身が見える',      prog:30, dmmText:'防振 ケンコー 8×30',  dmmPrice:'¥1,800', amText:'ニコン モナーク 8×42',    amPrice:'¥34,200'},
-    stand_high:{mag:'8×', dist:'40m',  note:'防振推奨',              view:'全身が見える',         prog:50, dmmText:'防振 ケンコー 8×30',  dmmPrice:'¥2,000', amText:'ニコン モナーク 8×42',    amPrice:'¥34,200'},
-    back:      {mag:'10×',dist:'55m',  note:'防振あると安定',        view:'全身が見える',          prog:65, dmmText:'防振 ニコン 10×30',  dmmPrice:'¥2,200', amText:'ニコン モナーク 10×42',   amPrice:'¥38,500'}
+    ss:{mag:'4×',dist:'8m',note:'裸眼でも見えるが感動',view:'毛穴まで見える',prog:8,dmmText:'ニコン 4×10 超小型',dmmPrice:'¥1,200',amText:'ニコン ポロプリズム 4×10',amPrice:'¥5,800'},
+    arena:{mag:'6×',dist:'15m',note:'軽量タイプで十分',view:'顔のアップが見える',prog:18,dmmText:'ケンコー 6×21',dmmPrice:'¥1,500',amText:'ニコン スポーツスター 6×15',amPrice:'¥9,800'},
+    stand_low:{mag:'8×',dist:'25m',note:'この倍率から防振を検討',view:'上半身が見える',prog:30,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥1,800',amText:'ニコン モナーク 8×42',amPrice:'¥34,200'},
+    stand_high:{mag:'8×',dist:'40m',note:'防振推奨',view:'全身が見える',prog:50,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥2,000',amText:'ニコン モナーク 8×42',amPrice:'¥34,200'},
+    back:{mag:'10×',dist:'55m',note:'防振あると安定',view:'全身が見える',prog:65,dmmText:'防振 ニコン 10×30',dmmPrice:'¥2,200',amText:'ニコン モナーク 10×42',amPrice:'¥38,500'}
   },
   outdoor:{
-    ss:        {mag:'8×', dist:'25m',  note:'明るい環境なので視野重視',view:'上半身が見える',     prog:25, dmmText:'防振 ケンコー 8×30',  dmmPrice:'¥2,000', amText:'ニコン モナーク 8×42',    amPrice:'¥34,200'},
-    arena:     {mag:'10×',dist:'60m',  note:'防振があると安定',       view:'全身が見える',         prog:55, dmmText:'防振 ニコン 10×30',  dmmPrice:'¥2,200', amText:'ニコン モナーク 10×42',   amPrice:'¥38,500'},
-    stand_low: {mag:'12×',dist:'100m', note:'防振タイプ強く推奨',     view:'ステージ全体が見える', prog:78, dmmText:'防振 ニコン 12×32',  dmmPrice:'¥2,600', amText:'コーワ紫陽 12×32',        amPrice:'¥54,780'},
-    stand_high:{mag:'16×',dist:'150m', note:'三脚付き推奨',           view:'ステージ概要のみ',     prog:90, dmmText:'防振 キャノン 15×50',dmmPrice:'¥3,500', amText:'キャノン IS 15×50',       amPrice:'¥98,000'},
-    back:      {mag:'16×',dist:'200m', note:'スタビライザー必須',     view:'ステージのみ確認可',   prog:95, dmmText:'防振 キャノン 15×50',dmmPrice:'¥3,800', amText:'キャノン IS 15×50',       amPrice:'¥98,000'}
+    ss:{mag:'8×',dist:'25m',note:'明るい環境なので視野重視',view:'上半身が見える',prog:25,dmmText:'防振 ケンコー 8×30',dmmPrice:'¥2,000',amText:'ニコン モナーク 8×42',amPrice:'¥34,200'},
+    arena:{mag:'10×',dist:'60m',note:'防振があると安定',view:'全身が見える',prog:55,dmmText:'防振 ニコン 10×30',dmmPrice:'¥2,200',amText:'ニコン モナーク 10×42',amPrice:'¥38,500'},
+    stand_low:{mag:'12×',dist:'100m',note:'防振タイプ強く推奨',view:'ステージ全体が見える',prog:78,dmmText:'防振 ニコン 12×32',dmmPrice:'¥2,600',amText:'コーワ紫陽 12×32',amPrice:'¥54,780'},
+    stand_high:{mag:'16×',dist:'150m',note:'三脚付き推奨',view:'ステージ概要のみ',prog:90,dmmText:'防振 キャノン 15×50',dmmPrice:'¥3,500',amText:'キャノン IS 15×50',amPrice:'¥98,000'},
+    back:{mag:'16×',dist:'200m',note:'スタビライザー必須',view:'ステージのみ確認可',prog:95,dmmText:'防振 キャノン 15×50',dmmPrice:'¥3,800',amText:'キャノン IS 15×50',amPrice:'¥98,000'}
   }
 };
 
-function selectSeat(btn, seat) {
-  document.querySelectorAll('.seat-btn').forEach(b => {
-    b.classList.remove('selected'); b.setAttribute('aria-pressed','false');
-  });
-  btn.classList.add('selected'); btn.setAttribute('aria-pressed','true');
-  state.seat = seat;
-  updateBino();
+const conciergeData={
+  ss:{dome:[{type:'alert',icon:'⚠',label:'埋もれ注意'},{type:'silver',icon:'✦',label:'銀テ最前線'},{type:'view',icon:'👁',label:'表情まる見え'}],arena:[{type:'alert',icon:'⚠',label:'埋もれ注意'},{type:'silver',icon:'✦',label:'銀テ期待大'},{type:'trolley',icon:'🎪',label:'トロッコ最近接'}],hall:[{type:'view',icon:'👁',label:'神席確定'},{type:'silver',icon:'✦',label:'銀テ直撃エリア'}],outdoor:[{type:'alert',icon:'⚠',label:'日焼け注意'},{type:'view',icon:'👁',label:'表情よく見える'}]},
+  arena:{dome:[{type:'alert',icon:'⚠',label:'埋もれ注意'},{type:'silver',icon:'✦',label:'銀テ届く可能性'},{type:'trolley',icon:'🎪',label:'トロッコルート注目'}],arena:[{type:'silver',icon:'✦',label:'銀テ期待'},{type:'trolley',icon:'🎪',label:'トロッコ近接'}],hall:[{type:'view',icon:'👁',label:'近距離で見やすい'}],outdoor:[{type:'alert',icon:'⚠',label:'人込み注意'}]},
+  stand_low:{dome:[{type:'trolley',icon:'🎪',label:'トロッコ最近接'},{type:'silver',icon:'✦',label:'銀テ届く範囲'}],arena:[{type:'trolley',icon:'🎪',label:'トロッコ近接'},{type:'view',icon:'👁',label:'全体見やすい'}],hall:[{type:'view',icon:'👁',label:'見やすい角度'}],outdoor:[{type:'view',icon:'👁',label:'全体が見渡せる'}]},
+  stand_high:{dome:[{type:'view',icon:'👁',label:'ステージ全体見える'},{type:'alert',icon:'⚠',label:'高所注意'}],arena:[{type:'view',icon:'👁',label:'全体演出わかる'},{type:'alert',icon:'⚠',label:'双眼鏡必須'}],hall:[{type:'view',icon:'👁',label:'ステージ全体見える'}],outdoor:[{type:'view',icon:'👁',label:'全体が見渡せる'}]},
+  back:{dome:[{type:'alert',icon:'⚠',label:'双眼鏡必須'},{type:'view',icon:'👁',label:'演出全体は楽しめる'}],arena:[{type:'alert',icon:'⚠',label:'双眼鏡必須'}],hall:[{type:'alert',icon:'⚠',label:'双眼鏡あると◎'}],outdoor:[{type:'alert',icon:'⚠',label:'双眼鏡必須'}]}
+};
+
+function selectSeat(btn,seat){
+  document.querySelectorAll('.seat-btn').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});
+  btn.classList.add('selected');btn.setAttribute('aria-pressed','true');
+  state.seat=seat;updateBino();
 }
 
-function updateBino() {
-  state.venueType = document.getElementById('venueType').value;
-  const d = binoData[state.venueType][state.seat];
-  document.getElementById('binoMag').textContent      = d.mag;
-  document.getElementById('binoDistance').textContent = d.dist;
-  document.getElementById('binoNote').textContent     = d.note;
-  document.getElementById('binoView').textContent     = d.view;
-  document.getElementById('stageBarFill').style.width = d.prog + '%';
-  document.getElementById('stageCursor').style.left   = d.prog + '%';
-  document.getElementById('dmmText').textContent         = d.dmmText;
-  document.getElementById('dmmPrice').textContent        = d.dmmPrice;
-  document.getElementById('amazonBinoText').textContent  = d.amText;
-  document.getElementById('amazonBinoPrice').textContent = d.amPrice;
+function renderConcierge(){
+  const strip=document.getElementById('conciergeStrip');
+  const chips=(conciergeData[state.seat]||{})[state.venueType]||[];
+  strip.innerHTML=chips.map(c=>`<span class="concierge-chip ${c.type}">${c.icon} ${c.label}</span>`).join('');
+}
+
+function updateBino(){
+  state.venueType=document.getElementById('venueType').value;
+  const d=binoData[state.venueType][state.seat];
+  document.getElementById('binoMag').textContent=d.mag;
+  document.getElementById('binoDistance').textContent=d.dist;
+  document.getElementById('binoNote').textContent=d.note;
+  document.getElementById('binoView').textContent=d.view;
+  document.getElementById('stageBarFill').style.width=d.prog+'%';
+  document.getElementById('stageCursor').style.left=d.prog+'%';
+  document.getElementById('dmmText').textContent=d.dmmText;
+  document.getElementById('dmmPrice').textContent=d.dmmPrice;
+  document.getElementById('amazonBinoText').textContent=d.amText;
+  document.getElementById('amazonBinoPrice').textContent=d.amPrice;
+  renderConcierge();
 }
 
 /* ═══ PACKING ════════════════════════════════ */
-const packItems = {
+const packItems={
   essential:[
-    {id:'ticket',    label:'チケット（紙/電子）',        link:null},
-    {id:'id',        label:'身分証明書',                  link:null},
-    {id:'wallet',    label:'財布・交通系ICカード',        link:null},
-    {id:'phone',     label:'スマートフォン',              link:null},
-    {id:'battery',   label:'モバイルバッテリー',          link:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},
-    {id:'cable',     label:'充電ケーブル',                link:'https://www.amazon.co.jp/s?k=USB%E5%85%85%E9%9B%BB%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB'},
-    {id:'earphones', label:'イヤホン（移動中用）',        link:'https://www.amazon.co.jp/s?k=%E3%83%AF%E3%82%A4%E3%83%A4%E3%83%AC%E3%82%B9%E3%82%A4%E3%83%A4%E3%83%9B%E3%83%B3'},
+    {id:'ticket',label:'チケット（紙/電子）',link:null},
+    {id:'id',label:'身分証明書',link:null},
+    {id:'wallet',label:'財布・交通系ICカード',link:null},
+    {id:'phone',label:'スマートフォン',link:null},
+    {id:'battery',label:'モバイルバッテリー',link:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},
+    {id:'cable',label:'充電ケーブル',link:'https://www.amazon.co.jp/s?k=USB%E5%85%85%E9%9B%BB%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB'},
+    {id:'earphones',label:'イヤホン（移動中用）',link:'https://www.amazon.co.jp/s?k=%E3%83%AF%E3%82%A4%E3%83%A4%E3%83%AC%E3%82%B9%E3%82%A4%E3%83%A4%E3%83%9B%E3%83%B3'},
   ],
   weather:[
-    {id:'umbrella',  label:'折りたたみ傘',                link:'https://www.amazon.co.jp/s?k=%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF%E5%82%98+%E8%BB%BD%E9%87%8F'},
-    {id:'raincoat',  label:'レインコート（野外用）',      link:'https://www.amazon.co.jp/s?k=%E3%83%AC%E3%82%A4%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%88+%E3%83%9D%E3%83%B3%E3%83%81%E3%83%A7'},
-    {id:'sunscreen', label:'日焼け止め',                  link:'https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81+SPF50'},
-    {id:'handwarmer',label:'カイロ（冬季）',              link:'https://www.amazon.co.jp/s?k=%E3%82%AB%E3%82%A4%E3%83%AD+%E8%B2%BC%E3%82%8B%E3%82%BF%E3%82%A4%E3%83%97'},
-    {id:'fan',       label:'ハンディファン（夏季）',      link:'https://www.amazon.co.jp/s?k=%E3%83%8F%E3%83%B3%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%B3'},
+    {id:'umbrella',label:'折りたたみ傘',link:'https://www.amazon.co.jp/s?k=%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF%E5%82%98'},
+    {id:'raincoat',label:'レインコート（野外用）',link:'https://www.amazon.co.jp/s?k=%E3%83%AC%E3%82%A4%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%88'},
+    {id:'sunscreen',label:'日焼け止め',link:'https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81+SPF50'},
+    {id:'handwarmer',label:'カイロ（冬季）',link:'https://www.amazon.co.jp/s?k=%E3%82%AB%E3%82%A4%E3%83%AD'},
+    {id:'fan',label:'ハンディファン（夏季）',link:'https://www.amazon.co.jp/s?k=%E3%83%8F%E3%83%B3%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%B3'},
   ],
   goods:[
-    {id:'penlight',  label:'ペンライト',                  link:'https://www.amazon.co.jp/s?k=%E3%83%9A%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%88+%E3%83%A9%E3%82%A4%E3%83%96'},
-    {id:'uchiwa',    label:'うちわ',                      link:null},
-    {id:'bino_item', label:'双眼鏡',                      link:'https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1'},
-    {id:'bag',       label:'遠征用バッグ',                link:'https://www.amazon.co.jp/s?k=%E3%83%88%E3%83%BC%E3%83%88%E3%83%90%E3%83%83%E3%82%B0+%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF'},
-    {id:'battery_aa',label:'予備電池（AA）',              link:'https://www.amazon.co.jp/s?k=%E5%8D%983%E9%9B%BB%E6%B1%A0+%E3%82%A2%E3%83%AB%E3%82%AB%E3%83%AA'},
+    {id:'penlight',label:'ペンライト',link:'https://www.amazon.co.jp/s?k=%E3%83%9A%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%88+%E3%83%A9%E3%82%A4%E3%83%96'},
+    {id:'uchiwa',label:'うちわ',link:null},
+    {id:'bino_item',label:'双眼鏡',link:'https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1'},
+    {id:'bag',label:'遠征用バッグ',link:'https://www.amazon.co.jp/s?k=%E3%83%88%E3%83%BC%E3%83%88%E3%83%90%E3%83%83%E3%82%B0'},
+    {id:'battery_aa',label:'予備電池（AA）',link:'https://www.amazon.co.jp/s?k=%E5%8D%983%E9%9B%BB%E6%B1%A0'},
   ],
   recovery:[
-    {id:'socks',     label:'着圧ソックス（むくみ対策）',  link:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},
-    {id:'insole',    label:'衝撃吸収インソール',          link:'https://www.amazon.co.jp/s?k=%E3%82%A4%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB+%E8%A1%9D%E6%92%83%E5%90%B8%E5%8F%8E'},
-    {id:'throat',    label:'のど飴（声出し対策）',        link:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'},
-    {id:'ibuprofen', label:'頭痛薬・鎮痛剤',              link:'https://www.amazon.co.jp/s?k=%E9%A0%AD%E7%97%9B%E8%96%AC'},
-    {id:'neck',      label:'ネッククッション（夜行バス）', link:'https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3'},
+    {id:'socks',label:'着圧ソックス（むくみ対策）',link:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},
+    {id:'insole',label:'衝撃吸収インソール',link:'https://www.amazon.co.jp/s?k=%E3%82%A4%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB'},
+    {id:'throat',label:'のど飴（声出し対策）',link:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'},
+    {id:'ibuprofen',label:'頭痛薬・鎮痛剤',link:'https://www.amazon.co.jp/s?k=%E9%A0%AD%E7%97%9B%E8%96%AC'},
+    {id:'neck',label:'ネッククッション（夜行バス）',link:'https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3'},
   ]
 };
 
-function renderPackList() {
-  const items = packItems[state.packTab];
-  const c = document.getElementById('packList');
-  c.innerHTML = '';
-  items.forEach(item => {
-    const checked = state.checks[item.id] || false;
-    const div = document.createElement('div');
-    div.className = 'check-item' + (checked ? ' checked' : '');
-    div.id = 'row_' + item.id;
-    div.setAttribute('role','listitem');
-    div.innerHTML = `
-      <input type="checkbox" id="chk_${item.id}" ${checked?'checked':''} 
-             onchange="toggleCheck('${item.id}',this)" aria-label="${item.label}">
-      <label class="check-label" for="chk_${item.id}">${item.label}</label>
-      ${item.link ? `<a href="${item.link}" target="_blank" rel="nofollow noopener" class="amazon-link" onclick="event.stopPropagation()" aria-label="${item.label}をAmazonで検索">Amazon</a>` : ''}
-    `;
+function renderPackList(){
+  const items=packItems[state.packTab];
+  const c=document.getElementById('packList');c.innerHTML='';
+  items.forEach(item=>{
+    const checked=state.checks[item.id]||false;
+    const div=document.createElement('div');
+    div.className='check-item'+(checked?' checked':'');
+    div.id='row_'+item.id;div.setAttribute('role','listitem');
+    div.innerHTML=`<input type="checkbox" id="chk_${item.id}" ${checked?'checked':''} onchange="toggleCheck('${item.id}',this)" aria-label="${item.label}"><label class="check-label" for="chk_${item.id}">${item.label}</label>${item.link?`<a href="${item.link}" target="_blank" rel="nofollow noopener" class="amazon-link" onclick="event.stopPropagation()" aria-label="${item.label}をAmazonで検索">Amazon</a>`:''}`;
     c.appendChild(div);
   });
   updatePackProgress();
 }
 
-function toggleCheck(id, el) {
-  state.checks[id] = el.checked;
-  const row = document.getElementById('row_' + id);
-  row.classList.toggle('checked', el.checked);
-  if(el.checked) {
-    row.style.transition = 'transform 0.18s var(--ease-spring)';
-    row.style.transform = 'translateX(4px)';
-    setTimeout(() => { row.style.transform = ''; }, 220);
-  }
-  updatePackProgress();
-  updateShareURL();
+function toggleCheck(id,el){
+  state.checks[id]=el.checked;
+  const row=document.getElementById('row_'+id);
+  row.classList.toggle('checked',el.checked);
+  if(el.checked){row.style.transition='transform 0.18s var(--ease-spring)';row.style.transform='translateX(4px)';setTimeout(()=>{row.style.transform='';},220);}
+  updatePackProgress();saveState();
 }
 
-let lastPct = 0;
-function updatePackProgress() {
-  const all   = Object.values(packItems).flat();
-  const total = all.length;
-  const done  = all.filter(i => state.checks[i.id]).length;
-  const pct   = total ? Math.round(done / total * 100) : 0;
-
-  document.getElementById('packProgress').style.width = pct + '%';
-  document.getElementById('packCount').textContent    = done + ' / ' + total;
-  document.getElementById('summaryPack').textContent  = pct + '%';
-
-  const el = document.getElementById('packProgressEl');
-  if(el) el.setAttribute('aria-valuenow', pct);
-
-  const dot = document.getElementById('bnavDotPack');
-  if(dot) dot.classList.toggle('show', pct > 0 && pct < 100);
-
-  if(pct === 100 && lastPct < 100) {
-    const list = document.getElementById('packList');
-    list.classList.add('celebrate');
+let lastPct=0;
+function updatePackProgress(){
+  const all=Object.values(packItems).flat();
+  const total=all.length;const done=all.filter(i=>state.checks[i.id]).length;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('packProgress').style.width=pct+'%';
+  document.getElementById('packCount').textContent=done+' / '+total;
+  document.getElementById('summaryPack').textContent=pct+'%';
+  const el=document.getElementById('packProgressEl');if(el)el.setAttribute('aria-valuenow',pct);
+  const dot=document.getElementById('bnavDotPack');if(dot)dot.classList.toggle('show',pct>0&&pct<100);
+  if(pct===100&&lastPct<100){
+    const list=document.getElementById('packList');list.classList.add('celebrate');
     document.getElementById('celebrationMsg').classList.remove('hidden');
-    showToastMsg('✦ 全アイテム準備完了！');
-    setTimeout(() => list.classList.remove('celebrate'), 600);
-  } else if(pct < 100) {
-    document.getElementById('celebrationMsg').classList.add('hidden');
-  }
-  lastPct = pct;
+    showToastMsg('✦ 全アイテム準備完了！遠征ファイト！');
+    setTimeout(()=>list.classList.remove('celebrate'),600);
+  }else if(pct<100){document.getElementById('celebrationMsg').classList.add('hidden');}
+  lastPct=pct;
 }
 
-function switchPackTab(tab) {
-  state.packTab = tab;
-  ['essential','weather','goods','recovery'].forEach(t => {
-    const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
-    el.classList.toggle('active', t === tab);
-    el.setAttribute('aria-selected', t === tab);
+function switchPackTab(tab){
+  state.packTab=tab;
+  ['essential','weather','goods','recovery'].forEach(t=>{
+    const el=document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
+    el.classList.toggle('active',t===tab);el.setAttribute('aria-selected',t===tab);
   });
   renderPackList();
 }
 
-/* ═══ URL STATE SHARING ═══════════════════════
-   Encodes checks + venue + budget + color
-   into URL params — shareable with friends
-═════════════════════════════════════════════ */
-function encodeState() {
-  const checks = Object.entries(state.checks).filter(([,v])=>v).map(([k])=>k).join(',');
-  return new URLSearchParams({
-    v:  state.venue,
-    b:  state.budget,
-    c:  state.accentColor.replace('#',''),
-    cn: state.colorName,
-    ct: state.accentText.replace('#',''),
-    cl: state.accentLight.replace('#',''),
-    ch: checks
-  }).toString();
+/* ═══ BUDGET ════════════════════════════════ */
+function onBudgetChange(){
+  state.budget=parseInt(document.getElementById('budgetInput').value)||0;
+  document.getElementById('summaryBudget').textContent='¥'+state.budget.toLocaleString();
+  saveState();
 }
 
-function decodeState() {
-  const p = new URLSearchParams(location.search);
-  if(p.has('v')) {
-    const v = p.get('v');
-    document.getElementById('venueInput').value = v;
-    state.venue = v;
-    document.getElementById('summaryVenue').textContent = v;
-    buildVenueLinks(v);
-  }
-  if(p.has('b')) {
-    const b = parseInt(p.get('b')) || 0;
-    document.getElementById('budgetInput').value = b;
-    state.budget = b;
-    document.getElementById('summaryBudget').textContent = '¥' + b.toLocaleString();
-  }
-  if(p.has('c') && p.has('cn')) {
-    // Synthetic element to reuse setAccent logic
-    const s = document.querySelector(`.color-swatch[data-color="#${p.get('c')}"]`);
-    if(s) { setAccent(s); }
-    else {
-      // Custom color not in presets — apply directly
-      const r = document.documentElement;
-      r.style.setProperty('--accent', '#'+p.get('c'));
-      r.style.setProperty('--accent-text', '#'+(p.get('ct')||'b03058'));
-      r.style.setProperty('--accent-light', '#'+(p.get('cl')||'fde8ef'));
-      state.colorName = p.get('cn');
-      document.getElementById('summaryColorName').textContent = state.colorName;
-    }
-  }
-  if(p.has('ch') && p.get('ch')) {
-    p.get('ch').split(',').filter(Boolean).forEach(id => { state.checks[id] = true; });
-  }
-  renderPackList();
+/* ═══ SHARING ═══════════════════════════════ */
+function encodeState(){
+  const checks=Object.entries(state.checks).filter(([,v])=>v).map(([k])=>k).join(',');
+  return new URLSearchParams({v:state.venue,b:state.budget,c:state.accentColor.replace('#',''),cn:state.colorName,ct:state.accentText.replace('#',''),cl:state.accentLight,ch:checks}).toString();
+}
+function getShareURL(){return location.origin+location.pathname+'?'+encodeState();}
+function shareToX(){
+  const text=`【遠征計画】${state.venue} / 予算¥${state.budget.toLocaleString()} #遠征 #EnseiPass`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(getShareURL())}`,'_blank');
+}
+function copyShareURL(){
+  navigator.clipboard.writeText(getShareURL()).then(()=>showToastMsg('URLをコピーしました')).catch(()=>{
+    const w=document.getElementById('urlShareWrap');const d=document.getElementById('urlDisplay');
+    d.textContent=getShareURL();w.style.display='flex';
+  });
+}
+function copyText(){
+  const all=Object.values(packItems).flat();
+  const done=all.filter(i=>state.checks[i.id]).map(i=>'✓ '+i.label);
+  const todo=all.filter(i=>!state.checks[i.id]).map(i=>'□ '+i.label);
+  const text=[`【ENSEI PASS — 遠征計画】`,`会場：${state.venue}`,`予算：¥${state.budget.toLocaleString()}`,`推し色：${state.colorName}`,``,`【持ち物チェック】`,...done,...todo].join('\n');
+  navigator.clipboard.writeText(text).then(()=>showToastMsg('テキストをコピーしました'));
 }
 
-function updateShareURL() {
-  const url = location.origin + location.pathname + '?' + encodeState();
-  const d   = document.getElementById('urlDisplay');
-  const w   = document.getElementById('urlShareWrap');
-  if(d) d.textContent = url;
-  if(w) w.style.display = 'flex';
-}
+/* ═══ TOAST ═════════════════════════════════ */
+let toastTimer;
+function showToastMsg(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);}
 
-function copyShareURL() {
-  const url = location.origin + location.pathname + '?' + encodeState();
-  copyToClipboard(url);
-  showToastMsg('URLをコピーしました');
-}
+/* ═══ BOTTOM NAV ════════════════════════════ */
+function activateBnav(el){document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
 
-/* ═══ SHARE ══════════════════════════════════ */
-function getShareText() {
-  const all  = Object.values(packItems).flat();
-  const done = all.filter(i => state.checks[i.id]).length;
-  return `【${state.venue}】遠征プランを作成しました✨\n予算：¥${Number(state.budget).toLocaleString()} / 推し色：${state.colorName}\n荷造り進捗：${done}/${all.length}\n#V-MAP #遠征 #オタ活`;
-}
-function shareToX()  { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`, '_blank', 'noopener'); }
-function copyText()  { copyToClipboard(getShareText()); showToastMsg('テキストをコピーしました'); }
-
-/* ═══ UTILS ══════════════════════════════════ */
-function copyToClipboard(text) {
-  if(navigator.clipboard) { navigator.clipboard.writeText(text); return; }
-  const ta = document.createElement('textarea');
-  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); } catch(e) {}
-  document.body.removeChild(ta);
-}
-
-let _toastTimer;
-function showToastMsg(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
-}
-
-function activateBnav(el) {
-  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
-
-/* ═══ SCROLL SPY ═════════════════════════════ */
-function initScrollSpy() {
-  if(!('IntersectionObserver' in window)) return;
-  const ids = ['hotel','bino','pack','route','share'];
-  const navItems = document.querySelectorAll('.bnav-item');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        const id = e.target.id;
-        navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + id));
-      }
-    });
-  }, {rootMargin:'-40% 0px -40% 0px', threshold:0});
-  ids.forEach(id => { const el = document.getElementById(id); if(el) obs.observe(el); });
-}
-
-/* ═══ LIVE INPUT BINDINGS ════════════════════ */
-document.getElementById('venueInput').addEventListener('input', function() {
-  state.venue = this.value || '未入力';
-  document.getElementById('summaryVenue').textContent = state.venue;
-  buildVenueLinks(this.value);
-  updateShareURL();
-});
-document.getElementById('budgetInput').addEventListener('input', function() {
-  state.budget = parseInt(this.value) || 0;
-  document.getElementById('summaryBudget').textContent = '¥' + state.budget.toLocaleString();
-  updateShareURL();
-});
-
-/* ═══ INIT ═══════════════════════════════════ */
-(function() {
-  buildVenueLinks(state.venue);
-  decodeState();
+/* ═══ INIT ══════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  loadState();
   updateBino();
-  updateShareURL();
-  initScrollSpy();
-})();
+  renderPackList();
+  buildVenueLinks(state.venue);
+  // Default venue info
+  const defaultVenue=VENUES.find(v=>v.name===state.venue)||VENUES[0];
+  renderVenueInfo(defaultVenue);
+  updateSummaryVenue();
+});
 </script>
+
 </body>
 </html>
