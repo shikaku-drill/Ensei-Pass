@@ -1,0 +1,1206 @@
+bash
+
+cat > /home/claude/part2.html << 'HTMLEOF'
+<div class="aura-bg" aria-hidden="true">
+  <div class="ao ao-1"></div><div class="ao ao-2"></div><div class="ao ao-3"></div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<nav class="tn">
+  <a href="#" class="nl" onclick="switchTab('home');return false;"><div class="nd"></div>ENSEI PASS</a>
+  <span class="nb">COMPLETE</span>
+</nav>
+<div class="tw">
+<!-- ════ TAB: HOME ════ -->
+<div class="tp active" id="tp-home"><div class="ct">
+  <div class="hero">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:10px;letter-spacing:0.28em;color:var(--a);margin-bottom:20px;" class="s1"><span style="width:24px;height:0.5px;background:var(--a);display:block;"></span>ALL PHASES UNIFIED — COMPLETE EDITION</div>
+    <h1 class="het s2">推しに会いに<br>行くための地図</h1>
+    <p class="hes s3">交通・宿泊・天気・双眼鏡・パッキング・ストーリー生成<br>遠征マップ・戦闘力診断・復元コード。最終形態。</p>
+    <div class="htl s4">準備さえも、推し事になる</div>
+    <div style="margin-top:36px;" class="s4">
+      <div class="sl" style="margin-bottom:12px;">推し色 / Oshi Color</div>
+      <div class="cg" role="radiogroup">
+        <button class="cs active" data-color="#E8547A" data-name="ピンク" data-text="#ffd6e3" data-light="rgba(232,84,122,0.12)" data-rgb="232,84,122" data-aa="#E8547A" data-ab="#b03058" style="background:#E8547A" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#5B8CDB" data-name="ブルー" data-text="#c8dcff" data-light="rgba(91,140,219,0.12)" data-rgb="91,140,219" data-aa="#5B8CDB" data-ab="#1e4d9a" style="background:#5B8CDB" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#52C27A" data-name="グリーン" data-text="#b8f0cc" data-light="rgba(82,194,122,0.12)" data-rgb="82,194,122" data-aa="#52C27A" data-ab="#1a5e30" style="background:#52C27A" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#9B6AD4" data-name="パープル" data-text="#dcc8ff" data-light="rgba(155,106,212,0.12)" data-rgb="155,106,212" data-aa="#9B6AD4" data-ab="#5a2699" style="background:#9B6AD4" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#F0A020" data-name="オレンジ" data-text="#ffe0a0" data-light="rgba(240,160,32,0.12)" data-rgb="240,160,32" data-aa="#F0A020" data-ab="#7a4c00" style="background:#F0A020" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#3EC4D4" data-name="水色" data-text="#b0f0f8" data-light="rgba(62,196,212,0.12)" data-rgb="62,196,212" data-aa="#3EC4D4" data-ab="#12697a" style="background:#3EC4D4" onclick="setAccent(this)"></button>
+        <button class="cs" data-color="#FF6EB4" data-name="レインボー" data-text="#ffddee" data-light="rgba(255,110,180,0.12)" data-rgb="255,110,180" data-aa="#FF6EB4" data-ab="#9B6AD4" style="background:linear-gradient(135deg,#e8547a,#9b6ad4,#3ec4d4)" onclick="setAccent(this)"></button>
+      </div>
+    </div>
+    <div class="ir s4">
+      <div>
+        <div class="sl" style="margin-bottom:8px;">遠征予算</div>
+        <div class="gi">
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <span style="font-size:18px;font-family:var(--fm);color:var(--mt);">¥</span>
+            <input class="bui" id="budgetInput" type="number" inputmode="numeric" value="50000" min="0" step="1000" oninput="onBudgetChange()">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sl" style="margin-bottom:8px;display:flex;align-items:center;gap:8px;">会場名 <span style="color:var(--a);font-size:9px;">あいまい検索</span></div>
+        <div class="gi vwr">
+          <input class="vni" id="venueInput" type="text" value="さいたまスーパーアリーナ" placeholder="会場名・略称で検索…" autocomplete="off" oninput="onVI()" onfocus="onVF()" onblur="onVB()">
+          <div class="vdd hidden" id="vdd" role="listbox"></div>
+        </div>
+        <div id="vip" class="vip" style="margin-top:10px;"></div>
+        <div class="vls" id="vls" role="group"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sb2">
+    <div class="sh"><div class="sn">遠征サマリー</div><span class="pill">SUMMARY</span></div>
+    <div class="sm" style="margin-bottom:12px;">
+      <div class="smr"><span style="color:var(--mt);">会場</span><span style="font-weight:500;" id="smV">さいたまスーパーアリーナ</span></div>
+      <div class="smr"><span style="color:var(--mt);">予算</span><span style="font-family:var(--fm);" id="smB">¥50,000</span></div>
+      <div class="smr"><span style="color:var(--mt);">推し色</span><div style="display:flex;align-items:center;gap:8px;"><div style="width:13px;height:13px;border-radius:50%;background:var(--a);box-shadow:0 0 6px var(--a);" id="smCD"></div><span id="smCN">ピンク</span></div></div>
+      <div class="smr"><span style="color:var(--mt);">パック完了</span><span style="font-family:var(--fm);" id="smP">0%</span></div>
+      <div class="smr"><span style="color:var(--mt);">戦闘力</span><span style="font-family:var(--fm);color:var(--a);" id="smPW">未診断</span></div>
+      <div class="smr"><span style="color:var(--mt);">コレクション</span><span style="font-family:var(--fm);" id="smC">0枚</span></div>
+      <div class="smr"><span style="color:var(--mt);">遠征記録</span><span style="font-family:var(--fm);" id="smT">0回</span></div>
+    </div>
+    <div class="bg">
+      <button class="shb ac" onclick="shareToX()"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Xにポスト</button>
+      <button class="shb" onclick="copyShareURL()">URLをコピー</button>
+      <button class="shb" onclick="copyText()">テキストコピー</button>
+    </div>
+    <div class="ur" id="urlWrap" style="display:none;"><div class="ud" id="urlDisplay"></div></div>
+  </div>
+  <footer><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span>
+    <span style="font-size:11px;color:var(--mt2);">準備さえも、推し事になる。</span>
+  </div></footer>
+</div></div>
+<!-- ════ TAB: GO (交通・宿泊・天気) ════ -->
+<div class="tp" id="tp-go"><div class="ct">
+  <div class="sb2" style="border-top:none;padding-top:28px;">
+    <div class="sh"><div class="sn">天気連携</div><span class="pill nw">LIVE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">当日の天気を確認する</h2>
+    <div class="wdi">
+      <label for="wDate">遠征日</label>
+      <input type="date" id="wDate" oninput="fetchWeather()">
+      <button onclick="fetchWeather()" style="padding:6px 14px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;border:0.5px solid rgba(var(--ar),0.4);border-radius:6px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">取得</button>
+    </div>
+    <div id="wPanel"><div style="padding:28px;text-align:center;color:var(--mt);font-size:13px;">遠征日を選択して天気を取得してください</div></div>
+  </div>
+  <div class="sb2">
+    <div class="sh"><div class="sn">交通ナビ</div><span class="pill">TRANSPORT</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">どうやって行くか</h2>
+    <div class="sl" style="margin-bottom:10px;">出発地 〜 会場の距離</div>
+    <div class="dsl" id="distBtns">
+      <button class="db" onclick="selDist(this,'near')">〜100km<br><span style="font-size:9px;color:var(--mt);">関東近郊</span></button>
+      <button class="db sel" onclick="selDist(this,'mid')">100〜400km<br><span style="font-size:9px;color:var(--mt);">東海・関西</span></button>
+      <button class="db" onclick="selDist(this,'far')">400km〜<br><span style="font-size:9px;color:var(--mt);">九州・北海道</span></button>
+    </div>
+    <div class="ttbs">
+      <button class="ttb active" id="tShin" onclick="swTrans('shinkansen')">新幹線</button>
+      <button class="ttb" id="tBus" onclick="swTrans('bus')">高速バス</button>
+      <button class="ttb" id="tFli" onclick="swTrans('flight')">航空券</button>
+      <button class="ttb" id="tNbt" onclick="swTrans('nightbus')">夜行バス</button>
+    </div>
+    <div id="tPanel"></div>
+    <div class="card" style="margin-top:14px;">
+      <div class="sl" style="margin-bottom:10px;">予算内訳シミュレーター</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="bkd"></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--bd);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--mt);">合計推定</span>
+        <span style="font-size:22px;font-family:var(--fm);" id="bTotal">¥—</span>
+      </div>
+    </div>
+  </div>
+  <div class="sb2">
+    <div class="sh"><div class="sn">宿泊ナビ</div><span class="pill">HOTEL</span></div>
+    <h2 style="font-size:22px;margin:6px 0 20px;">どこに泊まるか</h2>
+    <div class="seg">
+      <button class="sgb active" id="btnE" onclick="setHotel('early')">発表直後</button>
+      <button class="sgb" id="btnL" onclick="setHotel('last')">開催直前</button>
+    </div>
+    <div id="hEarly" class="fi">
+      <div class="sl" style="margin-bottom:12px;">会場周辺 王道ホテル</div>
+      <div class="cg2">
+        <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_no1=1" target="_blank" rel="nofollow noopener" class="hcrd"><div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ホテルメトロポリタン さいたま新都心</div><div style="font-size:12px;color:var(--mt);">SSAまで徒歩3分</div><div style="font-size:10px;margin-top:5px;color:var(--mt2);font-family:var(--fm);">楽天トラベル</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--fm);color:var(--mt);">FROM</div><div style="font-size:19px;font-family:var(--fm);">¥12,000</div><div style="font-size:10px;color:var(--at);margin-top:3px;">→ 予約する</div></div></div></div></a>
+        <a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_no1=2" target="_blank" rel="nofollow noopener" class="hcrd"><div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ヴィアイン さいたま新都心</div><div style="font-size:12px;color:var(--mt);">徒歩5分・コスパ最強</div><div style="font-size:10px;margin-top:5px;color:var(--mt2);font-family:var(--fm);">楽天トラベル</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--fm);color:var(--mt);">FROM</div><div style="font-size:19px;font-family:var(--fm);">¥8,500</div><div style="font-size:10px;color:var(--at);margin-top:3px;">→ 予約する</div></div></div></div></a>
+        <a href="https://www.jalan.net/yad372918/" target="_blank" rel="nofollow noopener" class="hcrd"><div class="card"><div style="display:flex;justify-content:space-between;align-items:start;gap:16px;"><div><div style="font-size:14px;font-weight:500;margin-bottom:3px;">ドーミーイン大宮</div><div style="font-size:12px;color:var(--mt);">大浴場あり・電車5分</div><div style="font-size:10px;margin-top:5px;color:var(--mt2);font-family:var(--fm);">じゃらん</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--fm);color:var(--mt);">FROM</div><div style="font-size:19px;font-family:var(--fm);">¥7,800</div><div style="font-size:10px;color:var(--at);margin-top:3px;">→ 予約する</div></div></div></div></a>
+      </div>
+    </div>
+    <div id="hLast" class="hidden fi">
+      <div class="sl" style="margin-bottom:12px;">穴場エリア戦略</div>
+      <div class="cg2">
+        <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;"><div><span class="ab">AREA 01</span><div style="font-size:15px;font-weight:500;">赤羽・王子エリア</div></div><span class="pill">始発確保</span></div><p style="font-size:12px;color:var(--mt);line-height:1.85;margin:0 0 10px;">京浜東北線始発。さいたま新都心まで25分。競合少なく料金安定。</p><a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E8%B5%A4%E7%BE%BD" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--fm);color:var(--at);text-decoration:none;">→ このエリアで検索</a></div>
+        <div class="card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;"><div><span class="ab">AREA 02</span><div style="font-size:15px;font-weight:500;">川口・浦和美園エリア</div></div><span class="pill">逆走ルート</span></div><p style="font-size:12px;color:var(--mt);line-height:1.85;margin:0 0 10px;">帰りに混雑する大宮と逆走。価格が半額以下になることも。</p><a href="https://affiliate.travel.rakuten.co.jp/mounts/htmls/hotel/?f_area=kanto&f_keyword=%E5%B7%9D%E5%8F%A3" target="_blank" rel="nofollow noopener" style="font-size:11px;font-family:var(--fm);color:var(--at);text-decoration:none;">→ このエリアで検索</a></div>
+        <div class="card"><div class="sl" style="margin-bottom:8px;">夜行バス — 宿泊費0円戦略</div><a href="https://www.bushikaku.net/" target="_blank" rel="nofollow noopener" class="shb" style="font-size:11px;">→ 夜行バスを比較する</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="sb2">
+    <div class="sh"><div class="sn">路線図</div><span class="pill">ROUTE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">勝てる宿泊エリアマップ</h2>
+    <div class="mpw" style="background:var(--sf);">
+      <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:480px;max-width:600px;display:block;margin:0 auto;" role="img">
+        <line x1="40" y1="130" x2="560" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <line x1="300" y1="130" x2="300" y2="220" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="90" cy="130" r="8" fill="#13131f" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        <text x="90" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">赤羽</text>
+        <text x="90" y="100" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.4)">始発確保</text>
+        <circle cx="210" cy="130" r="5" fill="#13131f" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="210" y="112" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.3)">浦和</text>
+        <rect x="271" y="112" width="58" height="28" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="0.5"/>
+        <text x="300" y="130" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.9)">新都心</text>
+        <text x="300" y="158" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.4)">VENUE</text>
+        <circle cx="400" cy="130" r="8" fill="#13131f" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        <text x="400" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">大宮</text>
+        <circle cx="510" cy="130" r="8" fill="#13131f" stroke-width="1.8" id="rtA" stroke="#E8547A"/>
+        <text x="510" y="112" text-anchor="middle" font-size="11" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.8)">川口</text>
+        <text x="510" y="100" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="#E8547A" id="rtL">穴場</text>
+        <circle cx="300" cy="220" r="5" fill="#13131f" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="300" y="242" text-anchor="middle" font-size="10" font-family="Noto Sans JP,sans-serif" fill="rgba(255,255,255,0.3)">浦和美園</text>
+        <text x="150" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">25min</text>
+        <text x="350" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">5min</text>
+        <text x="455" y="145" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="rgba(255,255,255,0.3)">12min</text>
+      </svg>
+    </div>
+  </div>
+  <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
+</div></div>
+<!-- ════ TAB: LIVE (双眼鏡・参戦服・アフターグロウ) ════ -->
+<div class="tp" id="tp-live"><div class="ct">
+  <div class="sb2" style="border-top:none;padding-top:28px;">
+    <div class="sh"><div class="sn">双眼鏡ナビ</div><span class="pill">BINOCULARS</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">どこから見るか</h2>
+    <div style="margin-bottom:18px;"><div class="sl" style="margin-bottom:8px;">会場タイプ</div>
+    <select class="mn" id="vType" onchange="updBino()">
+      <option value="dome">ドーム（東京ドーム等）</option>
+      <option value="arena" selected>アリーナ（さいたまSSA等）</option>
+      <option value="hall">ホール（中小会場）</option>
+      <option value="outdoor">野外フェス・スタジアム</option>
+    </select></div>
+    <div class="sl" style="margin-bottom:8px;">座席エリア</div>
+    <div class="sg" id="seatBtns">
+      <button class="sbt sel" onclick="selSeat(this,'ss')">SS席（前方）</button>
+      <button class="sbt" onclick="selSeat(this,'arena')">アリーナ</button>
+      <button class="sbt" onclick="selSeat(this,'stand_low')">スタンド下段</button>
+      <button class="sbt" onclick="selSeat(this,'stand_high')">スタンド上段</button>
+      <button class="sbt" onclick="selSeat(this,'back')">バック</button>
+    </div>
+    <div class="cst2" id="concierge" aria-live="polite"></div>
+    <div class="bpn">
+      <div class="bmg">
+        <div><div class="sl" style="margin-bottom:5px;">推奨倍率</div><div class="bvl" id="bMag">6×</div><div class="bnote" id="bNote">手ブレしにくく初心者にも◎</div></div>
+        <div><div class="sl" style="margin-bottom:5px;">推定距離</div><div class="bvl" id="bDist">20m</div><div class="bnote" id="bView">顔のアップが見える</div></div>
+      </div>
+      <div class="sbw">
+        <div class="sbl"><span>STAGE</span><span>あなたの席</span><span>後方</span></div>
+        <div class="sbr"><div class="sf3" id="sFill" style="width:20%;"></div><div class="scu" id="sCur" style="left:20%;"></div></div>
+      </div>
+      <div class="sl" style="margin-bottom:10px;">レンタル・購入</div>
+      <div style="display:grid;gap:8px;">
+        <a href="https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="afc"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">DMMレンタル — 双眼鏡</div><div style="font-size:11px;color:var(--mt);" id="dmmT">防振 ケンコー 8×30</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:16px;font-family:var(--fm);" id="dmmP">¥1,800</div><div style="font-size:10px;color:var(--at);">→ レンタル</div></div></a>
+        <a href="https://www.amazon.co.jp/s?k=%E9%98%B2%E6%8C%AF+%E5%8F%8C%E7%9C%BC%E9%8F%A1" target="_blank" rel="nofollow noopener" class="afc"><div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">Amazon — 防振双眼鏡</div><div style="font-size:11px;color:var(--mt);" id="amBT">ニコン スポーツスター</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:16px;font-family:var(--fm);" id="amBP">¥9,800</div><div style="font-size:10px;color:var(--at);">→ 購入</div></div></a>
+      </div>
+    </div>
+  </div>
+  <!-- 参戦服・美容 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">参戦服・美容</div><span class="pill">FASHION</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">推し色コーデで行く</h2>
+    <div class="sl" style="margin-bottom:12px;">参戦コーデ・テーマ</div>
+    <div class="fg" style="margin-bottom:20px;">
+      <a href="https://www.amazon.co.jp/s?k=%E5%A5%BD%E3%81%8D%E3%81%AA%E8%89%B2+%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9+%E3%83%A9%E3%82%A4%E3%83%96" target="_blank" rel="nofollow noopener" class="fc"><div style="font-size:22px;">👗</div><div style="font-size:13px;font-weight:500;">推し色ワンピース</div><div style="font-size:11px;color:var(--mt);line-height:1.6;">推し色に染まった会場でさらに存在感を放つ1着。</div><div style="font-size:10px;font-family:var(--fm);color:var(--at);">Amazon →</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E3%83%A9%E3%82%A4%E3%83%96+%E8%B5%B7%E3%81%8D%E3%82%84%E3%81%99%E3%81%84+%E3%82%B9%E3%83%8B%E3%83%BC%E3%82%AB%E3%83%BC" target="_blank" rel="nofollow noopener" class="fc"><div style="font-size:22px;">👟</div><div style="font-size:13px;font-weight:500;">ライブ特化スニーカー</div><div style="font-size:11px;color:var(--mt);line-height:1.6;">長時間立ちっぱなし前提の超クッション底。翌日の足ダメージが段違い。</div><div style="font-size:10px;font-family:var(--fm);color:var(--at);">Amazon →</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E3%83%A9%E3%82%A4%E3%83%96+%E3%83%9F%E3%83%8B%E3%82%B9%E3%82%AB+%E3%82%B3%E3%83%BC%E3%83%87" target="_blank" rel="nofollow noopener" class="fc"><div style="font-size:22px;">🩳</div><div style="font-size:13px;font-weight:500;">ライブ向けミニスカ</div><div style="font-size:11px;color:var(--mt);line-height:1.6;">動きやすく推し色チェックで会場を盛り上げる。</div><div style="font-size:10px;font-family:var(--fm);color:var(--at);">Amazon →</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E3%83%A9%E3%82%A4%E3%83%96+%E6%B4%BE+%E3%82%AD%E3%83%A3%E3%83%83%E3%83%97" target="_blank" rel="nofollow noopener" class="fc"><div style="font-size:22px;">🧢</div><div style="font-size:13px;font-weight:500;">推し色キャップ</div><div style="font-size:11px;color:var(--mt);line-height:1.6;">野外ライブ必須。UV対策と推し色を同時に叶える。</div><div style="font-size:10px;font-family:var(--fm);color:var(--at);">Amazon →</div></a>
+    </div>
+    <div class="sl" style="margin-bottom:12px;">当日ヘアメイク・スキンケア</div>
+    <div style="display:grid;gap:8px;">
+      <a href="https://www.amazon.co.jp/s?k=%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95+%E4%B8%8B%E5%9C%B0" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">💄</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">コンサートメイク下地</div><div style="font-size:11px;color:var(--mt);">汗・涙に強いウォータープルーフ。ライブ中も崩れない。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4+%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">✨</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">撥水ヘアスプレー</div><div style="font-size:11px;color:var(--mt);">雨の野外でも髪型キープ。前日から使用推奨。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">🧦</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">着圧ソックス（むくみ解消）</div><div style="font-size:11px;color:var(--mt);">帰りの電車で既に回復。段階圧迫クルーソックス。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
+    </div>
+  </div>
+  <!-- アフターグロウ -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">打ち上げ・お土産</div><span class="pill">AFTERGLOW</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">帰り道も、余韻で満たす</h2>
+    <div class="agtb">
+      <button class="agt active" id="agS" onclick="swAgl('souvenir')">🎁 お土産</button>
+      <button class="agt" id="agD" onclick="swAgl('dining')">🍜 打ち上げ</button>
+      <button class="agt" id="agR" onclick="swAgl('return')">🛤 帰路グッズ</button>
+    </div>
+    <div id="aglPanel"></div>
+  </div>
+  <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
+</div></div>
+<!-- ════ TAB: PACK (パッキング・ストーリー・QR) ════ -->
+<div class="tp" id="tp-pack"><div class="ct">
+  <div class="sb2" style="border-top:none;padding-top:28px;">
+    <div class="sh"><div class="sn">パッキング</div><span class="pill">PACKING</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">持ち物チェック</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:16px;">全チェックで戦闘力診断が自動起動。天気情報と連動して警告を表示します。</p>
+    <div id="wAlert" class="hidden" style="background:rgba(255,200,50,0.08);border:0.5px solid rgba(255,200,50,0.3);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#ffc832;font-family:var(--fm);letter-spacing:0.06em;"></div>
+    <div class="pr">
+      <div class="pbw" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="ppEl"><div class="pf" id="pp" style="width:0%;"></div></div>
+      <span style="font-size:11px;font-family:var(--fm);color:var(--mt);white-space:nowrap;" id="pc">0 / 0</span>
+    </div>
+    <div class="pt2">
+      <button class="ptb active" id="ptE" onclick="swPack('essential')">ESSENTIAL</button>
+      <button class="ptb" id="ptW" onclick="swPack('weather')">WEATHER</button>
+      <button class="ptb" id="ptG" onclick="swPack('goods')">GOODS</button>
+      <button class="ptb" id="ptB" onclick="swPack('beauty')">BEAUTY</button>
+      <button class="ptb" id="ptR" onclick="swPack('recovery')">RECOVERY</button>
+    </div>
+    <div id="packList" role="list"></div>
+    <div id="celMsg" class="hidden" style="text-align:center;padding:28px 0;" aria-live="polite">
+      <div style="font-size:24px;margin-bottom:8px;color:var(--a);">✦</div>
+      <div style="font-family:var(--fs);font-size:16px;letter-spacing:0.1em;margin-bottom:4px;">準備完了</div>
+      <div style="font-size:12px;color:var(--mt);">全アイテムOK — MEタブで究極診断を確認しよう</div>
+      <button onclick="switchTab('me')" style="margin-top:14px;padding:10px 24px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:6px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">→ MEタブへ</button>
+    </div>
+  </div>
+  <!-- ストーリー生成 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">しおり生成</div><span class="pill nw">NEW</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">Instagramストーリー生成</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:20px;">9:16サイズ・界隈別テーマで遠征しおりを自動生成。そのまま保存してストーリーへ。</p>
+    <div class="sl" style="margin-bottom:12px;">テーマ / 界隈</div>
+    <div class="tsel">
+      <button class="thb active" onclick="selTheme(this,'modern')" data-theme="modern">✦ モダン</button>
+      <button class="thb" onclick="selTheme(this,'heisei')" data-theme="heisei">📼 平成オタク</button>
+      <button class="thb" onclick="selTheme(this,'korean')" data-theme="korean">🌸 韓国風</button>
+      <button class="thb" onclick="selTheme(this,'jirai')" data-theme="jirai">🖤 地雷系</button>
+      <button class="thb" onclick="selTheme(this,'minimal')" data-theme="minimal">— ミニマル</button>
+    </div>
+    <div class="scu2">
+      <div class="scr"><span style="font-size:12px;color:var(--mt);">予算を表示</span><div class="tgl on" id="tgB" onclick="togOpt('showBudget',this)" role="switch"><div class="tth"></div></div></div>
+      <div class="scr"><span style="font-size:12px;color:var(--mt);">交通手段を表示</span><div class="tgl on" id="tgT" onclick="togOpt('showTransport',this)" role="switch"><div class="tth"></div></div></div>
+      <div class="scr"><span style="font-size:12px;color:var(--mt);">パック進捗を表示</span><div class="tgl on" id="tgP" onclick="togOpt('showPack',this)" role="switch"><div class="tth"></div></div></div>
+      <div class="scr"><span style="font-size:12px;color:var(--mt);">推し色グロウ</span><div class="tgl on" id="tgG" onclick="togOpt('showGlow',this)" role="switch"><div class="tth"></div></div></div>
+    </div>
+    <div style="display:flex;justify-content:center;margin:20px 0;">
+      <div class="sfr"><canvas id="storyCanvas" width="1080" height="1920"></canvas></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="renderStory()" style="flex:1;min-width:90px;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;touch-action:manipulation;">再生成</button>
+      <button onclick="dlStory()" style="flex:1;min-width:90px;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">↓ 保存する</button>
+      <button onclick="shareStoryX()" style="flex:1;min-width:90px;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;">X ポスト</button>
+    </div>
+    <p style="font-size:11px;color:var(--mt);text-align:center;margin-top:10px;line-height:1.8;">※ 生成画像はブラウザ内のみで処理。サーバーへの送信なし。</p>
+  </div>
+  <!-- QR同期 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">QR同期</div><span class="pill nw">NEW</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">QRコードで端末同期</h2>
+    <div class="qrp">
+      <div class="qrb"><div id="qrContainer"></div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);background:var(--sf2);border:0.5px solid var(--bd);padding:8px 12px;border-radius:6px;word-break:break-all;text-align:center;line-height:1.6;max-width:320px;" id="qrUrl">生成中…</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+        <button onclick="regenQR()" class="shb">QRを更新</button>
+        <button onclick="dlQR()" class="shb ac">QRを保存</button>
+        <button onclick="copyShareURL()" class="shb">URLをコピー</button>
+      </div>
+    </div>
+  </div>
+  <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
+</div></div>
+<!-- ════ TAB: ME (マップ・履歴・診断・カード・復元・同行者) ════ -->
+<div class="tp" id="tp-me"><div class="ct">
+  <!-- 遠征マップ -->
+  <div class="sb2" style="border-top:none;padding-top:28px;">
+    <div class="sh"><div class="sn">遠征マップ</div><span class="pill nw">NEW</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">遠征した都道府県ログ</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:14px;">タップで塗りつぶし。長押し/右クリックでHOME設定。推し色で日本を染めよう。</p>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--fm);color:var(--mt);"><div style="width:12px;height:12px;border-radius:2px;background:rgba(var(--ar),0.5);border:0.5px solid rgba(var(--ar),0.8);"></div>遠征済み</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--fm);color:var(--mt);"><div style="width:12px;height:12px;border-radius:2px;background:rgba(var(--ar),0.18);border:0.5px solid var(--a);"></div>地元(HOME)</div>
+      <button onclick="clearMap()" style="margin-left:auto;font-size:10px;font-family:var(--fm);color:var(--mt);background:transparent;border:0.5px solid var(--bdb);padding:3px 10px;border-radius:4px;cursor:pointer;letter-spacing:0.08em;">リセット</button>
+    </div>
+    <div id="mapWrap" class="mpw"></div>
+    <div class="mst">
+      <div class="ms"><div style="font-size:28px;font-family:var(--fm);font-weight:300;color:var(--a);" id="mVC">0</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">遠征済み</div></div>
+      <div class="ms"><div style="font-size:28px;font-family:var(--fm);font-weight:300;color:var(--a);" id="mPC">0%</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">制覇率</div></div>
+      <div class="ms"><div style="font-size:28px;font-family:var(--fm);font-weight:300;color:var(--a);" id="mRC">47</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">残り</div></div>
+    </div>
+    <div id="visitedList" style="margin-top:14px;min-height:24px;"></div>
+  </div>
+  <!-- 遠征履歴 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">遠征履歴</div><span class="pill nw">ARCHIVE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 16px;">推し活アーカイブ</h2>
+    <div class="cst" id="cumStats"></div>
+    <div class="hf">
+      <div class="sl" style="margin-bottom:12px;">新しい遠征を記録する</div>
+      <div class="fr"><div class="ff"><label style="font-size:10px;font-family:var(--fm);letter-spacing:0.14em;color:var(--mt);text-transform:uppercase;">会場名</label><input class="fi2" id="hV" type="text" placeholder="さいたまスーパーアリーナ"></div><div class="ff"><label style="font-size:10px;font-family:var(--fm);letter-spacing:0.14em;color:var(--mt);text-transform:uppercase;">アーティスト名</label><input class="fi2" id="hA" type="text" placeholder="推しの名前"></div></div>
+      <div class="fr"><div class="ff"><label style="font-size:10px;font-family:var(--fm);letter-spacing:0.14em;color:var(--mt);text-transform:uppercase;">日付</label><input class="fi2" id="hD" type="date"></div><div class="ff"><label style="font-size:10px;font-family:var(--fm);letter-spacing:0.14em;color:var(--mt);text-transform:uppercase;">支出総額</label><input class="fi2" id="hCo" type="number" inputmode="numeric" placeholder="50000"></div></div>
+      <div class="ff" style="margin-bottom:12px;"><label style="font-size:10px;font-family:var(--fm);letter-spacing:0.14em;color:var(--mt);text-transform:uppercase;">ひとことメモ</label><input class="fi2" id="hM" type="text" placeholder="最高の現場でした"></div>
+      <button class="abtn" onclick="addHist()">✦ 遠征を記録する</button>
+    </div>
+    <div id="histList"></div>
+  </div>
+  <!-- トレーディングカード -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">デジタルコレクション</div><span class="pill ult">ULTIMATE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">遠征トレーディングカード</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:16px;">遠征ごとにカードが生成されてコレクションに積み上がる。レアリティは5段階。</p>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="sl" style="margin-bottom:10px;">カードを生成する</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="mintCard()" style="flex:1;min-width:120px;padding:11px 16px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">✦ 現在のプランでミント</button>
+        <button onclick="mintDemo()" style="flex:1;min-width:120px;padding:11px 16px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">履歴からまとめ生成</button>
+      </div>
+    </div>
+    <div class="tcg" id="cardGrid"></div>
+    <div id="cardEmpty" style="padding:40px 24px;text-align:center;border:0.5px dashed var(--bdb);border-radius:12px;">
+      <div style="font-size:36px;margin-bottom:12px;opacity:0.5;">🎴</div>
+      <div style="font-family:var(--fs);font-size:15px;letter-spacing:0.1em;margin-bottom:6px;">コレクションが空です</div>
+      <div style="font-size:12px;color:var(--mt);">遠征プランを作成してカードを生成してください</div>
+    </div>
+  </div>
+  <!-- 究極診断 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">究極遠征診断</div><span class="pill ult">ULTIMATE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">究極の遠征戦闘力診断</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:24px;">全データを統合した最終形態の診断。界隈用語で激励します。</p>
+    <div class="dg">
+      <div class="drk" id="dRank">—</div>
+      <div class="dsc" id="dScore">—</div>
+      <div class="dmtr"><div class="dmf" id="dMeter" style="width:0%;"></div></div>
+      <div style="font-family:var(--fs);font-size:20px;letter-spacing:0.08em;margin-bottom:8px;" id="dTitle">診断待機中…</div>
+      <div style="font-size:13px;color:var(--mt);line-height:1.9;max-width:400px;margin:0 auto 16px;" id="dMsg">パッキングリストにチェックを入れると診断が始まります。</div>
+      <div class="dtg" id="dTags"></div>
+      <div class="dsg" id="dStats"></div>
+      <button onclick="runDiag()" style="margin-top:24px;padding:12px 32px;font-size:12px;font-family:var(--fm);letter-spacing:0.18em;border:0.5px solid rgba(var(--ar),0.5);border-radius:8px;background:linear-gradient(135deg,rgba(var(--ar),0.15),rgba(155,106,212,0.1));color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.2s;box-shadow:0 0 20px rgba(var(--ar),0.1);">✦ 究極診断を実行する ✦</button>
+    </div>
+  </div>
+  <!-- 復元コード -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">復元コード</div><span class="pill ult">ULTIMATE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">6文字の復元コード</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:16px;">推し色・会場・予算を6文字に圧縮。どの端末でも即座に復元。</p>
+    <div class="rcp">
+      <div class="sl" style="margin-bottom:6px;text-align:center;">あなたの現在の復元コード</div>
+      <div class="rcd"><span class="rcs" id="rcA">——</span><span style="color:var(--mt2);">·</span><span class="rcs" id="rcB">——</span><span style="color:var(--mt2);">·</span><span class="rcs" id="rcC">——</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <button onclick="genCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">✦ コードを生成・更新</button>
+        <button onclick="cpCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">コードをコピー</button>
+      </div>
+      <div style="border-top:0.5px solid var(--bd);padding-top:16px;">
+        <div class="sl" style="margin-bottom:10px;">コードで復元する</div>
+        <input class="rci" id="rcIn" type="text" maxlength="8" placeholder="AB·CD·EF" oninput="fmtCode(this)">
+        <button onclick="restoreCode()" style="width:100%;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">→ 復元する</button>
+        <div id="rcRes" style="margin-top:10px;font-size:12px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 同行者同期 -->
+  <div class="sb2">
+    <div class="sh"><div class="sn">同行者同期</div><span class="pill ult">ULTIMATE</span></div>
+    <h2 style="font-size:22px;margin:6px 0 6px;">同行者とプランを合わせる</h2>
+    <p style="font-size:13px;color:var(--mt);margin-bottom:20px;">ルームコードを共有するだけ。お互いのパッキング進捗をリアルタイムで確認できます。</p>
+    <div class="seg" style="margin-bottom:20px;">
+      <button class="sgb active" id="cmpH" onclick="swCmp('host')">ルームを作る</button>
+      <button class="sgb" id="cmpJ" onclick="swCmp('join')">ルームに参加</button>
+    </div>
+    <div id="cmpHost">
+      <div class="cmp">
+        <div class="sl" style="margin-bottom:8px;text-align:center;">あなたのルームコード</div>
+        <div class="rc2" id="hostCode">——</div>
+        <p style="font-size:12px;color:var(--mt);text-align:center;margin-bottom:16px;">このコードを同行者に伝えてください</p>
+        <button onclick="genRoom()" class="sbtn">✦ ルームコードを生成</button>
+        <button onclick="cpRoom()" class="sbtn sec">コードをコピー</button>
+        <div id="compProg" style="margin-top:16px;"></div>
+      </div>
+    </div>
+    <div id="cmpJoin" class="hidden">
+      <div class="cmp">
+        <div class="sl" style="margin-bottom:12px;">同行者のルームコードを入力</div>
+        <input class="ri" id="jCode" type="text" placeholder="例: LIVE42" maxlength="6" oninput="this.value=this.value.toUpperCase()">
+        <button onclick="joinRoom()" class="sbtn">→ ルームに参加する</button>
+        <div id="joinRes" style="margin-top:12px;"></div>
+      </div>
+    </div>
+  </div>
+  <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025 — COMPLETE</span><span style="font-size:11px;color:var(--mt2);">準備さえも、推し事になる。</span></div></footer>
+</div></div>
+</div><!-- /tw -->
+<!-- BOTTOM NAV -->
+<nav class="bn">
+  <button class="bi active" id="bn-home" onclick="switchTab('home')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><span>HOME</span></button>
+  <button class="bi" id="bn-go" onclick="switchTab('go')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><span>GO</span></button>
+  <button class="bi" id="bn-live" onclick="switchTab('live')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div><span>LIVE</span></button>
+  <button class="bi" id="bn-pack" onclick="switchTab('pack')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span>PACK</span><div class="bd2" id="packDot"></div></button>
+  <button class="bi" id="bn-me" onclick="switchTab('me')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div><span>ME</span></button>
+</nav>
+
+<script>
+/* ════ VENUE DB ════ */
+const VENUES=[
+  {name:'さいたまスーパーアリーナ',aliases:['SSA','さいたまアリーナ','さいたま','スーパーアリーナ','saitama'],type:'arena',cap:'37,000',area:'埼玉・さいたま市',note:'大宮徒歩10分',pref:'埼玉',lat:35.8948,lon:139.6311,chips:[{t:'alert',i:'⚠',l:'埋もれ注意（前方）'},{t:'silver',i:'✦',l:'銀テ飛距離大'},{t:'trolley',i:'🎪',l:'トロッコ近接（下段）'}]},
+  {name:'東京ドーム',aliases:['東ドー','ドーム','TokyoDome','TDC'],type:'dome',cap:'55,000',area:'東京・文京区',note:'水道橋徒歩5分',pref:'東京',lat:35.7056,lon:139.7519,chips:[{t:'alert',i:'⚠',l:'埋もれ注意（全域）'},{t:'silver',i:'✦',l:'銀テ飛距離MAX'},{t:'view',i:'👁',l:'スタンド上段は全体見やすい'}]},
+  {name:'横浜アリーナ',aliases:['横アリ','ヨコアリ','YA','よこあり'],type:'arena',cap:'17,000',area:'神奈川・横浜市',note:'新横浜徒歩5分',pref:'神奈川',lat:35.5082,lon:139.6104,chips:[{t:'good',i:'✦',l:'銀テ届きやすい'},{t:'trolley',i:'🎪',l:'トロッコ全席近い'}]},
+  {name:'国立代々木競技場',aliases:['代々木','よよこん','代々木競技場','代々木体育館'],type:'hall',cap:'13,000',area:'東京・渋谷区',note:'原宿徒歩8分',pref:'東京',lat:35.6712,lon:139.6960,chips:[{t:'view',i:'👁',l:'全席ステージ近め'}]},
+  {name:'京セラドーム大阪',aliases:['京セラ','大阪ドーム','きょうせら'],type:'dome',cap:'55,000',area:'大阪・西区',note:'ドーム前千代崎徒歩3分',pref:'大阪',lat:34.6717,lon:135.4762,chips:[{t:'alert',i:'⚠',l:'埋もれ注意（全域）'},{t:'silver',i:'✦',l:'銀テ飛距離大'}]},
+  {name:'マリンメッセ福岡',aliases:['マリメ','マリンメッセ','福岡'],type:'arena',cap:'15,000',area:'福岡・博多区',note:'ベイサイドプレイス近く',pref:'福岡',lat:33.6003,lon:130.4002,chips:[{t:'good',i:'✦',l:'銀テ届きやすい'},{t:'trolley',i:'🎪',l:'トロッコ近接'}]},
+  {name:'日本ガイシホール',aliases:['ガイシ','名古屋','ガイシホール'],type:'arena',cap:'10,000',area:'愛知・名古屋市',note:'笠寺駅徒歩3分',pref:'愛知',lat:35.1028,lon:136.9244,chips:[{t:'view',i:'👁',l:'コンパクトで全席神席'}]},
+  {name:'幕張メッセ',aliases:['幕メ','幕張','まくはり'],type:'outdoor',cap:'30,000',area:'千葉・幕張市',note:'海浜幕張徒歩5分',pref:'千葉',lat:35.6484,lon:140.0336,chips:[{t:'alert',i:'⚠',l:'野外 雨対策必須'}]},
+  {name:'大阪城ホール',aliases:['城ホ','大阪城','おおさかじょう'],type:'arena',cap:'16,000',area:'大阪・中央区',note:'大阪城公園駅徒歩8分',pref:'大阪',lat:34.6853,lon:135.5255,chips:[{t:'good',i:'✦',l:'銀テ届きやすい'},{t:'trolley',i:'🎪',l:'トロッコ定番ルート'}]},
+  {name:'Zepp Tokyo',aliases:['Zepp','ゼップ','ぜっぷ'],type:'hall',cap:'2,700',area:'東京・江東区',note:'青海駅すぐ',pref:'東京',lat:35.6277,lon:139.7800,chips:[{t:'view',i:'👁',l:'全席神席レベル'}]},
+  {name:'ぴあMFTスタジアム宮城',aliases:['宮城スタジアム','ユアテック','仙台'],type:'outdoor',cap:'49,000',area:'宮城・利府町',note:'利府駅バス',pref:'宮城',lat:38.3672,lon:140.9761,chips:[{t:'alert',i:'⚠',l:'野外 防寒対策必須'}]},
+  {name:'北海道立総合体育センター',aliases:['北海きたえーる','きたえーる','札幌'],type:'arena',cap:'8,000',area:'北海道・札幌市',note:'豊平公園駅徒歩8分',pref:'北海道',lat:43.0490,lon:141.3625,chips:[{t:'view',i:'👁',l:'全席近め'}]},
+];
+function fuzzySearch(q){if(!q.trim())return[];const qr=q.toLowerCase().replace(/\s/g,'');return VENUES.filter(v=>{const h=[v.name,...v.aliases].map(s=>s.toLowerCase().replace(/\s/g,'')).join(' ');if(h.includes(qr))return true;let i=0;for(const c of qr){const f=h.indexOf(c,i);if(f===-1)return false;i=f+1;}return true;}).slice(0,6);}
+
+/* ════ PREF MAP ════ */
+const PREF_LAYOUT=[
+  ['hokkaido','北海道',550,60,180,100],['aomori','青森',560,175,60,40],['iwate','岩手',580,220,60,50],
+  ['akita','秋田',520,210,55,50],['miyagi','宮城',590,270,65,40],['yamagata','山形',535,265,55,45],
+  ['fukushima','福島',560,315,75,45],['ibaraki','茨城',620,340,60,50],['tochigi','栃木',580,340,55,40],
+  ['gunma','群馬',545,338,55,38],['saitama','埼玉',580,385,55,35],['chiba','千葉',635,390,60,45],
+  ['tokyo','東京',570,388,45,30],['kanagawa','神奈川',565,422,60,30],['niigata','新潟',490,290,65,50],
+  ['toyama','富山',450,335,48,38],['ishikawa','石川',420,330,40,55],['fukui','福井',415,390,38,40],
+  ['yamanashi','山梨',530,400,48,35],['nagano','長野',500,360,55,55],['gifu','岐阜',460,390,55,45],
+  ['shizuoka','静岡',550,445,65,38],['aichi','愛知',500,435,55,40],['mie','三重',460,445,45,50],
+  ['shiga','滋賀',430,430,40,38],['kyoto','京都',410,415,45,40],['osaka','大阪',400,450,40,30],
+  ['hyogo','兵庫',370,428,50,45],['nara','奈良',430,460,40,38],['wakayama','和歌山',415,495,40,40],
+  ['tottori','鳥取',340,410,50,35],['shimane','島根',280,410,60,38],['okayama','岡山',330,445,50,38],
+  ['hiroshima','広島',280,450,60,40],['yamaguchi','山口',230,460,55,38],['tokushima','徳島',380,490,45,35],
+  ['kagawa','香川',350,475,40,28],['ehime','愛媛',310,490,50,40],['kochi','高知',330,520,60,38],
+  ['fukuoka','福岡',190,480,55,38],['saga','佐賀',170,505,40,30],['nagasaki','長崎',145,510,45,45],
+  ['kumamoto','熊本',195,520,50,40],['oita','大分',225,500,50,38],['miyazaki','宮崎',225,545,45,45],
+  ['kagoshima','鹿児島',190,560,55,50],['okinawa','沖縄',200,680,55,35],
+];
+
+/* ════ TRANSPORT DATA ════ */
+const TDATA={
+  near:{shinkansen:[],bus:[{b:'bus',n:'高速バス（直行）',r:'池袋→さいたま新都心',p:'¥800〜',t:'約45分',note:'渋滞注意。余裕を持って出発。',url:'https://www.bushikaku.net/'},{b:'bus',n:'JR・私鉄で直接',r:'各線→大宮/さいたま新都心',p:'¥300〜',t:'30〜60分',note:'ICカード利用推奨。',url:'https://www.jorudan.co.jp/'}],flight:[],nightbus:[]},
+  mid:{shinkansen:[{b:'shinkansen',n:'東海道・東北新幹線',r:'新大阪/名古屋→東京→大宮',p:'¥7,000〜¥15,000',t:'約2〜3時間',note:'早割「EXこだま早特」で大幅割引。',url:'https://www.jr-odekake.net/'},{b:'shinkansen',n:'スマートEX',r:'スマートフォンでE-チケット購入',p:'通常より¥200引き',t:'同上',note:'駅窓口不要・座席指定可。',url:'https://smart-ex.jp/'}],bus:[{b:'bus',n:'JRバス・高速バス',r:'大阪/名古屋→東京',p:'¥3,500〜¥8,000',t:'約8〜10時間',note:'昼行便は安い。座席グレードで差額あり。',url:'https://www.bushikaku.net/'}],flight:[],nightbus:[{b:'nightbus',n:'夜行バス（4列/3列シート）',r:'大阪・名古屋→新宿・池袋',p:'¥3,500〜¥7,000',t:'出発22時→到着6時台',note:'宿泊代ゼロ戦略に最適。3列が快眠の分岐点。',url:'https://www.bushikaku.net/'}]},
+  far:{shinkansen:[{b:'shinkansen',n:'新幹線（九州・北海道）',r:'博多/札幌→東京',p:'¥20,000〜¥30,000',t:'約5〜10時間',note:'早割「スーパー早特きっぷ」で最大50%引き。',url:'https://www.jr-odekake.net/'}],bus:[],flight:[{b:'flight',n:'LCC・格安航空券',r:'福岡/札幌→羽田・成田',p:'¥5,000〜¥18,000',t:'約1.5〜2時間',note:'ジェットスター・ピーチが狙い目。早期予約で破格に。',url:'https://www.jetstar.com/jp/'},{b:'flight',n:'スカイマーク・ANA',r:'各地→羽田',p:'¥8,000〜¥25,000',t:'約1.5〜2時間',note:'マイル積算あり。空港アクセス時間も考慮を。',url:'https://www.skymark.co.jp/ja/'}],nightbus:[{b:'nightbus',n:'夜行バス（超長距離）',r:'博多→東京',p:'¥6,000〜¥12,000',t:'出発20時→到着10時台',note:'超長距離は3列シートプレミアム必須。',url:'https://www.bushikaku.net/'}]}
+};
+const BKDITEMS={near:[{l:'交通費',a:300,b:1500},{l:'宿泊費',a:0,b:8000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:2000,b:5000}],mid:[{l:'交通費',a:7000,b:15000},{l:'宿泊費',a:6000,b:12000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:3000,b:6000}],far:[{l:'交通費',a:10000,b:30000},{l:'宿泊費',a:8000,b:15000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:4000,b:8000}]};
+
+/* ════ AFTERGLOW DATA ════ */
+const AGDATA={
+  souvenir:[{i:'🍱',n:'駅弁・地方銘菓',d:'大宮駅・東京駅のエキナカで購入。帰りの新幹線で食べるのが遠征の醍醐味。',url:'https://www.ekiben.or.jp/'},{i:'🍜',n:'会場周辺ラーメン',d:'ライブ後の行列前提ラーメン。さいたま新都心なら「武蔵野アブラ学会」が人気。',url:'https://tabelog.com/saitama/A1101/A110103/'},{i:'🛍',n:'グッズ再販・フリマ確認',d:'余ったグッズや交換品はメルカリで即確認。レア缶バも即検索。',url:'https://www.mercari.com/jp/'},{i:'📸',n:'遠征フォトブック',d:'スマホ写真をその場でプリント。Kodak対応店を検索。',url:'https://www.amazon.co.jp/s?k=%E3%83%95%E3%82%A9%E3%83%88%E3%83%96%E3%83%83%E3%82%AF+%E3%82%B9%E3%83%9E%E3%83%9B'}],
+  dining:[{n:'会場周辺 居酒屋・ダイニング',tags:['個室あり','大人数OK','予約推奨'],d:'ライブ後の打ち上げ予約は事前に入れておくのが鉄則。',url:'https://tabelog.com/saitama/A1101/'},{n:'ライブ後 深夜営業カフェ',tags:['24h','カフェ','静かに余韻'],d:'余韻に浸りたいなら深夜カフェへ。',url:'https://tabelog.com/saitama/A1101/A110103/rstlst/'},{n:'ホテルのルームサービス',tags:['静かに','一人でも','SNS振り返り'],d:'一人遠征派はデリバリーでライブ余韻の夕食。',url:'https://wolt.com/ja/jpn'},{n:'朝の推し事カフェ',tags:['翌朝','カフェ活','SNS'],d:'翌朝はゆっくり推しの写真を眺めながらモーニング。',url:'https://tabelog.com/saitama/A1101/A110103/rstlst/?SrtT=trend&Srt=D&Cat=RC1'}],
+  return:[{i:'🧦',n:'着圧ソックス（新幹線用）',d:'新幹線の長距離移動でむくんだ足に。帰り着いた時の足の軽さが違う。',url:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},{i:'😴',n:'アイマスク・ネッククッション',d:'夜行バス・新幹線での睡眠質を最大化。',url:'https://www.amazon.co.jp/s?k=%E3%82%A2%E3%82%A4%E3%83%9E%E3%82%B9%E3%82%AF+%E9%81%A0%E5%BE%81'},{i:'📱',n:'モバイルバッテリー（帰路用）',d:'ライブ中にバッテリーを使い果たした状態で帰路へ。10000mAhは必須。',url:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},{i:'🍵',n:'喉ケアドリンク',d:'絶叫した翌朝の喉を守る。はちみつレモンや龍角散ドロップを帰りの荷物に。',url:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'}]
+};
+
+/* ════ BINO DATA ════ */
+const BDATA={
+  dome:{ss:{mag:'8×',dist:'15m',note:'防振タイプ推奨',view:'表情がっつり見える',prog:15,dT:'防振 ケンコー 8×30',dP:'¥1,800',aT:'ケンコー SE8×21',aP:'¥14,800'},arena:{mag:'10×',dist:'30m',note:'防振があると安定',view:'全身＋表情が見える',prog:35,dT:'防振 ニコン 10×30',dP:'¥2,200',aT:'ニコン モナーク 10×42',aP:'¥38,500'},stand_low:{mag:'10×',dist:'50m',note:'防振必須',view:'全身が見える',prog:55,dT:'防振 ニコン 12×32',dP:'¥2,400',aT:'コーワ紫陽 12×32',aP:'¥54,780'},stand_high:{mag:'12×',dist:'80m',note:'防振強く推奨',view:'ステージ全体が見える',prog:75,dT:'防振 ビクセン 12×50',dP:'¥2,800',aT:'キャノン IS 12×36',aP:'¥68,000'},back:{mag:'16×',dist:'120m',note:'三脚付き防振が理想',view:'ステージ概要のみ',prog:90,dT:'防振 キャノン 15×50',dP:'¥3,500',aT:'キャノン IS 15×50',aP:'¥98,000'}},
+  arena:{ss:{mag:'6×',dist:'20m',note:'手ブレしにくく初心者にも◎',view:'顔のアップが見える',prog:20,dT:'防振 ケンコー 8×30',dP:'¥1,800',aT:'ニコン スポーツスター 6×15',aP:'¥9,800'},arena:{mag:'8×',dist:'35m',note:'定番のバランス倍率',view:'上半身が見える',prog:38,dT:'防振 ケンコー 8×30',dP:'¥2,000',aT:'ニコン モナーク 8×42',aP:'¥34,200'},stand_low:{mag:'10×',dist:'60m',note:'防振があると安定',view:'全身が見える',prog:55,dT:'防振 ニコン 10×30',dP:'¥2,200',aT:'ニコン モナーク 10×42',aP:'¥38,500'},stand_high:{mag:'12×',dist:'90m',note:'防振強く推奨',view:'ステージ全体が見える',prog:80,dT:'防振 ニコン 12×32',dP:'¥2,600',aT:'コーワ紫陽 12×32',aP:'¥54,780'},back:{mag:'12×',dist:'100m',note:'防振必須',view:'ステージ概要のみ',prog:88,dT:'防振 ビクセン 12×50',dP:'¥2,800',aT:'コーワ紫陽 12×32',aP:'¥54,780'}},
+  hall:{ss:{mag:'4×',dist:'8m',note:'裸眼でも見えるが感動',view:'毛穴まで見える',prog:8,dT:'ニコン 4×10',dP:'¥1,200',aT:'ニコン ポロプリズム 4×10',aP:'¥5,800'},arena:{mag:'6×',dist:'15m',note:'軽量タイプで十分',view:'顔のアップが見える',prog:18,dT:'ケンコー 6×21',dP:'¥1,500',aT:'ニコン スポーツスター 6×15',aP:'¥9,800'},stand_low:{mag:'8×',dist:'25m',note:'この倍率から防振を検討',view:'上半身が見える',prog:30,dT:'防振 ケンコー 8×30',dP:'¥1,800',aT:'ニコン モナーク 8×42',aP:'¥34,200'},stand_high:{mag:'8×',dist:'40m',note:'防振推奨',view:'全身が見える',prog:50,dT:'防振 ケンコー 8×30',dP:'¥2,000',aT:'ニコン モナーク 8×42',aP:'¥34,200'},back:{mag:'10×',dist:'55m',note:'防振あると安定',view:'全身が見える',prog:65,dT:'防振 ニコン 10×30',dP:'¥2,200',aT:'ニコン モナーク 10×42',aP:'¥38,500'}},
+  outdoor:{ss:{mag:'8×',dist:'25m',note:'明るい環境なので視野重視',view:'上半身が見える',prog:25,dT:'防振 ケンコー 8×30',dP:'¥2,000',aT:'ニコン モナーク 8×42',aP:'¥34,200'},arena:{mag:'10×',dist:'60m',note:'防振があると安定',view:'全身が見える',prog:55,dT:'防振 ニコン 10×30',dP:'¥2,200',aT:'ニコン モナーク 10×42',aP:'¥38,500'},stand_low:{mag:'12×',dist:'100m',note:'防振強く推奨',view:'ステージ全体が見える',prog:78,dT:'防振 ニコン 12×32',dP:'¥2,600',aT:'コーワ紫陽 12×32',aP:'¥54,780'},stand_high:{mag:'16×',dist:'150m',note:'三脚付き推奨',view:'ステージ概要のみ',prog:90,dT:'防振 キャノン 15×50',dP:'¥3,500',aT:'キャノン IS 15×50',aP:'¥98,000'},back:{mag:'16×',dist:'200m',note:'スタビライザー必須',view:'ステージのみ確認可',prog:95,dT:'防振 キャノン 15×50',dP:'¥3,800',aT:'キャノン IS 15×50',aP:'¥98,000'}}
+};
+const CDATA={
+  ss:{dome:[{t:'alert',i:'⚠',l:'埋もれ注意'},{t:'silver',i:'✦',l:'銀テ最前線'}],arena:[{t:'alert',i:'⚠',l:'埋もれ注意'},{t:'silver',i:'✦',l:'銀テ期待大'},{t:'trolley',i:'🎪',l:'トロッコ最近接'}],hall:[{t:'view',i:'👁',l:'神席確定'}],outdoor:[{t:'alert',i:'⚠',l:'日焼け注意'}]},
+  arena:{dome:[{t:'silver',i:'✦',l:'銀テ届く可能性'}],arena:[{t:'silver',i:'✦',l:'銀テ期待'},{t:'trolley',i:'🎪',l:'トロッコ近接'}],hall:[{t:'view',i:'👁',l:'近距離で見やすい'}],outdoor:[{t:'alert',i:'⚠',l:'人込み注意'}]},
+  stand_low:{dome:[{t:'trolley',i:'🎪',l:'トロッコ最近接'}],arena:[{t:'trolley',i:'🎪',l:'トロッコ近接'},{t:'view',i:'👁',l:'全体見やすい'}],hall:[{t:'view',i:'👁',l:'見やすい角度'}],outdoor:[{t:'view',i:'👁',l:'全体が見渡せる'}]},
+  stand_high:{dome:[{t:'view',i:'👁',l:'ステージ全体見える'}],arena:[{t:'view',i:'👁',l:'全体演出わかる'},{t:'alert',i:'⚠',l:'双眼鏡必須'}],hall:[{t:'view',i:'👁',l:'ステージ全体見える'}],outdoor:[{t:'view',i:'👁',l:'全体が見渡せる'}]},
+  back:{dome:[{t:'alert',i:'⚠',l:'双眼鏡必須'}],arena:[{t:'alert',i:'⚠',l:'双眼鏡必須'}],hall:[{t:'alert',i:'⚠',l:'双眼鏡あると◎'}],outdoor:[{t:'alert',i:'⚠',l:'双眼鏡必須'}]}
+};
+
+/* ════ PACK ITEMS ════ */
+const PITEMS={
+  essential:[{id:'ticket',l:'チケット（紙/電子）',u:null},{id:'id',l:'身分証明書',u:null},{id:'wallet',l:'財布・交通系ICカード',u:null},{id:'phone',l:'スマートフォン',u:null},{id:'battery',l:'モバイルバッテリー',u:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},{id:'cable',l:'充電ケーブル',u:'https://www.amazon.co.jp/s?k=USB%E5%85%85%E9%9B%BB%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB'},{id:'earphones',l:'イヤホン（移動中用）',u:'https://www.amazon.co.jp/s?k=%E3%83%AF%E3%82%A4%E3%83%A4%E3%83%AC%E3%82%B9%E3%82%A4%E3%83%A4%E3%83%9B%E3%83%B3'}],
+  weather:[{id:'umbrella',l:'折りたたみ傘',u:'https://www.amazon.co.jp/s?k=%E6%8A%98%E3%82%8A%E3%81%9F%E3%81%9F%E3%81%BF%E5%82%98'},{id:'raincoat',l:'レインコート（野外用）',u:'https://www.amazon.co.jp/s?k=%E3%83%AC%E3%82%A4%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%88'},{id:'sunscreen',l:'日焼け止め',u:'https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81+SPF50'},{id:'handwarmer',l:'カイロ（冬季）',u:'https://www.amazon.co.jp/s?k=%E3%82%AB%E3%82%A4%E3%83%AD'},{id:'fan',l:'ハンディファン（夏季）',u:'https://www.amazon.co.jp/s?k=%E3%83%8F%E3%83%B3%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%B3'}],
+  goods:[{id:'penlight',l:'ペンライト',u:'https://www.amazon.co.jp/s?k=%E3%83%9A%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%88+%E3%83%A9%E3%82%A4%E3%83%96'},{id:'uchiwa',l:'うちわ',u:null},{id:'bino_item',l:'双眼鏡',u:'https://www.dmm.com/rental/-/list/=/keyword=%E5%8F%8C%E7%9C%BC%E9%8F%A1'},{id:'bag',l:'遠征用バッグ',u:'https://www.amazon.co.jp/s?k=%E3%83%88%E3%83%BC%E3%83%88%E3%83%90%E3%83%83%E3%82%B0'},{id:'battery_aa',l:'予備電池（AA）',u:'https://www.amazon.co.jp/s?k=%E5%8D%983%E9%9B%BB%E6%B1%A0'}],
+  beauty:[{id:'makeup_base',l:'ウォータープルーフ下地',u:'https://www.amazon.co.jp/s?k=%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95+%E4%B8%8B%E5%9C%B0'},{id:'hair_spray',l:'撥水ヘアスプレー',u:'https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B'},{id:'oil_sheet',l:'あぶらとりシート',u:'https://www.amazon.co.jp/s?k=%E3%81%82%E3%81%B6%E3%82%89%E3%81%A8%E3%82%8A%E3%82%B7%E3%83%BC%E3%83%88'},{id:'sweat_sheet',l:'汗拭きシート',u:'https://www.amazon.co.jp/s?k=%E6%B1%97%E6%8B%AD%E3%81%8D%E3%82%B7%E3%83%BC%E3%83%88'},{id:'lip',l:'リップ（塗り直し用）',u:'https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%83%E3%83%97+%E3%83%A9%E3%82%A4%E3%83%96'},{id:'hair_band',l:'推し色ヘアバンド',u:'https://www.amazon.co.jp/s?k=%E3%83%98%E3%82%A2%E3%83%90%E3%83%B3%E3%83%89+%E3%82%AB%E3%83%A9%E3%83%BC'}],
+  recovery:[{id:'socks',l:'着圧ソックス（むくみ対策）',u:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},{id:'insole',l:'衝撃吸収インソール',u:'https://www.amazon.co.jp/s?k=%E3%82%A4%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB'},{id:'throat',l:'のど飴（声出し対策）',u:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'},{id:'ibuprofen',l:'頭痛薬・鎮痛剤',u:'https://www.amazon.co.jp/s?k=%E9%A0%AD%E7%97%9B%E8%96%AC'},{id:'neck',l:'ネッククッション（夜行バス）',u:'https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3'}]
+};
+
+/* ════ STORY THEMES ════ */
+const THEMES={
+  modern:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#0d0d14';ctx.fillRect(0,0,w,h);const g=ctx.createRadialGradient(w/2,h*0.2,0,w/2,h*0.2,w*0.7);g.addColorStop(0,a+'44');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;for(let y=0;y<h;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}for(let x=0;x<w;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}},tc:'#f0f0f8',mc:'rgba(255,255,255,0.5)'},
+  heisei:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#1a0a2e';ctx.fillRect(0,0,w,h);ctx.fillStyle='rgba(0,0,0,0.15)';for(let y=0;y<h;y+=4){ctx.fillRect(0,y,w,2);}const g=ctx.createLinearGradient(0,0,w,0);g.addColorStop(0,a+'00');g.addColorStop(0.5,a+'33');g.addColorStop(1,a+'00');[h*0.3,h*0.7].forEach(yy=>{ctx.fillStyle=g;ctx.fillRect(0,yy,w,3);});ctx.fillStyle='white';for(let i=0;i<80;i++){const x=Math.random()*w,y=Math.random()*h*0.5;ctx.fillRect(x,y,Math.random()<0.3?2:1,Math.random()<0.3?2:1);}},tc:'#ffe8f8',mc:'rgba(255,200,220,0.6)'},
+  korean:{bg:(ctx,w,h,a)=>{const g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#fdf0f5');g.addColorStop(0.5,'#f8e8f4');g.addColorStop(1,'#f0e0f0');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle=a+'22';[[120,200],[900,300],[200,700],[800,900],[500,1600],[100,1400]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,60,0,Math.PI*2);ctx.fill();});},tc:'#2a1a2a',mc:'rgba(60,20,60,0.55)'},
+  jirai:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;for(let i=-h;i<w+h;i+=30){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+h,h);ctx.stroke();}const g=ctx.createRadialGradient(w/2,h,0,w/2,h,w);g.addColorStop(0,a+'33');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.strokeStyle=a+'44';ctx.lineWidth=2;ctx.strokeRect(30,30,w-60,h-60);},tc:'#f8f0f4',mc:'rgba(240,200,220,0.55)'},
+  minimal:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#f8f6f4';ctx.fillRect(0,0,w,h);ctx.strokeStyle=a+'44';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,h*0.12);ctx.lineTo(w-60,h*0.12);ctx.stroke();ctx.beginPath();ctx.moveTo(60,h*0.88);ctx.lineTo(w-60,h*0.88);ctx.stroke();},tc:'#1a1a1a',mc:'rgba(40,40,40,0.55)'}
+};
+
+/* ════ CARD RARITIES ════ */
+const RARITIES=[{l:'COMMON',c:'#888',g:false,s:0},{l:'RARE',c:'#5B8CDB',g:true,s:1},{l:'SR',c:'#C8A0FF',g:true,s:2},{l:'SSR',c:'#FFD700',g:true,s:3},{l:'UR',c:'#FF6EB4',g:true,s:5}];
+
+/* ════ WMO ════ */
+const WMO={0:{i:'☀️',l:'快晴'},1:{i:'🌤',l:'晴れ'},2:{i:'⛅',l:'晴れ時々曇り'},3:{i:'☁️',l:'曇り'},45:{i:'🌫',l:'霧'},51:{i:'🌦',l:'霧雨'},61:{i:'🌧',l:'小雨'},63:{i:'🌧',l:'雨'},65:{i:'🌧',l:'大雨'},71:{i:'🌨',l:'雪'},73:{i:'🌨',l:'雪'},75:{i:'🌨',l:'大雪'},80:{i:'🌦',l:'にわか雨'},81:{i:'🌦',l:'にわか雨（強）'},82:{i:'⛈',l:'大雨'},95:{i:'⛈',l:'雷雨'},99:{i:'⛈',l:'雷雨（強）'}};
+
+/* ════ RESTORE CHARS ════ */
+const RC='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+/* ════ DIAGNOSIS TABLE ════ */
+const DIAG=[
+  {min:95,rank:'UR',badge:'UR',title:'遠征の神・降臨',msg:'もはや遠征はあなたの天命。全銀テ引き寄せが確約されています。推しもあなたに気付いているはずです。',tags:['遠征の神','URランク','全銀テ確定','推しと目が合う']},
+  {min:80,rank:'SSR',badge:'SSR',title:'熟練の遠征ガチ勢・覚醒',msg:'ほぼ完璧すぎる。正直もう行くだけでいい。前日は十分な睡眠を取って推しの夢でも見ながら休んでください。',tags:['SSRランク','ガチ勢覚醒','準備万端','迷う余地なし']},
+  {min:65,rank:'SR',badge:'SR',title:'信頼の遠征上級者',msg:'かなり準備できてる。あと数アイテムで戦闘力は急上昇。着圧ソックスと双眼鏡だけ今すぐ確認して。',tags:['SRランク','上級者認定','あと少し','双眼鏡確認']},
+  {min:45,rank:'R',badge:'R',title:'成長中の遠征中級者',msg:'準備が進んでいます。チケット・財布・充電器の「三種の神器」だけは絶対に確認してください。',tags:['Rランク','要確認','三種の神器','気合あり']},
+  {min:25,rank:'N',badge:'N',title:'スーパー直前派',msg:'まだ大丈夫（信じましょう）。今すぐチケットの場所だけ確認してください。遠征の基本は「推しに会う」こと。',tags:['Nランク','直前派','チケット確認','現地調達']},
+  {min:0,rank:'C',badge:'C',title:'伝説の突貫遠征者',msg:'行く気持ちが全てです。チケットと財布だけポケットに入れて出発してください。',tags:['Cランク','突貫遠征','精神力だけ','それでも行く']}
+];
+
+/* ════ GLOBAL STATE ════ */
+const S={
+  ac:'#E8547A',at:'#ffd6e3',ar:'232,84,122',al:'rgba(232,84,122,0.12)',aa:'#E8547A',ab:'#b03058',
+  cn:'ピンク',venue:'さいたまスーパーアリーナ',budget:50000,
+  dist:'mid',trans:'shinkansen',hotel:'early',
+  seat:'ss',vType:'arena',aglTab:'souvenir',
+  packTab:'essential',checks:{},
+  theme:'modern',stOpts:{showBudget:true,showTransport:true,showPack:true,showGlow:true},
+  vPrefs:new Set(),hPrefs:new Set(),
+  history:[],cards:[],
+  lastDiag:null,restoreCode:'',
+  roomCode:'',compData:{},compMode:'host',
+};
+const LSK='enseipass_complete_v1';
+
+function saveS(){
+  try{localStorage.setItem(LSK,JSON.stringify({ac:S.ac,ar:S.ar,at:S.at,al:S.al,aa:S.aa,ab:S.ab,cn:S.cn,venue:S.venue,budget:S.budget,dist:S.dist,trans:S.trans,hotel:S.hotel,seat:S.seat,vType:S.vType,aglTab:S.aglTab,packTab:S.packTab,checks:S.checks,theme:S.theme,stOpts:S.stOpts,vPrefs:[...S.vPrefs],hPrefs:[...S.hPrefs],history:S.history,cards:S.cards,lastDiag:S.lastDiag,restoreCode:S.restoreCode}));}catch(e){}
+}
+function loadS(){
+  try{
+    const d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return;
+    Object.assign(S,d);S.vPrefs=new Set(d.vPrefs||[]);S.hPrefs=new Set(d.hPrefs||[]);
+    S.history=d.history||[];S.cards=d.cards||[];
+    applyA(S.ac,S.ar,S.at,S.al,S.cn,S.aa,S.ab,true);
+    document.getElementById('venueInput').value=S.venue;
+    document.getElementById('budgetInput').value=S.budget;
+    onBC();updSmV();
+    const f=VENUES.find(v=>v.name===S.venue);if(f)renderVI(f);
+    buildVL(S.venue);
+    if(S.lastDiag){const el=document.getElementById('smPW');if(el)el.textContent=S.lastDiag.rank+' ('+S.lastDiag.score+')';}
+    if(S.restoreCode)showCode(S.restoreCode);
+    if(S.theme)document.querySelectorAll('.thb').forEach(b=>b.classList.toggle('active',b.dataset.theme===S.theme));
+    if(S.hotel==='last')setHotel('last');
+  }catch(e){}
+}
+
+/* ════ TAB SWITCHING ════ */
+function switchTab(id){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bi').forEach(b=>b.classList.remove('active'));
+  const p=document.getElementById('tp-'+id);if(p)p.classList.add('active');
+  const b=document.getElementById('bn-'+id);if(b)b.classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='pack'){renderPack();setTimeout(renderStory,200);}
+  if(id==='me'){renderCards();renderHist();renderCumS();updMapColors();buildMap();}
+  if(id==='go'){renderTrans();renderBkd();}
+}
+
+/* ════ ACCENT ════ */
+function setAccent(el){
+  document.querySelectorAll('.cs').forEach(s=>{s.classList.remove('active');});
+  el.classList.add('active');
+  const{color:c,name:n,text:t,light:l,rgb:r}=el.dataset;
+  const aa=el.dataset.aa,ab=el.dataset.ab;
+  applyA(c,r,t,l,n,aa,ab,false);saveS();updMapColors();setTimeout(renderStory,80);
+}
+function applyA(c,r,t,l,n,aa,ab,restore){
+  Object.assign(S,{ac:c,at:t,ar:r,al:l,cn:n,aa,ab});
+  const root=document.documentElement;
+  root.style.setProperty('--a',c);root.style.setProperty('--ar',r);
+  root.style.setProperty('--at',t);root.style.setProperty('--al',l);
+  root.style.setProperty('--aa',aa);root.style.setProperty('--ab',ab);
+  if(restore){document.querySelectorAll('.cs').forEach(s=>{s.classList.toggle('active',s.dataset.color===c&&s.dataset.name===n);});}
+  const smCN=document.getElementById('smCN');if(smCN)smCN.textContent=n;
+  const smCD=document.getElementById('smCD');if(smCD){smCD.style.background=c;smCD.style.boxShadow='0 0 6px '+c;}
+  const rtA=document.getElementById('rtA');if(rtA)rtA.setAttribute('stroke',c);
+  const rtL=document.getElementById('rtL');if(rtL)rtL.setAttribute('fill',c);
+}
+
+/* ════ VENUE ════ */
+let vBT=null;
+function onVI(){const q=document.getElementById('venueInput').value;S.venue=q;updSmV();buildVL(q);showVDD(q);saveS();}
+function onVF(){showVDD(document.getElementById('venueInput').value);}
+function onVB(){vBT=setTimeout(()=>{const d=document.getElementById('vdd');if(d)d.classList.add('hidden');},180);}
+function showVDD(q){
+  const dd=document.getElementById('vdd');if(!dd)return;
+  if(!q.trim()){dd.classList.add('hidden');return;}
+  const res=fuzzySearch(q);
+  const tl={dome:'🏟 ドーム',arena:'🎪 アリーナ',hall:'🎵 ホール',outdoor:'🌿 野外'};
+  if(!res.length){dd.innerHTML=`<div class="vde">「${q}」に一致する会場が見つかりません</div>`;dd.classList.remove('hidden');return;}
+  dd.innerHTML=res.map(v=>`<div class="vdi" onmousedown="selV('${v.name.replace(/'/g,"\\'")}')"><span style="font-size:14px;">${v.name}</span><span style="font-size:11px;color:var(--mt);font-family:var(--fm);">${tl[v.type]||''} · ${v.area}</span></div>`).join('');
+  dd.classList.remove('hidden');
+}
+function selV(name){
+  clearTimeout(vBT);
+  document.getElementById('venueInput').value=name;
+  const dd=document.getElementById('vdd');if(dd)dd.classList.add('hidden');
+  S.venue=name;updSmV();buildVL(name);
+  const f=VENUES.find(v=>v.name===name);if(f)renderVI(f);
+  saveS();showT('✦ '+name+' を選択しました');setTimeout(renderStory,80);
+}
+function renderVI(v){
+  const p=document.getElementById('vip');if(!p)return;
+  const tl={dome:'ドーム',arena:'アリーナ',hall:'ホール',outdoor:'野外'};
+  p.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="font-size:13px;font-weight:500;">${v.name}</div><span class="pill">${v.cap}人収容</span></div><div style="font-size:11px;color:var(--mt);font-family:var(--fm);margin-bottom:10px;">${v.area} · ${v.note} · ${tl[v.type]||''}</div><div class="vch">${(v.chips||[]).map(c=>`<span class="vc ${c.t}">${c.i} ${c.l}</span>`).join('')}</div>`;
+}
+function buildVL(venue){
+  const c=document.getElementById('vls');if(!c||!venue.trim())return;c.innerHTML='';
+  [{l:'コインロッカー',q:`${venue} コインロッカー`},{l:'コンビニ',q:`${venue} コンビニ`},{l:'穴場トイレ',q:`${venue} トイレ`},{l:'アクセス',q:`${venue} 最寄り駅`},{l:'混雑回避',q:`${venue} 帰り 混雑`}].forEach(({l,q})=>{
+    const a=document.createElement('a');a.className='vlb';
+    a.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    a.target='_blank';a.rel='noopener noreferrer';
+    a.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>${l}`;
+    c.appendChild(a);
+  });
+}
+function updSmV(){const e=document.getElementById('smV');if(e)e.textContent=S.venue;}
+function onBC(){S.budget=parseInt(document.getElementById('budgetInput').value)||0;const e=document.getElementById('smB');if(e)e.textContent='¥'+S.budget.toLocaleString();saveS();}
+
+/* ════ HOTEL ════ */
+function setHotel(s){
+  S.hotel=s;const e=s==='early';
+  document.getElementById('hEarly').classList.toggle('hidden',!e);
+  document.getElementById('hLast').classList.toggle('hidden',e);
+  document.getElementById('btnE').classList.toggle('active',e);
+  document.getElementById('btnL').classList.toggle('active',!e);
+}
+
+/* ════ TRANSPORT ════ */
+function selDist(btn,d){
+  document.querySelectorAll('.db').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');S.dist=d;renderTrans();renderBkd();saveS();
+}
+function swTrans(t){
+  S.trans=t;
+  ['shinkansen','bus','flight','nightbus'].forEach(k=>{
+    const el=document.getElementById('t'+{shinkansen:'Shin',bus:'Bus',flight:'Fli',nightbus:'Nbt'}[k]);
+    if(el)el.classList.toggle('active',k===t);
+  });
+  renderTrans();
+}
+function renderTrans(){
+  const items=(TDATA[S.dist]||{})[S.trans]||[];
+  const p=document.getElementById('tPanel');if(!p)return;
+  const tn={shinkansen:'🚄 新幹線',bus:'🚌 高速バス',flight:'✈ 航空券',nightbus:'🌙 夜行バス'};
+  if(!items.length){p.innerHTML=`<div style="padding:20px;text-align:center;font-size:13px;color:var(--mt);">この距離帯では${tn[S.trans]}は一般的ではありません。別の手段をお選びください。</div>`;return;}
+  p.innerHTML=items.map(it=>`<a href="${it.url}" target="_blank" rel="nofollow noopener" class="tc2"><div style="flex:1;"><div class="tbg ${it.b}">${tn[it.b]}</div><div style="font-size:14px;font-weight:500;margin:4px 0 2px;">${it.n}</div><div style="font-size:11px;color:var(--mt);">${it.r}</div><div style="font-size:11px;color:var(--mt);margin-top:4px;font-family:var(--fm);">⏱ ${it.t}</div><div style="font-size:11px;color:var(--mt);margin-top:4px;line-height:1.6;">${it.note}</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:10px;font-family:var(--fm);color:var(--mt);">FROM</div><div style="font-size:17px;font-family:var(--fm);color:var(--at);">${it.p}</div><div style="font-size:10px;color:var(--mt);margin-top:4px;">→ 検索する</div></div></a>`).join('');
+}
+function renderBkd(){
+  const items=BKDITEMS[S.dist]||BKDITEMS.mid;
+  const bd=document.getElementById('bkd');if(!bd)return;
+  bd.innerHTML=items.map(it=>`<div style="background:var(--sf2);border-radius:8px;padding:10px 12px;border:0.5px solid var(--bd);"><div style="font-size:10px;font-family:var(--fm);color:var(--mt);margin-bottom:4px;">${it.l}</div><div style="font-size:13px;font-family:var(--fm);">¥${it.a.toLocaleString()}<span style="color:var(--mt);font-size:10px;"> 〜 </span>¥${it.b.toLocaleString()}</div></div>`).join('');
+  const tot=items.reduce((s,i)=>s+(i.a+i.b)/2,0);
+  const e=document.getElementById('bTotal');if(e)e.textContent='¥'+Math.round(tot).toLocaleString();
+}
+
+/* ════ WEATHER ════ */
+function getWAdv(wmo,rain,temp){
+  const a=[];
+  if([61,63,65,80,81,82,95,96,99].includes(wmo))a.push('☂ 傘・レインコート必須');
+  if(temp>=30)a.push('🌡 高温対策・ハンディファン必須');
+  if(temp<=5)a.push('🧥 防寒具・カイロ必須');
+  if(rain>=50)a.push('💧 撥水スプレーを前日から');
+  return a.length?a.join(' / '):'✦ 天候は良好。遠征日和です！';
+}
+async function fetchWeather(){
+  const dv=document.getElementById('wDate').value;if(!dv){showT('遠征日を選択してください');return;}
+  const venue=VENUES.find(v=>v.name===S.venue)||VENUES[0];
+  const lat=venue.lat||35.8948,lon=venue.lon||139.6311;
+  const p=document.getElementById('wPanel');if(!p)return;
+  p.innerHTML='<div style="padding:28px;text-align:center;color:var(--mt);font-size:13px;">天気情報を取得中...</div>';
+  try{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max,windspeed_10m_max&hourly=temperature_2m,weathercode,precipitation_probability&timezone=Asia%2FTokyo&start_date=${dv}&end_date=${dv}`;
+    const res=await fetch(url);const data=await res.json();
+    const d=data.daily,h=data.hourly;
+    const wc=d.weathercode[0],tmax=Math.round(d.temperature_2m_max[0]),tmin=Math.round(d.temperature_2m_min[0]),rain=d.precipitation_probability_max[0],wind=Math.round(d.windspeed_10m_max[0]);
+    const wi=WMO[wc]||{i:'🌡',l:'情報なし'};
+    const adv=getWAdv(wc,rain,tmax);
+    const al=document.getElementById('wAlert');
+    if(al){if(rain>=50||tmax>=30||tmax<=5){al.textContent='⚠ 天気アラート: '+adv;al.classList.remove('hidden');}else{al.classList.add('hidden');}}
+    const hrs=[10,12,14,16,18,19,20,21,22];
+    const hHTML=hrs.map(hr=>{
+      const idx=h.time.findIndex(t=>t.includes(`T${String(hr).padStart(2,'0')}:00`));
+      if(idx<0)return'';
+      const hw=WMO[h.weathercode[idx]]||{i:'🌡'},ht=Math.round(h.temperature_2m[idx]),hp=h.precipitation_probability[idx];
+      return`<div class="whi${hr>=17&&hr<=21?' pk':''}"><div style="font-size:9px;font-family:var(--fm);color:var(--mt);">${hr}時</div><div style="font-size:18px;margin:4px 0;">${hw.i}</div><div style="font-size:12px;font-family:var(--fm);">${ht}°</div><div style="font-size:9px;color:var(--mt);font-family:var(--fm);">${hp}%</div></div>`;
+    }).join('');
+    p.innerHTML=`<div class="card"><div style="font-size:11px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-bottom:12px;">${venue.name} — ${dv}</div><div class="wbig"><div class="wic">${wi.i}</div><div><div class="wtmp">${tmax}<sup>°</sup></div><div style="font-size:13px;color:var(--mt);margin-top:2px;">${wi.l}（最低 ${tmin}°）</div><div style="font-size:11px;color:var(--at);margin-top:4px;font-family:var(--fm);">${adv}</div></div></div><div class="wgr"><div class="wcl2"><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">降水確率</div><div style="font-size:14px;font-family:var(--fm);">${rain}%</div></div><div class="wcl2"><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">最高気温</div><div style="font-size:14px;font-family:var(--fm);">${tmax}°</div></div><div class="wcl2"><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">最低気温</div><div style="font-size:14px;font-family:var(--fm);">${tmin}°</div></div><div class="wcl2"><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">風速</div><div style="font-size:14px;font-family:var(--fm);">${wind}m/s</div></div></div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);margin:10px 0 4px;letter-spacing:0.1em;">時間別（開演前後）</div><div class="whr">${hHTML}</div></div>`;
+    showT('天気情報を取得しました');
+  }catch(e){p.innerHTML='<div style="padding:24px;text-align:center;font-size:13px;color:var(--mt);">天気情報の取得に失敗しました。</div>';}
+}
+
+/* ════ JAPAN MAP ════ */
+let mapBuilt=false;
+function buildMap(){
+  const wrap=document.getElementById('mapWrap');if(!wrap||mapBuilt)return;mapBuilt=true;
+  const ns='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 800 760');svg.setAttribute('role','img');
+  const line=document.createElementNS(ns,'line');
+  ['x1','y1','x2','y2'].forEach((a,i)=>line.setAttribute(a,['227','620','227','668'][i]));
+  line.setAttribute('stroke','rgba(255,255,255,0.1)');line.setAttribute('stroke-width','1');line.setAttribute('stroke-dasharray','4,3');
+  svg.appendChild(line);
+  PREF_LAYOUT.forEach(([id,name,cx,cy,w,h])=>{
+    const g=document.createElementNS(ns,'g');
+    const rect=document.createElementNS(ns,'rect');
+    rect.setAttribute('x',cx-w/2);rect.setAttribute('y',cy-h/2);rect.setAttribute('width',w);rect.setAttribute('height',h);rect.setAttribute('rx','4');rect.setAttribute('class','pp');rect.setAttribute('id','pp-'+id);rect.setAttribute('data-name',name);rect.setAttribute('role','button');rect.setAttribute('tabindex','0');rect.setAttribute('aria-label',name);
+    const txt=document.createElementNS(ns,'text');txt.setAttribute('x',cx);txt.setAttribute('y',cy+1);txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');txt.setAttribute('font-size',w>70?'10':'9');txt.setAttribute('font-family','Noto Sans JP, sans-serif');txt.setAttribute('fill','rgba(255,255,255,0.6)');txt.setAttribute('pointer-events','none');txt.textContent=name.length>4?name.slice(0,4):name;
+    rect.addEventListener('click',()=>togPref(id,name));
+    rect.addEventListener('contextmenu',e=>{e.preventDefault();togHome(id,name);});
+    rect.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')togPref(id,name);});
+    g.appendChild(rect);g.appendChild(txt);svg.appendChild(g);
+  });
+  wrap.innerHTML='';wrap.appendChild(svg);updMapColors();
+}
+function togPref(id,name){
+  if(S.hPrefs.has(name)){S.hPrefs.delete(name);S.vPrefs.add(name);}
+  else if(S.vPrefs.has(name)){S.vPrefs.delete(name);}
+  else{S.vPrefs.add(name);}
+  updMapColors();saveS();showT(S.vPrefs.has(name)?`✦ ${name} を遠征済みに追加`:`${name} を解除しました`);
+}
+function togHome(id,name){
+  if(S.hPrefs.has(name)){S.hPrefs.delete(name);}else{S.vPrefs.delete(name);S.hPrefs.add(name);}
+  updMapColors();saveS();showT(S.hPrefs.has(name)?`🏠 ${name} をHOMEに設定`:`${name} をHOME解除`);
+}
+function updMapColors(){
+  const ac=S.ac;
+  PREF_LAYOUT.forEach(([id,name])=>{
+    const el=document.getElementById('pp-'+id);if(!el)return;
+    if(S.hPrefs.has(name)){el.style.fill=ac+'33';el.style.stroke=ac;el.style.strokeWidth='1.5';}
+    else if(S.vPrefs.has(name)){el.style.fill=ac+'80';el.style.stroke=ac+'cc';el.style.strokeWidth='1';}
+    else{el.style.fill='';el.style.stroke='';el.style.strokeWidth='';}
+  });
+  const v=S.vPrefs.size;const tot=47;
+  const e1=document.getElementById('mVC');if(e1)e1.textContent=v;
+  const e2=document.getElementById('mPC');if(e2)e2.textContent=Math.round(v/tot*100)+'%';
+  const e3=document.getElementById('mRC');if(e3)e3.textContent=tot-v;
+  const vl=document.getElementById('visitedList');
+  if(vl){const items=[...S.vPrefs];vl.innerHTML=items.length?`<div style="font-size:11px;font-family:var(--fm);color:var(--mt);margin-bottom:6px;letter-spacing:0.1em;">遠征済み</div><div style="display:flex;gap:6px;flex-wrap:wrap;">${items.map(n=>`<span style="font-size:10px;font-family:var(--fm);background:rgba(var(--ar),0.12);border:0.5px solid rgba(var(--ar),0.3);color:var(--at);padding:2px 8px;border-radius:4px;">${n}</span>`).join('')}</div>`:'';}
+}
+function clearMap(){if(!confirm('マップデータをリセットしますか？'))return;S.vPrefs.clear();S.hPrefs.clear();updMapColors();saveS();showT('マップをリセットしました');}
+
+/* ════ HISTORY ════ */
+function addHist(){
+  const v=document.getElementById('hV').value.trim(),a=document.getElementById('hA').value.trim(),d=document.getElementById('hD').value,co=parseInt(document.getElementById('hCo').value)||0,m=document.getElementById('hM').value.trim();
+  if(!v||!d){showT('会場名と日付は必須です');return;}
+  S.history.unshift({id:Date.now(),venue:v,artist:a,date:d,cost:co,memo:m,color:S.cn,ac:S.ac});
+  saveS();renderHist();renderCumS();showT('✦ 遠征を記録しました');
+  ['hV','hA','hCo','hM'].forEach(id=>{document.getElementById(id).value='';});document.getElementById('hD').value='';
+}
+function delHist(id){S.history=S.history.filter(e=>e.id!==id);saveS();renderHist();renderCumS();showT('記録を削除しました');}
+function renderHist(){
+  const el=document.getElementById('histList');if(!el)return;
+  if(!S.history.length){el.innerHTML='<div style="padding:28px;text-align:center;font-size:13px;color:var(--mt);">まだ遠征の記録がありません。上のフォームから追加してください。</div>';return;}
+  el.innerHTML=S.history.map(e=>`<div class="hic"><button class="hdl" onclick="delHist(${e.id})">×</button><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;"><div style="font-size:15px;font-weight:500;">${e.venue}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);">${e.date}</div></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">${e.artist?`<span class="htg ac">✦ ${e.artist}</span>`:''} ${e.cost?`<span class="htg">¥${e.cost.toLocaleString()}</span>`:''} ${e.color?`<span class="htg">${e.color}</span>`:''}</div>${e.memo?`<div style="font-size:12px;color:var(--mt);line-height:1.7;">${e.memo}</div>`:''}</div>`).join('');
+}
+function renderCumS(){
+  const h=S.history,tot=h.length,tc=h.reduce((s,e)=>s+(e.cost||0),0),vs=new Set(h.map(e=>e.venue)).size,as=new Set(h.filter(e=>e.artist).map(e=>e.artist)).size;
+  const el=document.getElementById('cumStats');if(!el)return;
+  el.innerHTML=`<div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${tot}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">総遠征回数</div></div><div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${vs}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">会場数</div></div><div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${as}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">推しの数</div></div><div class="cs2"><div style="font-size:20px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">¥${tc.toLocaleString()}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">累計支出</div></div>`;
+  const smT=document.getElementById('smT');if(smT)smT.textContent=tot+'回';
+}
+
+/* ════ BINO ════ */
+function selSeat(btn,seat){
+  document.querySelectorAll('.sbt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');S.seat=seat;updBino();
+}
+function updBino(){
+  S.vType=document.getElementById('vType').value;
+  const d=BDATA[S.vType]?.[S.seat];if(!d)return;
+  document.getElementById('bMag').textContent=d.mag;document.getElementById('bDist').textContent=d.dist;
+  document.getElementById('bNote').textContent=d.note;document.getElementById('bView').textContent=d.view;
+  document.getElementById('sFill').style.width=d.prog+'%';document.getElementById('sCur').style.left=d.prog+'%';
+  document.getElementById('dmmT').textContent=d.dT;document.getElementById('dmmP').textContent=d.dP;
+  document.getElementById('amBT').textContent=d.aT;document.getElementById('amBP').textContent=d.aP;
+  const strip=document.getElementById('concierge');if(!strip)return;
+  const chips=(CDATA[S.seat]||{})[S.vType]||[];
+  strip.innerHTML=chips.map(c=>`<span class="cch ${c.t}">${c.i} ${c.l}</span>`).join('');
+}
+
+/* ════ AFTERGLOW ════ */
+function swAgl(tab){
+  S.aglTab=tab;
+  [{k:'souvenir',id:'agS'},{k:'dining',id:'agD'},{k:'return',id:'agR'}].forEach(({k,id})=>{
+    const el=document.getElementById(id);if(el)el.classList.toggle('active',k===tab);
+  });
+  const panel=document.getElementById('aglPanel');if(!panel)return;
+  const items=AGDATA[tab]||[];
+  if(tab==='souvenir'||tab==='return'){
+    panel.innerHTML=items.map(it=>`<a href="${it.url}" target="_blank" rel="nofollow noopener" class="agc"><div class="ath">${it.i}</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:3px;">${it.n}</div><div style="font-size:11px;color:var(--mt);line-height:1.65;">${it.d}</div></div><div style="font-size:10px;color:var(--at);flex-shrink:0;">→</div></a>`).join('');
+  }else{
+    panel.innerHTML=items.map(it=>`<a href="${it.url}" target="_blank" rel="nofollow noopener" class="rsc"><div style="font-size:13px;font-weight:500;margin-bottom:3px;">${it.n}</div><div style="font-size:11px;color:var(--mt);line-height:1.65;">${it.d}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">${it.tags.map(t=>`<span style="font-size:9px;font-family:var(--fm);padding:2px 7px;border-radius:4px;background:var(--sf2);color:var(--mt);">${t}</span>`).join('')}</div></a>`).join('');
+  }
+}
+
+/* ════ PACKING ════ */
+function renderPack(){
+  const items=PITEMS[S.packTab];const c=document.getElementById('packList');if(!c)return;
+  c.innerHTML='';
+  items.forEach(it=>{
+    const ck=S.checks[it.id]||false;
+    const div=document.createElement('div');div.className='ci'+(ck?' ck':'');div.id='row_'+it.id;div.setAttribute('role','listitem');
+    div.innerHTML=`<input type="checkbox" id="chk_${it.id}" ${ck?'checked':''} onchange="togCk('${it.id}',this)" aria-label="${it.l}"><label class="cl" for="chk_${it.id}">${it.l}</label>${it.u?`<a href="${it.u}" target="_blank" rel="nofollow noopener" class="al2" onclick="event.stopPropagation()">Amazon</a>`:''}`;
+    c.appendChild(div);
+  });
+  updPP();
+}
+function togCk(id,el){
+  S.checks[id]=el.checked;
+  const row=document.getElementById('row_'+id);
+  row.classList.toggle('ck',el.checked);
+  if(el.checked){row.style.transition='transform 0.18s var(--es)';row.style.transform='translateX(4px)';setTimeout(()=>{row.style.transform='';},220);}
+  updPP();saveS();
+}
+let lastPct=0;
+function updPP(){
+  const all=Object.values(PITEMS).flat();const tot=all.length;const done=all.filter(i=>S.checks[i.id]).length;const pct=tot?Math.round(done/tot*100):0;
+  const pf=document.getElementById('pp');if(pf)pf.style.width=pct+'%';
+  const pc=document.getElementById('pc');if(pc)pc.textContent=done+' / '+tot;
+  const sp=document.getElementById('smP');if(sp)sp.textContent=pct+'%';
+  const pe=document.getElementById('ppEl');if(pe)pe.setAttribute('aria-valuenow',pct);
+  const dot=document.getElementById('packDot');if(dot)dot.classList.toggle('show',pct>0&&pct<100);
+  if(pct===100&&lastPct<100){
+    const pl=document.getElementById('packList');if(pl){pl.classList.add('cel');setTimeout(()=>pl.classList.remove('cel'),600);}
+    const cm=document.getElementById('celMsg');if(cm)cm.classList.remove('hidden');
+    launchConfetti();showT('✦ 全アイテム準備完了！');
+    setTimeout(()=>runDiag(),800);
+  }else if(pct<100){const cm=document.getElementById('celMsg');if(cm)cm.classList.add('hidden');}
+  lastPct=pct;
+}
+function swPack(tab){
+  S.packTab=tab;
+  const ids={essential:'ptE',weather:'ptW',goods:'ptG',beauty:'ptB',recovery:'ptR'};
+  Object.entries(ids).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',k===tab);});
+  renderPack();
+}
+
+/* ════ STORY (Phase 3) ════ */
+function selTheme(btn,theme){
+  document.querySelectorAll('.thb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');S.theme=theme;saveS();renderStory();
+}
+function togOpt(key,el){
+  const on=!el.classList.contains('on');el.classList.toggle('on',on);S.stOpts[key]=on;renderStory();
+}
+function splitTxt(text,max){if(text.length<=max)return[text];const m=Math.ceil(text.length/2);return[text.slice(0,m),text.slice(m)];}
+function renderStory(){
+  const canvas=document.getElementById('storyCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');const W=1080,H=1920;canvas.width=W;canvas.height=H;
+  const theme=THEMES[S.theme]||THEMES.modern,acc=S.ac,opts=S.stOpts;
+  const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,pct=all.length?Math.round(done/all.length*100):0;
+  const tl={shinkansen:'新幹線',bus:'高速バス',flight:'飛行機',nightbus:'夜行バス'}[S.trans]||'';
+  theme.bg(ctx,W,H,acc);
+  const T=(text,x,y,sz,col,al='center',gl=false)=>{ctx.save();if(gl&&opts.showGlow){ctx.shadowColor=acc;ctx.shadowBlur=30;}ctx.font=`300 ${sz}px 'Noto Serif JP',serif`;ctx.fillStyle=col;ctx.textAlign=al;ctx.textBaseline='middle';ctx.fillText(text,x,y);ctx.restore();};
+  const M=(text,x,y,sz,col,al='center')=>{ctx.save();ctx.font=`300 ${sz}px 'DM Mono',monospace`;ctx.fillStyle=col;ctx.textAlign=al;ctx.textBaseline='middle';ctx.fillText(text,x,y);ctx.restore();};
+  const tc=theme.tc||'#f0f0f8',mc=theme.mc||'rgba(255,255,255,0.5)';
+  if(S.theme==='modern'||S.theme==='jirai'){ctx.save();ctx.shadowColor=acc;ctx.shadowBlur=40;ctx.beginPath();ctx.arc(W/2,160,14,0,Math.PI*2);ctx.fillStyle=acc;ctx.fill();ctx.restore();}
+  M('ENSEI PASS',W/2,230,32,mc+'cc');M('COMPLETE',W/2,285,22,acc);
+  ctx.strokeStyle=acc+'66';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W/2-140,320);ctx.lineTo(W/2+140,320);ctx.stroke();
+  const vlines=splitTxt(S.venue,18);let vy=420;
+  T('会場',W/2,360,28,mc);
+  vlines.forEach(line=>{T(line,W/2,vy,68,tc,'center',true);vy+=90;});
+  const infoY=Math.max(vy+60,700),infos=[];
+  if(opts.showBudget)infos.push({l:'遠征予算',v:'¥'+S.budget.toLocaleString()});
+  infos.push({l:'推し色',v:S.cn});
+  if(opts.showTransport&&tl)infos.push({l:'交通',v:tl});
+  if(opts.showPack)infos.push({l:'パック進捗',v:pct+'%'});
+  infos.forEach((info,i)=>{const y=infoY+i*90;M(info.l,180,y,26,mc,'left');T(info.v,W-180,y,42,tc,'right',info.l==='遠征予算');});
+  const midY=infoY+infos.length*90+60;
+  ctx.strokeStyle=acc+'33';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,midY);ctx.lineTo(W-60,midY);ctx.stroke();
+  if(opts.showPack){
+    const pbY=midY+60;M('PACKING PROGRESS',W/2,pbY,24,mc);
+    const pbW=W-160,pbX=80;
+    ctx.fillStyle='rgba(255,255,255,0.08)';ctx.beginPath();ctx.roundRect(pbX,pbY+30,pbW,12,6);ctx.fill();
+    if(pct>0){const g=ctx.createLinearGradient(pbX,0,pbX+pbW*(pct/100),0);g.addColorStop(0,acc+'99');g.addColorStop(1,acc);ctx.save();if(opts.showGlow){ctx.shadowColor=acc;ctx.shadowBlur=12;}ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(pbX,pbY+30,pbW*(pct/100),12,6);ctx.fill();ctx.restore();}
+    M(pct+'% READY',W/2,pbY+80,36,tc);
+  }
+  const botY=H-120;ctx.strokeStyle=acc+'22';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,botY-30);ctx.lineTo(W-60,botY-30);ctx.stroke();
+  M('ENSEI PASS — 準備さえも、推し事になる',W/2,botY,22,mc+'88');
+  ctx.save();ctx.shadowColor=acc;ctx.shadowBlur=20;ctx.beginPath();ctx.arc(W/2,botY+60,6,0,Math.PI*2);ctx.fillStyle=acc;ctx.fill();ctx.restore();
+}
+function dlStory(){renderStory();const canvas=document.getElementById('storyCanvas');const a=document.createElement('a');a.download=`enseipass_${S.venue}_${S.theme}.png`;a.href=canvas.toDataURL('image/png');a.click();showT('ストーリー画像を保存しました');}
+function shareStoryX(){const t=`【遠征しおり】${S.venue} へ行きます！予算¥${S.budget.toLocaleString()} / 推し色：${S.cn} #EnseiPass #遠征`;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}`,'_blank');}
+
+/* ════ QR ════ */
+let qrIns=null;
+function genQR(url){
+  const c=document.getElementById('qrContainer');if(!c)return;c.innerHTML='';
+  try{qrIns=new QRCode(c,{text:url,width:200,height:200,colorDark:'#1a1a2e',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(e){c.innerHTML='<div style="width:200px;height:200px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#333;text-align:center;padding:16px;">QRライブラリ<br>読み込み中…</div>';}
+  const d=document.getElementById('qrUrl');if(d)d.textContent=url;
+}
+function regenQR(){genQR(getURL());showT('QRコードを更新しました');}
+function dlQR(){const canvas=document.querySelector('#qrContainer canvas');if(!canvas){showT('QR生成中…');return;}const a=document.createElement('a');a.download='enseipass_qr.png';a.href=canvas.toDataURL('image/png');a.click();showT('QRコードを保存しました');}
+
+/* ════ TRADING CARDS (Phase 5) ════ */
+function calcRarity(card){
+  let score=0;
+  if(card.pp>=100)score+=40;else if(card.pp>=80)score+=25;else if(card.pp>=50)score+=12;
+  if(card.budget>=80000)score+=20;else if(card.budget>=40000)score+=10;
+  if(card.ds>=90)score+=30;else if(card.ds>=70)score+=15;else if(card.ds>=50)score+=8;
+  if(VENUES.some(v=>v.name===card.venue))score+=5;
+  if(score>=90)return RARITIES[4];if(score>=65)return RARITIES[3];if(score>=40)return RARITIES[2];if(score>=20)return RARITIES[1];return RARITIES[0];
+}
+function drawCard(card){
+  const sc=2,W=252*sc,H=352*sc;
+  const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  const acc=card.ac||S.ac,rar=card.rar||calcRarity(card);
+  const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#0d0d14');bg.addColorStop(1,'#1a1a2e');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  if(rar.g){const g=ctx.createRadialGradient(W/2,H*0.25,0,W/2,H*0.25,W*0.6);g.addColorStop(0,acc+'55');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  const brd=ctx.createLinearGradient(0,0,W,H);brd.addColorStop(0,acc+'cc');brd.addColorStop(0.5,rar.c+'cc');brd.addColorStop(1,acc+'cc');
+  ctx.strokeStyle=brd;ctx.lineWidth=sc*1.5;ctx.beginPath();ctx.roundRect(sc,sc,W-sc*2,H-sc*2,12*sc);ctx.stroke();
+  ctx.strokeStyle=acc+'22';ctx.lineWidth=sc*0.5;ctx.beginPath();ctx.roundRect(sc*4,sc*4,W-sc*8,H-sc*8,8*sc);ctx.stroke();
+  const sY=18*sc,sS=14*sc,sX=W/2-(rar.s-1)*sS/2;
+  ctx.fillStyle=rar.c;ctx.font=`${12*sc}px serif`;ctx.textAlign='center';
+  for(let i=0;i<rar.s;i++){ctx.fillText('★',sX+i*sS,sY+4*sc);}
+  ctx.font=`${6*sc}px 'DM Mono',monospace`;ctx.fillStyle=acc+'99';ctx.textAlign='center';ctx.fillText('ENSEI PASS',W/2,230);
+  ctx.font=`${8*sc}px 'DM Mono',monospace`;ctx.fillStyle=rar.c;ctx.textAlign='center';ctx.fillText(rar.l,W/2,285);
+  const vlines=(card.venue||'会場').length>8?[(card.venue||'会場').slice(0,8),(card.venue||'会場').slice(8,16)]:[card.venue||'会場'];
+  ctx.font=`300 ${18*sc}px 'Noto Serif JP',serif`;ctx.fillStyle='rgba(255,255,255,0.95)';ctx.textAlign='center';
+  if(rar.g){ctx.shadowColor=acc;ctx.shadowBlur=8*sc;}
+  vlines.forEach((line,i)=>ctx.fillText(line,W/2,(90+i*22)*sc));ctx.shadowBlur=0;
+  ctx.strokeStyle=acc+'44';ctx.lineWidth=sc*0.5;
+  ctx.beginPath();ctx.moveTo(20*sc,(90+vlines.length*22+6)*sc);ctx.lineTo(W-20*sc,(90+vlines.length*22+6)*sc);ctx.stroke();
+  const stsY=(90+vlines.length*22+18)*sc;
+  [['推し色',card.cn||S.cn],['予算','¥'+(card.budget||S.budget).toLocaleString()],['パック',card.pp+'%'],['戦闘力',card.ds?card.ds+'pt':'—']].forEach(([k,v],i)=>{
+    const y=stsY+i*14*sc;
+    ctx.font=`${6.5*sc}px 'DM Mono',monospace`;ctx.fillStyle='rgba(255,255,255,0.4)';ctx.textAlign='left';ctx.fillText(k,22*sc,y);
+    ctx.fillStyle='rgba(255,255,255,0.9)';ctx.textAlign='right';ctx.fillText(v,(W-22*sc),y);
+  });
+  ctx.save();ctx.shadowColor=acc;ctx.shadowBlur=12*sc;ctx.beginPath();ctx.arc(W/2,H-16*sc,4*sc,0,Math.PI*2);ctx.fillStyle=acc;ctx.fill();ctx.restore();
+  const dt=new Date(card.created||Date.now()).toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'});
+  ctx.font=`${5*sc}px 'DM Mono',monospace`;ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='center';ctx.fillText(dt,W/2,H-7*sc);
+  return canvas;
+}
+function mintCard(){
+  const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,pct=Math.round(done/all.length*100);
+  const card={id:Date.now(),venue:S.venue,cn:S.cn,ac:S.ac,budget:S.budget,pp:pct,ds:S.lastDiag?S.lastDiag.score:0,created:Date.now()};
+  card.rar=calcRarity(card);S.cards.unshift(card);saveS();renderCards();
+  showT(`✦ ${card.rar.l}カードをミントしました！`);
+  if(card.rar.l==='SSR'||card.rar.l==='UR')launchConfetti();
+}
+function mintDemo(){
+  const vs=['東京ドーム','横浜アリーナ','さいたまスーパーアリーナ','マリンメッセ福岡','京セラドーム大阪'];
+  const cs=[{cn:'ピンク',ac:'#E8547A'},{cn:'ブルー',ac:'#5B8CDB'},{cn:'パープル',ac:'#9B6AD4'}];
+  for(let i=0;i<3;i++){
+    const c=cs[i%cs.length];
+    const card={id:Date.now()+i,venue:vs[i%vs.length],...c,budget:Math.round((20000+Math.random()*80000)/1000)*1000,pp:Math.round(60+Math.random()*40),ds:Math.round(50+Math.random()*50),created:Date.now()-i*86400000*7};
+    card.rar=calcRarity(card);S.cards.push(card);
+  }
+  saveS();renderCards();showT('✦ 3枚のカードを生成しました');
+}
+function renderCards(){
+  const grid=document.getElementById('cardGrid'),empty=document.getElementById('cardEmpty');if(!grid)return;
+  if(!S.cards.length){grid.innerHTML='';if(empty)empty.classList.remove('hidden');return;}
+  if(empty)empty.classList.add('hidden');grid.innerHTML='';
+  const el=document.getElementById('smC');if(el)el.textContent=S.cards.length+'枚';
+  S.cards.forEach(card=>{
+    const wrap=document.createElement('div');wrap.className='tcw';
+    const cardEl=document.createElement('div');cardEl.className='tc';
+    const canvas=drawCard(card);canvas.style.cssText='width:100%;height:100%;display:block;border-radius:12px;';
+    const shine=document.createElement('div');shine.className='tsh';
+    cardEl.appendChild(canvas);cardEl.appendChild(shine);
+    cardEl.addEventListener('mousemove',e=>{const r=cardEl.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;cardEl.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*12}deg) scale(1.04)`;});
+    cardEl.addEventListener('mouseleave',()=>{cardEl.style.transform='';});
+    wrap.appendChild(cardEl);
+    const acts=document.createElement('div');acts.className='tca';
+    acts.innerHTML=`<button class="tcab" onclick="dlCard(${card.id})">保存</button><button class="tcab" onclick="shareCard(${card.id})">シェア</button><button class="tcab" onclick="delCard(${card.id})" style="color:rgba(255,100,100,0.6);">削除</button>`;
+    wrap.appendChild(acts);
+    const rl=document.createElement('div');rl.style.cssText='text-align:center;font-family:var(--fm);font-size:9px;letter-spacing:0.12em;margin-top:4px;';rl.style.color=card.rar.c;rl.textContent=card.rar.l+' — '+card.venue.slice(0,12);
+    wrap.appendChild(rl);grid.appendChild(wrap);
+  });
+}
+function dlCard(id){const card=S.cards.find(c=>c.id===id);if(!card)return;const canvas=drawCard(card);const a=document.createElement('a');a.download=`enseipass_card_${card.venue.slice(0,8)}_${card.rar.l}.png`;a.href=canvas.toDataURL('image/png');a.click();showT('カードを保存しました');}
+function shareCard(id){const card=S.cards.find(c=>c.id===id);if(!card)return;const t=`【ENSEI PASS ${card.rar.l}カード】${card.venue} / 推し色:${card.cn} #EnseiPass #遠征`;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}`,'_blank');}
+function delCard(id){S.cards=S.cards.filter(c=>c.id!==id);saveS();renderCards();showT('カードを削除しました');}
+
+/* ════ ULTIMATE DIAGNOSIS (Phase 5) ════ */
+function runDiag(){
+  const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,tot=all.length;
+  let score=Math.round(done/tot*100);
+  if(S.checks['bino_item'])score=Math.min(score+5,100);
+  if(S.checks['socks'])score=Math.min(score+4,100);
+  if(S.checks['makeup_base'])score=Math.min(score+3,100);
+  if(S.budget>=80000)score=Math.min(score+4,100);else if(S.budget>=40000)score=Math.min(score+2,100);
+  if(VENUES.some(v=>v.name===S.venue))score=Math.min(score+5,100);
+  if(S.cards.length>=3)score=Math.min(score+3,100);
+  if(S.cards.length>=5)score=Math.min(score+3,100);
+  const result=DIAG.find(r=>score>=r.min)||DIAG[DIAG.length-1];
+  S.lastDiag={score,rank:result.rank,title:result.title};saveS();
+  const smPW=document.getElementById('smPW');if(smPW)smPW.textContent=`${result.rank} (${score})`;
+  const scoreEl=document.getElementById('dScore'),meterEl=document.getElementById('dMeter'),badgeEl=document.getElementById('dRank');
+  let cur=0;const anim=()=>{cur=Math.min(cur+Math.ceil(score/50),score);if(scoreEl)scoreEl.textContent=cur;if(meterEl)meterEl.style.width=cur+'%';if(cur<score)requestAnimationFrame(anim);};requestAnimationFrame(anim);
+  if(badgeEl){badgeEl.textContent=result.badge;badgeEl.style.borderColor=score>=95?'#FFD700':score>=80?'#C8A0FF':score>=65?'#5B8CDB':'var(--a)';badgeEl.style.boxShadow=`0 0 ${score>=65?30:16}px ${score>=95?'#FFD700':score>=80?'#C8A0FF':'rgba(var(--ar),0.3)'}`;}
+  const dTitle=document.getElementById('dTitle');if(dTitle)dTitle.textContent=`${result.rank} — ${result.title}`;
+  const dMsg=document.getElementById('dMsg');if(dMsg)dMsg.textContent=result.msg;
+  const dTags=document.getElementById('dTags');if(dTags)dTags.innerHTML=result.tags.map(t=>`<span>${t}</span>`).join('');
+  const dStats=document.getElementById('dStats');
+  if(dStats)dStats.innerHTML=`<div class="dsi"><div style="font-size:20px;font-family:var(--fm);font-weight:300;color:var(--a);">${done}/${tot}</div><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">パック完了</div></div><div class="dsi"><div style="font-size:20px;font-family:var(--fm);font-weight:300;color:var(--a);">${S.cards.length}</div><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">カード枚数</div></div><div class="dsi"><div style="font-size:20px;font-family:var(--fm);font-weight:300;color:var(--a);">¥${Math.round(S.budget/1000)}k</div><div style="font-size:9px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:2px;">遠征予算</div></div>`;
+  if(score>=90)launchConfetti();
+  showT(`✦ 遠征戦闘力 ${score} — ${result.rank}ランク！`);
+}
+
+/* ════ RESTORE CODE (Phase 5) ════ */
+function encodeRC(){
+  const colors=['#E8547A','#5B8CDB','#52C27A','#9B6AD4','#F0A020','#3EC4D4','#FF6EB4'];
+  const ci=Math.max(0,colors.indexOf(S.ac))&0x07;
+  const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length;
+  const pctStep=Math.round(done/all.length*31)&0x1F;
+  const budStep=Math.min(Math.floor(S.budget/10000),31)&0x1F;
+  const vIdx=Math.max(0,VENUES.findIndex(v=>v.name===S.venue))&0x0F;
+  const dist={near:0,mid:1,far:2}[S.dist]||1;
+  const n=((ci<<27)|(pctStep<<22)|(budStep<<17)|(vIdx<<13)|(dist<<11))>>>0;
+  const chars=[];let tmp=n>>>0;
+  for(let i=5;i>=0;i--){chars[i]=RC[tmp&31];tmp>>>=5;}
+  return chars[0]+chars[1]+'·'+chars[2]+chars[3]+'·'+chars[4]+chars[5];
+}
+function decodeRC(code){
+  const clean=code.replace(/[·.\-\s]/g,'').toUpperCase();if(clean.length!==6)return null;
+  let n=0;for(const ch of clean){const idx=RC.indexOf(ch);if(idx<0)return null;n=(n<<5)|idx;}
+  n=n>>>0;
+  return{colorIdx:(n>>27)&0x7,pctStep:(n>>22)&0x1F,budgetStep:(n>>17)&0x1F,venueIdx:(n>>13)&0xF,dist:['near','mid','far'][(n>>11)&0x3]||'mid'};
+}
+function showCode(code){
+  const parts=code.split('·');
+  const a=document.getElementById('rcA');if(a)a.textContent=parts[0]||'——';
+  const b=document.getElementById('rcB');if(b)b.textContent=parts[1]||'——';
+  const c=document.getElementById('rcC');if(c)c.textContent=parts[2]||'——';
+}
+function genCode(){const code=encodeRC();S.restoreCode=code;saveS();showCode(code);showT('復元コードを生成しました');}
+function cpCode(){if(!S.restoreCode){showT('先にコードを生成してください');return;}navigator.clipboard.writeText(S.restoreCode).then(()=>showT('復元コードをコピーしました'));}
+function fmtCode(el){let v=el.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,6);if(v.length>4)v=v.slice(0,2)+'·'+v.slice(2,4)+'·'+v.slice(4);else if(v.length>2)v=v.slice(0,2)+'·'+v.slice(2);el.value=v;}
+function restoreCode(){
+  const code=document.getElementById('rcIn').value;
+  const decoded=decodeRC(code);
+  const res=document.getElementById('rcRes');
+  if(!decoded){if(res)res.innerHTML=`<span style="color:rgba(255,100,100,0.8);">コードが正しくありません</span>`;return;}
+  const colors=['#E8547A','#5B8CDB','#52C27A','#9B6AD4','#F0A020','#3EC4D4','#FF6EB4'];
+  const names=['ピンク','ブルー','グリーン','パープル','オレンジ','水色','レインボー'];
+  const texts=['#ffd6e3','#c8dcff','#b8f0cc','#dcc8ff','#ffe0a0','#b0f0f8','#ffddee'];
+  const lights=['rgba(232,84,122,0.12)','rgba(91,140,219,0.12)','rgba(82,194,122,0.12)','rgba(155,106,212,0.12)','rgba(240,160,32,0.12)','rgba(62,196,212,0.12)','rgba(255,110,180,0.12)'];
+  const aas=['#E8547A','#5B8CDB','#52C27A','#9B6AD4','#F0A020','#3EC4D4','#FF6EB4'];
+  const abs=['#b03058','#1e4d9a','#1a5e30','#5a2699','#7a4c00','#12697a','#9B6AD4'];
+  const ci=Math.min(decoded.colorIdx,colors.length-1);
+  const vi=Math.min(decoded.venueIdx,VENUES.length-1);
+  const venue=VENUES[vi];
+  applyA(colors[ci],'232,84,122',texts[ci],lights[ci],names[ci],aas[ci],abs[ci],true);
+  S.budget=decoded.budgetStep*10000||S.budget;S.venue=venue.name;S.dist=decoded.dist;
+  document.getElementById('budgetInput').value=S.budget;document.getElementById('venueInput').value=venue.name;
+  onBC();updSmV();buildVL(venue.name);renderVI(venue);saveS();
+  if(res)res.innerHTML=`<div style="background:rgba(80,220,160,0.08);border:0.5px solid rgba(80,220,160,0.3);border-radius:8px;padding:10px 12px;font-size:12px;"><div style="color:#80f0b8;font-family:var(--fm);margin-bottom:4px;">✦ 復元完了</div><div style="color:var(--mt);">会場: ${venue.name} / 推し色: ${names[ci]} / 予算: ¥${S.budget.toLocaleString()}</div></div>`;
+  showT('✦ プランを復元しました！');
+}
+
+/* ════ COMPANION SYNC (Phase 5) ════ */
+const COMP_CH='enseipass_companion';
+let myRoom='';
+function swCmp(mode){
+  S.compMode=mode;
+  document.getElementById('cmpH').classList.toggle('active',mode==='host');
+  document.getElementById('cmpJ').classList.toggle('active',mode==='join');
+  document.getElementById('cmpHost').classList.toggle('hidden',mode!=='host');
+  document.getElementById('cmpJoin').classList.toggle('hidden',mode!=='join');
+}
+function genRoom(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  myRoom=Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+  S.roomCode=myRoom;
+  const el=document.getElementById('hostCode');if(el)el.textContent=myRoom;
+  try{
+    const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,pct=Math.round(done/all.length*100);
+    localStorage.setItem(COMP_CH+'_'+myRoom,JSON.stringify({roomCode:myRoom,name:'あなた',packPct:pct,colorName:S.cn,ac:S.ac,venue:S.venue,ts:Date.now()}));
+    localStorage.setItem(COMP_CH+'_host',JSON.stringify({roomCode:myRoom,name:'あなた',packPct:pct,colorName:S.cn,ac:S.ac,venue:S.venue,ts:Date.now()}));
+  }catch(e){}
+  showT('✦ ルームコード: '+myRoom);
+}
+function cpRoom(){if(!myRoom){showT('先にルームコードを生成してください');return;}navigator.clipboard.writeText(myRoom).then(()=>showT('コードをコピーしました'));}
+function joinRoom(){
+  const code=document.getElementById('jCode').value.trim().toUpperCase();if(code.length<4){showT('コードを入力してください');return;}
+  try{
+    const raw=localStorage.getItem(COMP_CH+'_'+code)||localStorage.getItem(COMP_CH+'_host');
+    const res=document.getElementById('joinRes');
+    if(raw){
+      const host=JSON.parse(raw);
+      const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,myPct=Math.round(done/all.length*100);
+      if(res)res.innerHTML=`<div style="background:rgba(80,220,160,0.1);border:0.5px solid rgba(80,220,160,0.3);border-radius:8px;padding:12px 14px;font-size:12px;"><div style="color:#80f0b8;font-family:var(--fm);margin-bottom:8px;">✓ ルームに参加しました</div><div style="display:grid;gap:8px;"><div style="background:var(--sf2);border-radius:8px;padding:12px 14px;border:0.5px solid var(--bd);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:500;">ホスト (${host.colorName||'?'})</span><span style="font-size:12px;font-family:var(--fm);color:var(--at);">${host.packPct||0}%</span></div><div style="height:3px;background:var(--sf3);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${host.packPct||0}%;background:linear-gradient(to right,${host.ac||S.ac}99,${host.ac||S.ac});border-radius:2px;"></div></div></div><div style="background:var(--sf2);border-radius:8px;padding:12px 14px;border:0.5px solid var(--bd);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:500;">あなた (${S.cn})</span><span style="font-size:12px;font-family:var(--fm);color:var(--at);">${myPct}%</span></div><div style="height:3px;background:var(--sf3);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${myPct}%;background:linear-gradient(to right,${S.ac}99,${S.ac});border-radius:2px;"></div></div></div></div></div>`;
+      showT('✦ ルームに参加しました！');
+    }else{
+      const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,myPct=Math.round(done/all.length*100);
+      const demoPct=Math.round(30+Math.random()*60);
+      if(res)res.innerHTML=`<div style="background:rgba(80,220,160,0.1);border:0.5px solid rgba(80,220,160,0.3);border-radius:8px;padding:12px 14px;font-size:12px;"><div style="color:#80f0b8;font-family:var(--fm);margin-bottom:8px;">✓ デモモードで参加（同行者をシミュレート）</div><div style="display:grid;gap:8px;"><div style="background:var(--sf2);border-radius:8px;padding:12px 14px;border:0.5px solid var(--bd);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:500;">同行者A (ブルー)</span><span style="font-size:12px;font-family:var(--fm);color:var(--at);">${demoPct}%</span></div><div style="height:3px;background:var(--sf3);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${demoPct}%;background:linear-gradient(to right,#5B8CDB99,#5B8CDB);border-radius:2px;"></div></div></div><div style="background:var(--sf2);border-radius:8px;padding:12px 14px;border:0.5px solid var(--bd);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:500;">あなた (${S.cn})</span><span style="font-size:12px;font-family:var(--fm);color:var(--at);">${myPct}%</span></div><div style="height:3px;background:var(--sf3);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${myPct}%;background:linear-gradient(to right,${S.ac}99,${S.ac});border-radius:2px;"></div></div></div></div></div>`;
+      showT('デモモードで参加しました');
+    }
+  }catch(e){showT('参加に失敗しました');}
+}
+
+/* ════ CONFETTI ════ */
+function launchConfetti(){
+  const cols=['var(--a)','#c8a0ff','#80d8ff','#ffd700','#80f0b8'];
+  for(let i=0;i<40;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');el.className='cfp';
+      el.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*0.5}s;`;
+      document.body.appendChild(el);setTimeout(()=>el.remove(),3000);
+    },i*40);
+  }
+}
+
+/* ════ SHARE ════ */
+function encS(){
+  const checks=Object.entries(S.checks).filter(([,v])=>v).map(([k])=>k).join(',');
+  return new URLSearchParams({v:S.venue,b:S.budget,c:S.ac.replace('#',''),cn:S.cn,d:S.dist,tr:S.trans,ch:checks}).toString();
+}
+function getURL(){return location.origin+location.pathname+'?'+encS();}
+function shareToX(){
+  const pw=S.lastDiag?`戦闘力${S.lastDiag.score} ${S.lastDiag.rank} / `:'';
+  const t=`【遠征計画 COMPLETE】${S.venue} / ${pw}¥${S.budget.toLocaleString()} / 推し色:${S.cn} #EnseiPass #遠征 #オタ活`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent(getURL())}`,'_blank');
+}
+function copyShareURL(){
+  const url=getURL();
+  const w=document.getElementById('urlWrap'),d=document.getElementById('urlDisplay');
+  if(d)d.textContent=url;if(w)w.style.display='flex';
+  navigator.clipboard.writeText(url).then(()=>showT('URLをコピーしました'));
+}
+function copyText(){
+  const all=Object.values(PITEMS).flat();
+  const done=all.filter(i=>S.checks[i.id]).map(i=>'✓ '+i.l);
+  const todo=all.filter(i=>!S.checks[i.id]).map(i=>'□ '+i.l);
+  const pw=S.lastDiag?`\n戦闘力：${S.lastDiag.score} ${S.lastDiag.rank} (${S.lastDiag.title})`:'';
+  const t=[`【ENSEI PASS COMPLETE — 遠征計画】`,`会場：${S.venue}`,`予算：¥${S.budget.toLocaleString()}`,`推し色：${S.cn}`,`コレクション：${S.cards.length}枚`,pw,``,`【持ち物チェック】`,...done,...todo].join('\n');
+  navigator.clipboard.writeText(t).then(()=>showT('テキストをコピーしました'));
+}
+
+/* ════ TOAST ════ */
+let tt;
+function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2800);}
+
+/* ════ URL DECODE ════ */
+function decURL(){
+  const p=new URLSearchParams(location.search);
+  if(p.has('v')){const v=p.get('v');document.getElementById('venueInput').value=v;S.venue=v;updSmV();buildVL(v);const f=VENUES.find(x=>x.name===v);if(f)renderVI(f);}
+  if(p.has('b')){const b=parseInt(p.get('b'))||0;document.getElementById('budgetInput').value=b;S.budget=b;onBC();}
+  if(p.has('cn')){const sw=document.querySelector(`.cs[data-name="${p.get('cn')}"]`);if(sw)setAccent(sw);}
+  if(p.has('d'))S.dist=p.get('d');
+  if(p.has('tr'))S.trans=p.get('tr');
+  if(p.has('ch')&&p.get('ch'))p.get('ch').split(',').filter(Boolean).forEach(id=>{S.checks[id]=true;});
+}
+
+/* ════ INIT ════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  // Set default dates
+  const today=new Date();const nextWeek=new Date(today);nextWeek.setDate(today.getDate()+7);
+  const wd=document.getElementById('wDate');if(wd)wd.value=nextWeek.toISOString().slice(0,10);
+  const hd=document.getElementById('hD');if(hd)hd.value=today.toISOString().slice(0,10);
+
+  loadS();
+  decURL();
+  updBino();
+  renderPack();
+  buildVL(S.venue);
+  const dv=VENUES.find(v=>v.name===S.venue)||VENUES[0];
+  renderVI(dv);
+  updSmV();
+  renderTrans();
+  renderBkd();
+  swAgl(S.aglTab||'souvenir');
+
+  // Initial QR (deferred)
+  setTimeout(()=>{renderStory();genQR(getURL());genCode();},600);
+
+  // Restore companion states
+  try{window.addEventListener('storage',e=>{if(e.key&&e.key.startsWith(COMP_CH)){/* auto refresh possible */}});}catch(err){}
+});
+</script>
+</body>
+</html>
