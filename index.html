@@ -1,6 +1,331 @@
-bash
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#0d0d14">
+<meta name="description" content="準備さえも、推し事になる。あなたの遠征を、一生の宝物に。">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ENSEI PASS">
+<title>ENSEI PASS — Complete</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --a:#E8547A;--ar:232,84,122;--al:rgba(232,84,122,0.12);--at:#ffd6e3;
+  --aa:#E8547A;--ab:#b03058;
+  --bg:#0d0d14;--sf:#13131f;--sf2:#1a1a2e;--sf3:#22223a;
+  --bd:rgba(255,255,255,0.08);--bdb:rgba(255,255,255,0.14);
+  --mt:rgba(255,255,255,0.45);--mt2:rgba(255,255,255,0.22);
+  --tx:#f0f0f8;
+  --fs:'Noto Serif JP',serif;--fn:'Noto Sans JP',sans-serif;--fm:'DM Mono',monospace;
+  --eo:cubic-bezier(0.16,1,0.3,1);--es:cubic-bezier(0.34,1.56,0.64,1);
+  --nh:56px;--bnh:68px;--sb:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:var(--fn);background:var(--bg);color:var(--tx);font-weight:300;letter-spacing:0.02em;line-height:1.8;overscroll-behavior:none;-webkit-font-smoothing:antialiased;min-height:100dvh;}
+h1,h2,h3{font-family:var(--fs);font-weight:300;letter-spacing:0.08em;}
+button,a,[role=button]{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+img,svg{display:block;}
+/* AURA */
+.aura-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.ao{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;animation:ap 6s ease-in-out infinite alternate;transition:background 1s;}
+.ao-1{width:440px;height:440px;top:-140px;left:-100px;background:var(--aa);}
+.ao-2{width:320px;height:320px;top:40%;right:-80px;background:var(--ab);animation-delay:-2s;opacity:0.12;}
+.ao-3{width:260px;height:260px;bottom:20%;left:25%;background:var(--aa);animation-delay:-4s;opacity:0.07;}
+@keyframes ap{from{transform:scale(1);}to{transform:scale(1.15) translateY(-20px);}}
+/* TOP NAV */
+.tn{position:sticky;top:0;z-index:40;height:var(--nh);background:rgba(13,13,20,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.nl{font-family:var(--fm);font-size:12px;letter-spacing:0.3em;color:var(--tx);text-decoration:none;font-weight:400;display:flex;align-items:center;gap:10px;}
+.nd{width:7px;height:7px;border-radius:50%;background:var(--a);box-shadow:0 0 8px var(--a);animation:lp 2.4s ease-in-out infinite;transition:background 0.6s,box-shadow 0.6s;}
+@keyframes lp{0%,100%{box-shadow:0 0 6px var(--a);}50%{box-shadow:0 0 18px var(--a);transform:scale(1.15);}}
+.nb{font-family:var(--fm);font-size:9px;letter-spacing:0.16em;color:var(--a);background:rgba(var(--ar),0.12);border:0.5px solid rgba(var(--ar),0.3);padding:2px 8px;border-radius:4px;}
+/* TABS */
+.tw{position:relative;z-index:1;}
+.tp{display:none;padding-bottom:calc(var(--bnh) + var(--sb) + 24px);}
+.tp.active{display:block;}
+/* BOTTOM NAV */
+.bn{position:fixed;bottom:0;left:0;right:0;z-index:50;height:calc(var(--bnh) + var(--sb));padding-bottom:var(--sb);background:rgba(13,13,20,0.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:0.5px solid var(--bd);display:flex;align-items:stretch;}
+.bi{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--mt2);font-family:var(--fm);font-size:9px;letter-spacing:0.1em;cursor:pointer;border:none;background:transparent;padding:0;position:relative;transition:color 0.2s;touch-action:manipulation;}
+.bi:active{transform:scale(0.9);}
+.bi.active{color:var(--a);}
+.bii{width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.bd2{position:absolute;top:8px;right:calc(50% - 14px);width:5px;height:5px;border-radius:50%;background:var(--a);display:none;box-shadow:0 0 6px var(--a);}
+.bd2.show{display:block;}
+/* CONTAINER */
+.ct{max-width:680px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+@media(min-width:640px){.ct{padding:0 40px;}}
+/* UTILS */
+.sl{font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt);}
+.pill{display:inline-flex;align-items:center;background:rgba(var(--ar),0.15);color:var(--at);font-size:10px;font-family:var(--fm);padding:2px 10px;border-radius:999px;letter-spacing:0.1em;border:0.5px solid rgba(var(--ar),0.3);}
+.pill.ult{background:linear-gradient(135deg,rgba(var(--ar),0.2),rgba(155,106,212,0.2));color:#e8b4ff;border-color:rgba(155,106,212,0.4);}
+.pill.nw{background:rgba(80,220,160,0.12);color:#80f0b8;border-color:rgba(80,220,160,0.3);}
+.hidden{display:none!important;}
+@keyframes fi{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.fi{animation:fi 0.35s var(--eo) both;}
+.s1{animation:fu 0.7s var(--eo) 0.08s both;}
+.s2{animation:fu 0.7s var(--eo) 0.22s both;}
+.s3{animation:fu 0.7s var(--eo) 0.36s both;}
+.s4{animation:fu 0.7s var(--eo) 0.50s both;}
+@keyframes sh{0%{background-position:-200% center;}100%{background-position:200% center;}}
+@keyframes cel{0%{transform:scale(1);}30%{transform:scale(1.04);}60%{transform:scale(0.98);}100%{transform:scale(1);}}
+.cel{animation:cel 0.5s var(--es);}
+/* SECTION BLOCKS */
+.sb2{padding:44px 0 36px;border-top:0.5px solid var(--bd);}
+.sb2:first-child{border-top:none;padding-top:28px;}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.sn{font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mt);}
+/* HERO */
+.hero{padding:60px 0 48px;}
+.het{font-size:clamp(36px,8vw,58px);line-height:1.1;margin-bottom:20px;letter-spacing:0.04em;background:linear-gradient(135deg,var(--tx) 30%,rgba(var(--ar),0.8) 65%,#c8a0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:sh 5s linear infinite;}
+.hes{font-size:13px;color:var(--mt);line-height:2;max-width:380px;}
+.htl{margin-top:28px;font-family:var(--fs);font-size:12px;color:var(--mt);letter-spacing:0.12em;display:flex;align-items:center;gap:12px;}
+.htl::before,.htl::after{content:'';flex:1;height:0.5px;background:linear-gradient(to right,transparent,var(--bdb));}
+.htl::after{background:linear-gradient(to left,transparent,var(--bdb));}
+/* SWATCHES */
+.cg{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
+.cs{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.2s var(--es),box-shadow 0.2s;position:relative;}
+.cs::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid transparent;transition:border-color 0.2s;}
+.cs.active::after{border-color:var(--a);}
+.cs.active{box-shadow:0 0 16px var(--a);transform:scale(1.12);}
+.cs:not(.active):hover{transform:scale(1.18);}
+.cs:active{transform:scale(0.88)!important;}
+/* INPUTS */
+.ir{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:32px;}
+@media(max-width:480px){.ir{grid-template-columns:1fr;gap:20px;}}
+.gi{background:var(--sf);border:0.5px solid var(--bdb);border-radius:8px;padding:12px 14px;transition:border-color 0.2s,box-shadow 0.2s;}
+.gi:focus-within{border-color:rgba(var(--ar),0.5);box-shadow:0 0 0 3px rgba(var(--ar),0.08);}
+.bui{border:none;font-size:28px;font-family:var(--fm);font-weight:300;width:100%;outline:none;background:transparent;color:var(--tx);padding:2px 0;}
+.vni{border:none;font-size:15px;font-family:var(--fs);width:100%;outline:none;background:transparent;color:var(--tx);padding:2px 0;}
+::placeholder{color:var(--mt2);}
+/* VENUE DROPDOWN */
+.vwr{position:relative;}
+.vdd{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--sf2);border:0.5px solid var(--bdb);border-radius:8px;z-index:20;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.5);max-height:260px;overflow-y:auto;}
+.vdi{padding:12px 14px;cursor:pointer;border-bottom:0.5px solid var(--bd);transition:background 0.12s;display:flex;flex-direction:column;gap:2px;}
+.vdi:last-child{border-bottom:none;}
+.vdi:hover{background:rgba(var(--ar),0.1);}
+.vde{padding:14px;font-size:13px;color:var(--mt);text-align:center;}
+.vip{margin-top:10px;background:var(--sf);border:0.5px solid var(--bdb);border-radius:8px;padding:14px 16px;}
+.vch{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.vc{font-size:10px;font-family:var(--fm);padding:3px 10px;border-radius:999px;border:0.5px solid var(--bdb);color:var(--mt);display:inline-flex;align-items:center;gap:4px;}
+.vc.warn{border-color:rgba(255,200,50,0.3);color:#ffc832;background:rgba(255,200,50,0.07);}
+.vc.good{border-color:rgba(var(--ar),0.3);color:var(--at);background:var(--al);}
+.vc.silver{border-color:rgba(200,200,220,0.25);color:#c8c8dc;background:rgba(200,200,220,0.07);}
+.vc.trolley{border-color:rgba(100,200,255,0.3);color:#80d8ff;background:rgba(100,200,255,0.07);}
+.vc.view{border-color:rgba(120,220,180,0.3);color:#80e8c0;background:rgba(120,220,180,0.07);}
+.vls{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-height:28px;}
+.vlb{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:var(--fm);letter-spacing:0.08em;color:var(--mt);border:0.5px solid var(--bdb);padding:4px 10px;border-radius:999px;text-decoration:none;transition:all 0.15s;background:transparent;cursor:pointer;}
+.vlb:hover{border-color:rgba(var(--ar),0.4);color:var(--at);background:var(--al);}
+/* CARDS */
+.card{border:0.5px solid var(--bdb);padding:16px 20px;background:var(--sf);border-radius:10px;transition:border-color 0.2s,box-shadow 0.2s;}
+.card:hover{border-color:rgba(var(--ar),0.3);box-shadow:0 0 20px rgba(var(--ar),0.06);}
+.cg2{display:grid;gap:10px;}
+.hcrd{text-decoration:none;color:var(--tx);display:block;}
+.afc{border:0.5px solid var(--bdb);padding:12px 16px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-decoration:none;color:var(--tx);transition:border-color 0.2s;background:var(--sf);}
+.afc:hover{border-color:rgba(var(--ar),0.3);}
+.ab{font-family:var(--fm);font-size:10px;letter-spacing:0.12em;color:var(--a);margin-bottom:4px;display:block;}
+/* SEG */
+.seg{display:inline-flex;border:0.5px solid var(--bdb);border-radius:6px;overflow:hidden;margin-bottom:28px;}
+.sgb{padding:8px 20px;font-size:11px;letter-spacing:0.12em;cursor:pointer;background:transparent;color:var(--mt);transition:background 0.15s,color 0.15s;font-family:var(--fm);border:none;touch-action:manipulation;}
+.sgb.active{background:rgba(var(--ar),0.2);color:var(--at);}
+.sgb+.sgb{border-left:0.5px solid var(--bdb);}
+/* TRANSPORT */
+.ttbs{display:flex;border:0.5px solid var(--bdb);border-radius:8px;overflow:hidden;margin-bottom:24px;}
+.ttb{flex:1;padding:10px 8px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;cursor:pointer;border:none;background:transparent;color:var(--mt);transition:all 0.15s;text-align:center;touch-action:manipulation;}
+.ttb+.ttb{border-left:0.5px solid var(--bdb);}
+.ttb.active{background:rgba(var(--ar),0.15);color:var(--at);}
+.tc2{border:0.5px solid var(--bdb);border-radius:10px;background:var(--sf);padding:16px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:start;gap:16px;text-decoration:none;color:var(--tx);transition:border-color 0.2s;}
+.tc2:hover{border-color:rgba(var(--ar),0.3);}
+.tbg{font-size:9px;font-family:var(--fm);letter-spacing:0.1em;padding:2px 8px;border-radius:4px;margin-bottom:4px;display:inline-block;}
+.tbg.shinkansen{background:rgba(0,180,255,0.15);color:#80d8ff;border:0.5px solid rgba(0,180,255,0.3);}
+.tbg.bus{background:rgba(255,180,50,0.15);color:#ffd080;border:0.5px solid rgba(255,180,50,0.3);}
+.tbg.flight{background:rgba(180,130,255,0.15);color:#d0b0ff;border:0.5px solid rgba(180,130,255,0.3);}
+.tbg.nightbus{background:rgba(100,100,200,0.15);color:#b0b8ff;border:0.5px solid rgba(100,100,200,0.3);}
+.dsl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.db{padding:7px 14px;font-size:11px;font-family:var(--fm);letter-spacing:0.08em;border:0.5px solid var(--bdb);border-radius:6px;cursor:pointer;background:transparent;color:var(--mt);transition:all 0.15s;touch-action:manipulation;}
+.db.sel{background:rgba(var(--ar),0.15);color:var(--at);border-color:rgba(var(--ar),0.4);}
+/* WEATHER */
+.wdi{display:flex;align-items:center;gap:12px;margin-bottom:20px;background:var(--sf);border:0.5px solid var(--bdb);border-radius:8px;padding:10px 14px;}
+.wdi label{font-size:11px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;white-space:nowrap;}
+.wdi input[type=date]{background:transparent;border:none;color:var(--tx);font-family:var(--fm);font-size:13px;outline:none;cursor:pointer;flex:1;color-scheme:dark;}
+.wbig{display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+.wic{width:64px;height:64px;border-radius:12px;background:rgba(var(--ar),0.1);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;border:0.5px solid rgba(var(--ar),0.2);}
+.wtmp{font-size:48px;font-family:var(--fm);font-weight:300;line-height:1;}
+.wgr{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+.wcl2{background:var(--sf2);border-radius:8px;padding:10px 8px;text-align:center;border:0.5px solid var(--bd);}
+.whr{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none;}
+.whr::-webkit-scrollbar{display:none;}
+.whi{flex-shrink:0;background:var(--sf2);border-radius:8px;padding:10px;text-align:center;border:0.5px solid var(--bd);min-width:56px;}
+.whi.pk{border-color:rgba(var(--ar),0.4);background:rgba(var(--ar),0.08);}
+/* MAP */
+.mpw{background:var(--sf);border:0.5px solid var(--bdb);border-radius:12px;padding:16px;overflow:hidden;}
+.mpw svg{width:100%;height:auto;display:block;}
+.pp{fill:var(--sf2);stroke:rgba(255,255,255,0.08);stroke-width:0.5;cursor:pointer;transition:fill 0.25s,stroke 0.2s;}
+.pp:hover{stroke:rgba(var(--ar),0.6);stroke-width:1;}
+.pp.vis{fill:rgba(var(--ar),0.5);stroke:rgba(var(--ar),0.8);}
+.pp.hm{fill:rgba(var(--ar),0.2);stroke:var(--a);}
+.mst{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;}
+.ms{background:var(--sf);border:0.5px solid var(--bdb);border-radius:8px;padding:12px;text-align:center;}
+/* HISTORY */
+.hf{background:var(--sf);border:0.5px solid var(--bdb);border-radius:12px;padding:20px;margin-bottom:20px;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:480px){.fr{grid-template-columns:1fr;}}
+.ff{display:flex;flex-direction:column;gap:6px;}
+.fi2{border:0.5px solid var(--bdb);border-radius:6px;padding:8px 12px;color:var(--tx);font-family:var(--fn);font-size:13px;font-weight:300;outline:none;transition:border-color 0.2s;width:100%;background:var(--sf2);}
+.fi2:focus{border-color:rgba(var(--ar),0.5);}
+.fi2[type=date]{color-scheme:dark;cursor:pointer;}
+.abtn{width:100%;padding:12px;font-size:12px;font-family:var(--fm);letter-spacing:0.14em;cursor:pointer;border-radius:8px;border:0.5px solid rgba(var(--ar),0.4);background:rgba(var(--ar),0.12);color:var(--at);transition:all 0.15s;touch-action:manipulation;}
+.abtn:hover{background:rgba(var(--ar),0.22);}
+.hic{border:0.5px solid var(--bdb);border-radius:10px;background:var(--sf);padding:16px 18px;margin-bottom:10px;position:relative;overflow:hidden;animation:fi 0.35s var(--eo) both;}
+.hic::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--a);border-radius:2px 0 0 2px;}
+.hdl{position:absolute;top:12px;right:12px;background:transparent;border:none;color:var(--mt2);cursor:pointer;font-size:16px;padding:4px;line-height:1;touch-action:manipulation;transition:color 0.15s;}
+.hdl:hover{color:rgba(255,100,100,0.8);}
+.htg{font-size:10px;font-family:var(--fm);padding:2px 8px;border-radius:4px;background:var(--sf2);color:var(--mt);border:0.5px solid var(--bd);letter-spacing:0.06em;}
+.htg.ac{background:rgba(var(--ar),0.1);color:var(--at);border-color:rgba(var(--ar),0.3);}
+.cst{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
+@media(min-width:480px){.cst{grid-template-columns:repeat(4,1fr);}}
+.cs2{background:var(--sf);border:0.5px solid var(--bdb);border-radius:10px;padding:14px 12px;text-align:center;}
+/* BINO */
+.sg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.sbt{padding:9px 14px;font-size:12px;border:0.5px solid var(--bdb);cursor:pointer;background:transparent;color:var(--mt);transition:all 0.15s;letter-spacing:0.04em;font-family:var(--fn);font-weight:300;border-radius:6px;touch-action:manipulation;}
+.sbt:active{transform:scale(0.94);}
+.sbt.sel{background:rgba(var(--ar),0.2);color:var(--at);border-color:rgba(var(--ar),0.4);}
+.sbt:hover:not(.sel){border-color:rgba(var(--ar),0.2);color:var(--tx);}
+.cst2{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;min-height:28px;}
+.cch{font-size:11px;font-family:var(--fm);padding:4px 12px;border-radius:999px;border:0.5px solid var(--bdb);color:var(--mt);letter-spacing:0.06em;display:inline-flex;align-items:center;gap:5px;animation:fi 0.2s ease both;}
+.cch.alert{border-color:rgba(255,200,50,0.35);color:#ffc832;background:rgba(255,200,50,0.08);}
+.cch.silver{border-color:rgba(200,200,220,0.3);color:#d0d0ec;background:rgba(200,200,220,0.07);}
+.cch.trolley{border-color:rgba(100,200,255,0.3);color:#80d8ff;background:rgba(100,200,255,0.07);}
+.cch.view{border-color:rgba(120,220,180,0.3);color:#80e8c0;background:rgba(120,220,180,0.07);}
+.cch.good{border-color:rgba(var(--ar),0.3);color:var(--at);background:var(--al);}
+.bpn{border:0.5px solid var(--bdb);background:var(--sf);padding:24px;border-radius:10px;}
+.bmg{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;}
+.bvl{font-size:44px;font-family:var(--fm);font-weight:300;line-height:1;transition:all 0.3s var(--eo);}
+.bnote{font-size:11px;color:var(--mt);margin-top:5px;line-height:1.5;}
+.sbw{margin-bottom:24px;}
+.sbl{display:flex;justify-content:space-between;font-size:9px;font-family:var(--fm);color:var(--mt);margin-bottom:5px;letter-spacing:0.1em;}
+.sbr{height:3px;background:var(--sf2);border-radius:2px;overflow:hidden;position:relative;}
+.sf3{height:100%;background:linear-gradient(to right,rgba(var(--ar),0.6),var(--a));border-radius:2px;transition:width 0.5s var(--eo);}
+.scu{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:var(--a);border-radius:50%;border:2px solid var(--bg);transition:left 0.5s var(--eo);box-shadow:0 0 8px var(--a);}
+select.mn{border:0.5px solid var(--bdb);font-size:13px;padding:8px 30px 8px 12px;background:var(--sf);color:var(--tx);outline:none;cursor:pointer;font-family:var(--fn);font-weight:300;border-radius:6px;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.4)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;touch-action:manipulation;}
+/* PACKING */
+.pt2{display:flex;border-bottom:0.5px solid var(--bd);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.pt2::-webkit-scrollbar{display:none;}
+.ptb{flex-shrink:0;padding:10px 14px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;cursor:pointer;border:none;background:transparent;color:var(--mt);border-bottom:1.5px solid transparent;transition:color 0.15s,border-color 0.15s;touch-action:manipulation;margin-bottom:-0.5px;}
+.ptb.active{color:var(--at);border-bottom-color:var(--a);}
+.pr{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.pbw{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden;}
+.pf{height:100%;background:linear-gradient(to right,rgba(var(--ar),0.6),var(--a));border-radius:2px;transition:width 0.4s var(--eo);}
+.ci{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--bd);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.ci:last-child{border-bottom:none;}
+.ci input[type=checkbox]{width:18px;height:18px;accent-color:var(--a);cursor:pointer;flex-shrink:0;}
+.cl{flex:1;font-size:14px;cursor:pointer;transition:color 0.2s;user-select:none;}
+.ci.ck .cl{text-decoration:line-through;color:var(--mt2);}
+.al2{flex-shrink:0;font-size:10px;font-family:var(--fm);color:var(--at);text-decoration:none;letter-spacing:0.06em;padding:3px 8px;border:0.5px solid rgba(var(--ar),0.3);border-radius:999px;touch-action:manipulation;opacity:1;}
+@media(hover:hover){.ci:not(.ck) .al2{opacity:0;}.ci:not(.ck):hover .al2{opacity:1;}}
+/* FASHION */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.fg{grid-template-columns:1fr;}}
+.fc{border:0.5px solid var(--bdb);border-radius:10px;background:var(--sf);padding:14px 16px;text-decoration:none;color:var(--tx);transition:border-color 0.2s;display:flex;flex-direction:column;gap:6px;}
+.fc:hover{border-color:rgba(var(--ar),0.3);}
+.bc{border:0.5px solid var(--bdb);border-radius:8px;padding:12px 16px;background:var(--sf);display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--tx);transition:border-color 0.2s;}
+.bc:hover{border-color:rgba(var(--ar),0.3);}
+.bci{width:36px;height:36px;border-radius:8px;background:rgba(var(--ar),0.12);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+/* AFTERGLOW */
+.agtb{display:flex;border:0.5px solid var(--bdb);border-radius:8px;overflow:hidden;margin-bottom:24px;}
+.agt{flex:1;padding:9px 12px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;cursor:pointer;border:none;background:transparent;color:var(--mt);transition:all 0.15s;text-align:center;touch-action:manipulation;}
+.agt+.agt{border-left:0.5px solid var(--bdb);}
+.agt.active{background:rgba(var(--ar),0.15);color:var(--at);}
+.agc{border:0.5px solid var(--bdb);border-radius:10px;background:var(--sf);padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--tx);transition:border-color 0.2s;}
+.agc:hover{border-color:rgba(var(--ar),0.3);}
+.ath{width:44px;height:44px;border-radius:8px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:0.5px solid var(--bd);}
+.rsc{border:0.5px solid var(--bdb);border-radius:10px;background:var(--sf);padding:14px 16px;margin-bottom:8px;text-decoration:none;color:var(--tx);display:block;}
+.rsc:hover{border-color:rgba(var(--ar),0.3);}
+/* STORY */
+.tsel{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.thb{padding:8px 16px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;border:0.5px solid var(--bdb);border-radius:999px;cursor:pointer;background:transparent;color:var(--mt);transition:all 0.2s;touch-action:manipulation;}
+.thb.active{background:rgba(var(--ar),0.18);color:var(--at);border-color:rgba(var(--ar),0.5);}
+.sfr{width:216px;height:384px;border-radius:16px;overflow:hidden;position:relative;flex-shrink:0;box-shadow:0 0 60px rgba(var(--ar),0.2);border:0.5px solid rgba(var(--ar),0.3);}
+.sfr canvas{width:216px;height:384px;display:block;border-radius:16px;}
+.scu2{background:var(--sf);border:0.5px solid var(--bdb);border-radius:10px;padding:16px 18px;margin-bottom:16px;}
+.scr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--bd);}
+.scr:last-child{border-bottom:none;}
+.tgl{width:36px;height:20px;background:var(--sf2);border-radius:999px;position:relative;cursor:pointer;border:0.5px solid var(--bdb);transition:background 0.2s;flex-shrink:0;}
+.tgl.on{background:var(--a);border-color:var(--a);}
+.tth{width:14px;height:14px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.tgl.on .tth{transform:translateX(16px);}
+/* QR */
+.qrp{background:var(--sf);border:0.5px solid var(--bdb);border-radius:12px;padding:24px;}
+.qrb{display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px;}
+#qrContainer{background:white;padding:12px;border-radius:10px;}
+/* TRADING CARDS */
+.tcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;margin-bottom:24px;}
+.tcw{position:relative;cursor:pointer;}
+.tc{width:100%;aspect-ratio:63/88;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.5);transition:transform 0.3s var(--es),box-shadow 0.3s;cursor:pointer;}
+.tc:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 16px 48px rgba(var(--ar),0.3);}
+.tc canvas{width:100%;height:100%;display:block;border-radius:12px;}
+.tsh{position:absolute;inset:0;border-radius:12px;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.1) 50%,transparent 60%);opacity:0;transition:opacity 0.3s;pointer-events:none;}
+.tc:hover .tsh{opacity:1;}
+.tca{display:flex;gap:6px;margin-top:8px;}
+.tcab{flex:1;padding:6px;font-size:9px;font-family:var(--fm);letter-spacing:0.08em;border:0.5px solid var(--bdb);border-radius:6px;background:transparent;color:var(--mt);cursor:pointer;text-align:center;touch-action:manipulation;transition:all 0.15s;}
+.tcab:hover{border-color:rgba(var(--ar),0.4);color:var(--at);}
+/* DIAGNOSIS */
+.dg{background:var(--sf);border:0.5px solid var(--bdb);border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden;}
+.dg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(var(--ar),0.08),transparent 70%);pointer-events:none;}
+.drk{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:50%;font-family:var(--fm);font-size:28px;font-weight:400;border:2px solid var(--a);background:linear-gradient(135deg,rgba(var(--ar),0.15),rgba(var(--ar),0.05));box-shadow:0 0 30px rgba(var(--ar),0.3);margin:0 auto 16px;transition:all 0.6s var(--eo);}
+.dsc{font-size:72px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1;text-shadow:0 0 40px rgba(var(--ar),0.5);transition:all 0.8s var(--eo);}
+.dmtr{height:6px;background:var(--sf2);border-radius:3px;overflow:hidden;margin:16px 0;}
+.dmf{height:100%;border-radius:3px;transition:width 1.4s var(--eo);background:linear-gradient(to right,rgba(var(--ar),0.5),var(--a),#c8a0ff);}
+.dtg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.dtg span{font-size:10px;font-family:var(--fm);padding:3px 10px;border-radius:999px;border:0.5px solid rgba(var(--ar),0.3);color:var(--at);background:rgba(var(--ar),0.08);letter-spacing:0.06em;}
+.dsg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;}
+.dsi{background:var(--sf2);border-radius:8px;padding:10px;text-align:center;border:0.5px solid var(--bd);}
+/* RESTORE */
+.rcp{background:var(--sf);border:0.5px solid var(--bdb);border-radius:12px;padding:24px;}
+.rcd{font-family:var(--fm);font-size:32px;font-weight:300;letter-spacing:0.4em;text-align:center;padding:20px 0;background:var(--sf2);border-radius:8px;border:0.5px solid var(--bdb);margin:16px 0;position:relative;overflow:hidden;}
+.rcs{display:inline-block;padding:0 4px;color:var(--at);}
+.rci{background:var(--sf2);border:0.5px solid var(--bdb);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--fm);font-size:20px;letter-spacing:0.3em;text-align:center;outline:none;text-transform:uppercase;transition:border-color 0.2s;width:100%;margin-bottom:10px;}
+.rci:focus{border-color:rgba(var(--ar),0.5);}
+/* COMPANION */
+.cmp{background:var(--sf);border:0.5px solid var(--bdb);border-radius:12px;padding:20px;}
+.rc2{font-family:var(--fm);font-size:36px;font-weight:300;letter-spacing:0.3em;color:var(--a);text-align:center;padding:16px 0;text-shadow:0 0 20px rgba(var(--ar),0.4);}
+.ri{background:var(--sf2);border:0.5px solid var(--bdb);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--fm);font-size:18px;letter-spacing:0.3em;text-align:center;width:100%;outline:none;margin-bottom:10px;text-transform:uppercase;transition:border-color 0.2s;}
+.ri::placeholder{letter-spacing:0.1em;font-size:13px;}
+.sbtn{width:100%;padding:12px;font-size:12px;font-family:var(--fm);letter-spacing:0.14em;cursor:pointer;border-radius:8px;border:0.5px solid rgba(var(--ar),0.4);background:rgba(var(--ar),0.12);color:var(--at);transition:all 0.15s;touch-action:manipulation;margin-bottom:8px;}
+.sbtn:hover{background:rgba(var(--ar),0.22);}
+.sbtn.sec{background:transparent;border-color:var(--bdb);color:var(--mt);}
+/* SHARE */
+.sm{border:0.5px solid var(--bdb);padding:24px;background:var(--sf);margin-bottom:24px;border-radius:10px;}
+.smr{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:8px 0;border-bottom:0.5px solid var(--bd);}
+.smr:last-child{border-bottom:none;}
+.bg{display:flex;gap:10px;flex-wrap:wrap;}
+.shb{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:0.5px solid var(--bdb);font-size:11px;cursor:pointer;background:transparent;color:var(--mt);letter-spacing:0.1em;font-family:var(--fm);transition:all 0.15s;text-decoration:none;border-radius:6px;touch-action:manipulation;}
+.shb:hover{border-color:rgba(var(--ar),0.5);color:var(--at);}
+.shb:active{transform:scale(0.97);}
+.shb.ac{background:rgba(var(--ar),0.15);border-color:rgba(var(--ar),0.4);color:var(--at);}
+.shb.ac:hover{background:rgba(var(--ar),0.25);}
+.ur{display:flex;gap:8px;margin-top:16px;}
+.ud{flex:1;font-size:10px;font-family:var(--fm);color:var(--mt);background:var(--sf2);border:0.5px solid var(--bd);padding:8px 12px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:all;}
+/* TOAST */
+#toast{position:fixed;bottom:calc(var(--bnh) + var(--sb) + 16px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--sf2);border:0.5px solid rgba(var(--ar),0.4);color:var(--at);padding:10px 22px;font-size:11px;font-family:var(--fm);letter-spacing:0.1em;opacity:0;pointer-events:none;transition:opacity 0.25s,transform 0.25s var(--eo);z-index:100;border-radius:8px;white-space:nowrap;box-shadow:0 0 20px rgba(var(--ar),0.2);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* CONFETTI */
+.cfp{position:fixed;pointer-events:none;z-index:200;animation:cfal linear forwards;}
+@keyframes cfal{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}
+/* FOOTER */
+footer{padding:28px 0;border-top:0.5px solid var(--bd);margin-top:40px;}
+@media(max-width:480px){.tn .nav-links{display:none;}.bvl{font-size:36px;}}
+@media(min-width:768px){.bn{display:none;}body{padding-bottom:80px;}}
+</style>
+</head>
+<body>
 
-cat > /home/claude/part2.html << 'HTMLEOF'
 <div class="aura-bg" aria-hidden="true">
   <div class="ao ao-1"></div><div class="ao ao-2"></div><div class="ao ao-3"></div>
 </div>
@@ -10,6 +335,7 @@ cat > /home/claude/part2.html << 'HTMLEOF'
   <span class="nb">COMPLETE</span>
 </nav>
 <div class="tw">
+ 
 <!-- ════ TAB: HOME ════ -->
 <div class="tp active" id="tp-home"><div class="ct">
   <div class="hero">
@@ -35,7 +361,7 @@ cat > /home/claude/part2.html << 'HTMLEOF'
         <div class="gi">
           <div style="display:flex;align-items:baseline;gap:6px;">
             <span style="font-size:18px;font-family:var(--fm);color:var(--mt);">¥</span>
-            <input class="bui" id="budgetInput" type="number" inputmode="numeric" value="50000" min="0" step="1000" oninput="onBudgetChange()">
+            <input class="bui" id="budgetInput" type="number" inputmode="numeric" value="50000" min="0" step="1000" oninput="onBC()">
           </div>
         </div>
       </div>
@@ -73,7 +399,8 @@ cat > /home/claude/part2.html << 'HTMLEOF'
     <span style="font-size:11px;color:var(--mt2);">準備さえも、推し事になる。</span>
   </div></footer>
 </div></div>
-<!-- ════ TAB: GO (交通・宿泊・天気) ════ -->
+ 
+<!-- ════ TAB: GO ════ -->
 <div class="tp" id="tp-go"><div class="ct">
   <div class="sb2" style="border-top:none;padding-top:28px;">
     <div class="sh"><div class="sn">天気連携</div><span class="pill nw">LIVE</span></div>
@@ -164,7 +491,8 @@ cat > /home/claude/part2.html << 'HTMLEOF'
   </div>
   <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
 </div></div>
-<!-- ════ TAB: LIVE (双眼鏡・参戦服・アフターグロウ) ════ -->
+ 
+<!-- ════ TAB: LIVE ════ -->
 <div class="tp" id="tp-live"><div class="ct">
   <div class="sb2" style="border-top:none;padding-top:28px;">
     <div class="sh"><div class="sn">双眼鏡ナビ</div><span class="pill">BINOCULARS</span></div>
@@ -201,7 +529,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
       </div>
     </div>
   </div>
-  <!-- 参戦服・美容 -->
   <div class="sb2">
     <div class="sh"><div class="sn">参戦服・美容</div><span class="pill">FASHION</span></div>
     <h2 style="font-size:22px;margin:6px 0 16px;">推し色コーデで行く</h2>
@@ -215,11 +542,10 @@ cat > /home/claude/part2.html << 'HTMLEOF'
     <div class="sl" style="margin-bottom:12px;">当日ヘアメイク・スキンケア</div>
     <div style="display:grid;gap:8px;">
       <a href="https://www.amazon.co.jp/s?k=%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95+%E4%B8%8B%E5%9C%B0" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">💄</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">コンサートメイク下地</div><div style="font-size:11px;color:var(--mt);">汗・涙に強いウォータープルーフ。ライブ中も崩れない。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
-      <a href="https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4+%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">✨</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">撥水ヘアスプレー</div><div style="font-size:11px;color:var(--mt);">雨の野外でも髪型キープ。前日から使用推奨。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
+      <a href="https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4+%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">✨</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">撥水ヘアスプレー</div><div style="font-size:11px;color:var(--mt);">雨の野外ライブでも髪型キープ。前日から使用推奨。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
       <a href="https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9" target="_blank" rel="nofollow noopener" class="bc"><div class="bci">🧦</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;margin-bottom:2px;">着圧ソックス（むくみ解消）</div><div style="font-size:11px;color:var(--mt);">帰りの電車で既に回復。段階圧迫クルーソックス。</div></div><div style="font-size:10px;color:var(--at);">→</div></a>
     </div>
   </div>
-  <!-- アフターグロウ -->
   <div class="sb2">
     <div class="sh"><div class="sn">打ち上げ・お土産</div><span class="pill">AFTERGLOW</span></div>
     <h2 style="font-size:22px;margin:6px 0 16px;">帰り道も、余韻で満たす</h2>
@@ -232,7 +558,8 @@ cat > /home/claude/part2.html << 'HTMLEOF'
   </div>
   <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
 </div></div>
-<!-- ════ TAB: PACK (パッキング・ストーリー・QR) ════ -->
+ 
+<!-- ════ TAB: PACK ════ -->
 <div class="tp" id="tp-pack"><div class="ct">
   <div class="sb2" style="border-top:none;padding-top:28px;">
     <div class="sh"><div class="sn">パッキング</div><span class="pill">PACKING</span></div>
@@ -258,7 +585,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
       <button onclick="switchTab('me')" style="margin-top:14px;padding:10px 24px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:6px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">→ MEタブへ</button>
     </div>
   </div>
-  <!-- ストーリー生成 -->
   <div class="sb2">
     <div class="sh"><div class="sn">しおり生成</div><span class="pill nw">NEW</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">Instagramストーリー生成</h2>
@@ -287,7 +613,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
     </div>
     <p style="font-size:11px;color:var(--mt);text-align:center;margin-top:10px;line-height:1.8;">※ 生成画像はブラウザ内のみで処理。サーバーへの送信なし。</p>
   </div>
-  <!-- QR同期 -->
   <div class="sb2">
     <div class="sh"><div class="sn">QR同期</div><span class="pill nw">NEW</span></div>
     <h2 style="font-size:22px;margin:6px 0 16px;">QRコードで端末同期</h2>
@@ -302,9 +627,9 @@ cat > /home/claude/part2.html << 'HTMLEOF'
   </div>
   <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025</span></div></footer>
 </div></div>
-<!-- ════ TAB: ME (マップ・履歴・診断・カード・復元・同行者) ════ -->
+ 
+<!-- ════ TAB: ME ════ -->
 <div class="tp" id="tp-me"><div class="ct">
-  <!-- 遠征マップ -->
   <div class="sb2" style="border-top:none;padding-top:28px;">
     <div class="sh"><div class="sn">遠征マップ</div><span class="pill nw">NEW</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">遠征した都道府県ログ</h2>
@@ -322,7 +647,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
     </div>
     <div id="visitedList" style="margin-top:14px;min-height:24px;"></div>
   </div>
-  <!-- 遠征履歴 -->
   <div class="sb2">
     <div class="sh"><div class="sn">遠征履歴</div><span class="pill nw">ARCHIVE</span></div>
     <h2 style="font-size:22px;margin:6px 0 16px;">推し活アーカイブ</h2>
@@ -336,7 +660,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
     </div>
     <div id="histList"></div>
   </div>
-  <!-- トレーディングカード -->
   <div class="sb2">
     <div class="sh"><div class="sn">デジタルコレクション</div><span class="pill ult">ULTIMATE</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">遠征トレーディングカード</h2>
@@ -355,7 +678,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
       <div style="font-size:12px;color:var(--mt);">遠征プランを作成してカードを生成してください</div>
     </div>
   </div>
-  <!-- 究極診断 -->
   <div class="sb2">
     <div class="sh"><div class="sn">究極遠征診断</div><span class="pill ult">ULTIMATE</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">究極の遠征戦闘力診断</h2>
@@ -371,7 +693,6 @@ cat > /home/claude/part2.html << 'HTMLEOF'
       <button onclick="runDiag()" style="margin-top:24px;padding:12px 32px;font-size:12px;font-family:var(--fm);letter-spacing:0.18em;border:0.5px solid rgba(var(--ar),0.5);border-radius:8px;background:linear-gradient(135deg,rgba(var(--ar),0.15),rgba(155,106,212,0.1));color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.2s;box-shadow:0 0 20px rgba(var(--ar),0.1);">✦ 究極診断を実行する ✦</button>
     </div>
   </div>
-  <!-- 復元コード -->
   <div class="sb2">
     <div class="sh"><div class="sn">復元コード</div><span class="pill ult">ULTIMATE</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">6文字の復元コード</h2>
@@ -380,18 +701,17 @@ cat > /home/claude/part2.html << 'HTMLEOF'
       <div class="sl" style="margin-bottom:6px;text-align:center;">あなたの現在の復元コード</div>
       <div class="rcd"><span class="rcs" id="rcA">——</span><span style="color:var(--mt2);">·</span><span class="rcs" id="rcB">——</span><span style="color:var(--mt2);">·</span><span class="rcs" id="rcC">——</span></div>
       <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
-        <button onclick="genCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">✦ コードを生成・更新</button>
-        <button onclick="cpCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">コードをコピー</button>
+        <button onclick="genCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">✦ コードを生成・更新</button>
+        <button onclick="cpCode()" style="flex:1;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid var(--bdb);border-radius:8px;background:transparent;color:var(--mt);cursor:pointer;touch-action:manipulation;">コードをコピー</button>
       </div>
       <div style="border-top:0.5px solid var(--bd);padding-top:16px;">
         <div class="sl" style="margin-bottom:10px;">コードで復元する</div>
         <input class="rci" id="rcIn" type="text" maxlength="8" placeholder="AB·CD·EF" oninput="fmtCode(this)">
-        <button onclick="restoreCode()" style="width:100%;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;transition:all 0.15s;">→ 復元する</button>
+        <button onclick="restoreCode()" style="width:100%;padding:11px;font-size:11px;font-family:var(--fm);letter-spacing:0.12em;border:0.5px solid rgba(var(--ar),0.4);border-radius:8px;background:rgba(var(--ar),0.12);color:var(--at);cursor:pointer;touch-action:manipulation;">→ 復元する</button>
         <div id="rcRes" style="margin-top:10px;font-size:12px;"></div>
       </div>
     </div>
   </div>
-  <!-- 同行者同期 -->
   <div class="sb2">
     <div class="sh"><div class="sn">同行者同期</div><span class="pill ult">ULTIMATE</span></div>
     <h2 style="font-size:22px;margin:6px 0 6px;">同行者とプランを合わせる</h2>
@@ -421,16 +741,34 @@ cat > /home/claude/part2.html << 'HTMLEOF'
   </div>
   <footer><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;"><span style="font-family:var(--fm);font-size:11px;letter-spacing:0.2em;color:var(--mt);">ENSEI PASS © 2025 — COMPLETE</span><span style="font-size:11px;color:var(--mt2);">準備さえも、推し事になる。</span></div></footer>
 </div></div>
+ 
 </div><!-- /tw -->
+ 
 <!-- BOTTOM NAV -->
 <nav class="bn">
-  <button class="bi active" id="bn-home" onclick="switchTab('home')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><span>HOME</span></button>
-  <button class="bi" id="bn-go" onclick="switchTab('go')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><span>GO</span></button>
-  <button class="bi" id="bn-live" onclick="switchTab('live')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div><span>LIVE</span></button>
-  <button class="bi" id="bn-pack" onclick="switchTab('pack')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span>PACK</span><div class="bd2" id="packDot"></div></button>
-  <button class="bi" id="bn-me" onclick="switchTab('me')"><div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div><span>ME</span></button>
+  <button class="bi active" id="bn-home" onclick="switchTab('home')">
+    <div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+    <span>HOME</span>
+  </button>
+  <button class="bi" id="bn-go" onclick="switchTab('go')">
+    <div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+    <span>GO</span>
+  </button>
+  <button class="bi" id="bn-live" onclick="switchTab('live')">
+    <div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div>
+    <span>LIVE</span>
+  </button>
+  <button class="bi" id="bn-pack" onclick="switchTab('pack')">
+    <div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+    <span>PACK</span>
+    <div class="bd2" id="packDot"></div>
+  </button>
+  <button class="bi" id="bn-me" onclick="switchTab('me')">
+    <div class="bii"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div>
+    <span>ME</span>
+  </button>
 </nav>
-
+ 
 <script>
 /* ════ VENUE DB ════ */
 const VENUES=[
@@ -448,7 +786,7 @@ const VENUES=[
   {name:'北海道立総合体育センター',aliases:['北海きたえーる','きたえーる','札幌'],type:'arena',cap:'8,000',area:'北海道・札幌市',note:'豊平公園駅徒歩8分',pref:'北海道',lat:43.0490,lon:141.3625,chips:[{t:'view',i:'👁',l:'全席近め'}]},
 ];
 function fuzzySearch(q){if(!q.trim())return[];const qr=q.toLowerCase().replace(/\s/g,'');return VENUES.filter(v=>{const h=[v.name,...v.aliases].map(s=>s.toLowerCase().replace(/\s/g,'')).join(' ');if(h.includes(qr))return true;let i=0;for(const c of qr){const f=h.indexOf(c,i);if(f===-1)return false;i=f+1;}return true;}).slice(0,6);}
-
+ 
 /* ════ PREF MAP ════ */
 const PREF_LAYOUT=[
   ['hokkaido','北海道',550,60,180,100],['aomori','青森',560,175,60,40],['iwate','岩手',580,220,60,50],
@@ -468,7 +806,7 @@ const PREF_LAYOUT=[
   ['kumamoto','熊本',195,520,50,40],['oita','大分',225,500,50,38],['miyazaki','宮崎',225,545,45,45],
   ['kagoshima','鹿児島',190,560,55,50],['okinawa','沖縄',200,680,55,35],
 ];
-
+ 
 /* ════ TRANSPORT DATA ════ */
 const TDATA={
   near:{shinkansen:[],bus:[{b:'bus',n:'高速バス（直行）',r:'池袋→さいたま新都心',p:'¥800〜',t:'約45分',note:'渋滞注意。余裕を持って出発。',url:'https://www.bushikaku.net/'},{b:'bus',n:'JR・私鉄で直接',r:'各線→大宮/さいたま新都心',p:'¥300〜',t:'30〜60分',note:'ICカード利用推奨。',url:'https://www.jorudan.co.jp/'}],flight:[],nightbus:[]},
@@ -476,14 +814,14 @@ const TDATA={
   far:{shinkansen:[{b:'shinkansen',n:'新幹線（九州・北海道）',r:'博多/札幌→東京',p:'¥20,000〜¥30,000',t:'約5〜10時間',note:'早割「スーパー早特きっぷ」で最大50%引き。',url:'https://www.jr-odekake.net/'}],bus:[],flight:[{b:'flight',n:'LCC・格安航空券',r:'福岡/札幌→羽田・成田',p:'¥5,000〜¥18,000',t:'約1.5〜2時間',note:'ジェットスター・ピーチが狙い目。早期予約で破格に。',url:'https://www.jetstar.com/jp/'},{b:'flight',n:'スカイマーク・ANA',r:'各地→羽田',p:'¥8,000〜¥25,000',t:'約1.5〜2時間',note:'マイル積算あり。空港アクセス時間も考慮を。',url:'https://www.skymark.co.jp/ja/'}],nightbus:[{b:'nightbus',n:'夜行バス（超長距離）',r:'博多→東京',p:'¥6,000〜¥12,000',t:'出発20時→到着10時台',note:'超長距離は3列シートプレミアム必須。',url:'https://www.bushikaku.net/'}]}
 };
 const BKDITEMS={near:[{l:'交通費',a:300,b:1500},{l:'宿泊費',a:0,b:8000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:2000,b:5000}],mid:[{l:'交通費',a:7000,b:15000},{l:'宿泊費',a:6000,b:12000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:3000,b:6000}],far:[{l:'交通費',a:10000,b:30000},{l:'宿泊費',a:8000,b:15000},{l:'グッズ',a:3000,b:20000},{l:'食費',a:4000,b:8000}]};
-
+ 
 /* ════ AFTERGLOW DATA ════ */
 const AGDATA={
   souvenir:[{i:'🍱',n:'駅弁・地方銘菓',d:'大宮駅・東京駅のエキナカで購入。帰りの新幹線で食べるのが遠征の醍醐味。',url:'https://www.ekiben.or.jp/'},{i:'🍜',n:'会場周辺ラーメン',d:'ライブ後の行列前提ラーメン。さいたま新都心なら「武蔵野アブラ学会」が人気。',url:'https://tabelog.com/saitama/A1101/A110103/'},{i:'🛍',n:'グッズ再販・フリマ確認',d:'余ったグッズや交換品はメルカリで即確認。レア缶バも即検索。',url:'https://www.mercari.com/jp/'},{i:'📸',n:'遠征フォトブック',d:'スマホ写真をその場でプリント。Kodak対応店を検索。',url:'https://www.amazon.co.jp/s?k=%E3%83%95%E3%82%A9%E3%83%88%E3%83%96%E3%83%83%E3%82%AF+%E3%82%B9%E3%83%9E%E3%83%9B'}],
   dining:[{n:'会場周辺 居酒屋・ダイニング',tags:['個室あり','大人数OK','予約推奨'],d:'ライブ後の打ち上げ予約は事前に入れておくのが鉄則。',url:'https://tabelog.com/saitama/A1101/'},{n:'ライブ後 深夜営業カフェ',tags:['24h','カフェ','静かに余韻'],d:'余韻に浸りたいなら深夜カフェへ。',url:'https://tabelog.com/saitama/A1101/A110103/rstlst/'},{n:'ホテルのルームサービス',tags:['静かに','一人でも','SNS振り返り'],d:'一人遠征派はデリバリーでライブ余韻の夕食。',url:'https://wolt.com/ja/jpn'},{n:'朝の推し事カフェ',tags:['翌朝','カフェ活','SNS'],d:'翌朝はゆっくり推しの写真を眺めながらモーニング。',url:'https://tabelog.com/saitama/A1101/A110103/rstlst/?SrtT=trend&Srt=D&Cat=RC1'}],
   return:[{i:'🧦',n:'着圧ソックス（新幹線用）',d:'新幹線の長距離移動でむくんだ足に。帰り着いた時の足の軽さが違う。',url:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},{i:'😴',n:'アイマスク・ネッククッション',d:'夜行バス・新幹線での睡眠質を最大化。',url:'https://www.amazon.co.jp/s?k=%E3%82%A2%E3%82%A4%E3%83%9E%E3%82%B9%E3%82%AF+%E9%81%A0%E5%BE%81'},{i:'📱',n:'モバイルバッテリー（帰路用）',d:'ライブ中にバッテリーを使い果たした状態で帰路へ。10000mAhは必須。',url:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},{i:'🍵',n:'喉ケアドリンク',d:'絶叫した翌朝の喉を守る。はちみつレモンや龍角散ドロップを帰りの荷物に。',url:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'}]
 };
-
+ 
 /* ════ BINO DATA ════ */
 const BDATA={
   dome:{ss:{mag:'8×',dist:'15m',note:'防振タイプ推奨',view:'表情がっつり見える',prog:15,dT:'防振 ケンコー 8×30',dP:'¥1,800',aT:'ケンコー SE8×21',aP:'¥14,800'},arena:{mag:'10×',dist:'30m',note:'防振があると安定',view:'全身＋表情が見える',prog:35,dT:'防振 ニコン 10×30',dP:'¥2,200',aT:'ニコン モナーク 10×42',aP:'¥38,500'},stand_low:{mag:'10×',dist:'50m',note:'防振必須',view:'全身が見える',prog:55,dT:'防振 ニコン 12×32',dP:'¥2,400',aT:'コーワ紫陽 12×32',aP:'¥54,780'},stand_high:{mag:'12×',dist:'80m',note:'防振強く推奨',view:'ステージ全体が見える',prog:75,dT:'防振 ビクセン 12×50',dP:'¥2,800',aT:'キャノン IS 12×36',aP:'¥68,000'},back:{mag:'16×',dist:'120m',note:'三脚付き防振が理想',view:'ステージ概要のみ',prog:90,dT:'防振 キャノン 15×50',dP:'¥3,500',aT:'キャノン IS 15×50',aP:'¥98,000'}},
@@ -498,7 +836,7 @@ const CDATA={
   stand_high:{dome:[{t:'view',i:'👁',l:'ステージ全体見える'}],arena:[{t:'view',i:'👁',l:'全体演出わかる'},{t:'alert',i:'⚠',l:'双眼鏡必須'}],hall:[{t:'view',i:'👁',l:'ステージ全体見える'}],outdoor:[{t:'view',i:'👁',l:'全体が見渡せる'}]},
   back:{dome:[{t:'alert',i:'⚠',l:'双眼鏡必須'}],arena:[{t:'alert',i:'⚠',l:'双眼鏡必須'}],hall:[{t:'alert',i:'⚠',l:'双眼鏡あると◎'}],outdoor:[{t:'alert',i:'⚠',l:'双眼鏡必須'}]}
 };
-
+ 
 /* ════ PACK ITEMS ════ */
 const PITEMS={
   essential:[{id:'ticket',l:'チケット（紙/電子）',u:null},{id:'id',l:'身分証明書',u:null},{id:'wallet',l:'財布・交通系ICカード',u:null},{id:'phone',l:'スマートフォン',u:null},{id:'battery',l:'モバイルバッテリー',u:'https://www.amazon.co.jp/s?k=%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC+10000mAh'},{id:'cable',l:'充電ケーブル',u:'https://www.amazon.co.jp/s?k=USB%E5%85%85%E9%9B%BB%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB'},{id:'earphones',l:'イヤホン（移動中用）',u:'https://www.amazon.co.jp/s?k=%E3%83%AF%E3%82%A4%E3%83%A4%E3%83%AC%E3%82%B9%E3%82%A4%E3%83%A4%E3%83%9B%E3%83%B3'}],
@@ -507,7 +845,7 @@ const PITEMS={
   beauty:[{id:'makeup_base',l:'ウォータープルーフ下地',u:'https://www.amazon.co.jp/s?k=%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95+%E4%B8%8B%E5%9C%B0'},{id:'hair_spray',l:'撥水ヘアスプレー',u:'https://www.amazon.co.jp/s?k=%E6%92%A5%E6%B0%B4%E3%82%B9%E3%83%97%E3%83%AC%E3%83%BC+%E9%AB%AA%E5%9E%8B'},{id:'oil_sheet',l:'あぶらとりシート',u:'https://www.amazon.co.jp/s?k=%E3%81%82%E3%81%B6%E3%82%89%E3%81%A8%E3%82%8A%E3%82%B7%E3%83%BC%E3%83%88'},{id:'sweat_sheet',l:'汗拭きシート',u:'https://www.amazon.co.jp/s?k=%E6%B1%97%E6%8B%AD%E3%81%8D%E3%82%B7%E3%83%BC%E3%83%88'},{id:'lip',l:'リップ（塗り直し用）',u:'https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%83%E3%83%97+%E3%83%A9%E3%82%A4%E3%83%96'},{id:'hair_band',l:'推し色ヘアバンド',u:'https://www.amazon.co.jp/s?k=%E3%83%98%E3%82%A2%E3%83%90%E3%83%B3%E3%83%89+%E3%82%AB%E3%83%A9%E3%83%BC'}],
   recovery:[{id:'socks',l:'着圧ソックス（むくみ対策）',u:'https://www.amazon.co.jp/s?k=%E7%9D%80%E5%9C%A7%E3%82%BD%E3%83%83%E3%82%AF%E3%82%B9'},{id:'insole',l:'衝撃吸収インソール',u:'https://www.amazon.co.jp/s?k=%E3%82%A4%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB'},{id:'throat',l:'のど飴（声出し対策）',u:'https://www.amazon.co.jp/s?k=%E3%81%AE%E3%81%A9%E3%81%82%E3%82%81'},{id:'ibuprofen',l:'頭痛薬・鎮痛剤',u:'https://www.amazon.co.jp/s?k=%E9%A0%AD%E7%97%9B%E8%96%AC'},{id:'neck',l:'ネッククッション（夜行バス）',u:'https://www.amazon.co.jp/s?k=%E3%83%8D%E3%83%83%E3%82%AF%E3%82%AF%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3'}]
 };
-
+ 
 /* ════ STORY THEMES ════ */
 const THEMES={
   modern:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#0d0d14';ctx.fillRect(0,0,w,h);const g=ctx.createRadialGradient(w/2,h*0.2,0,w/2,h*0.2,w*0.7);g.addColorStop(0,a+'44');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;for(let y=0;y<h;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}for(let x=0;x<w;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}},tc:'#f0f0f8',mc:'rgba(255,255,255,0.5)'},
@@ -516,16 +854,16 @@ const THEMES={
   jirai:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;for(let i=-h;i<w+h;i+=30){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+h,h);ctx.stroke();}const g=ctx.createRadialGradient(w/2,h,0,w/2,h,w);g.addColorStop(0,a+'33');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.strokeStyle=a+'44';ctx.lineWidth=2;ctx.strokeRect(30,30,w-60,h-60);},tc:'#f8f0f4',mc:'rgba(240,200,220,0.55)'},
   minimal:{bg:(ctx,w,h,a)=>{ctx.fillStyle='#f8f6f4';ctx.fillRect(0,0,w,h);ctx.strokeStyle=a+'44';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,h*0.12);ctx.lineTo(w-60,h*0.12);ctx.stroke();ctx.beginPath();ctx.moveTo(60,h*0.88);ctx.lineTo(w-60,h*0.88);ctx.stroke();},tc:'#1a1a1a',mc:'rgba(40,40,40,0.55)'}
 };
-
+ 
 /* ════ CARD RARITIES ════ */
 const RARITIES=[{l:'COMMON',c:'#888',g:false,s:0},{l:'RARE',c:'#5B8CDB',g:true,s:1},{l:'SR',c:'#C8A0FF',g:true,s:2},{l:'SSR',c:'#FFD700',g:true,s:3},{l:'UR',c:'#FF6EB4',g:true,s:5}];
-
+ 
 /* ════ WMO ════ */
 const WMO={0:{i:'☀️',l:'快晴'},1:{i:'🌤',l:'晴れ'},2:{i:'⛅',l:'晴れ時々曇り'},3:{i:'☁️',l:'曇り'},45:{i:'🌫',l:'霧'},51:{i:'🌦',l:'霧雨'},61:{i:'🌧',l:'小雨'},63:{i:'🌧',l:'雨'},65:{i:'🌧',l:'大雨'},71:{i:'🌨',l:'雪'},73:{i:'🌨',l:'雪'},75:{i:'🌨',l:'大雪'},80:{i:'🌦',l:'にわか雨'},81:{i:'🌦',l:'にわか雨（強）'},82:{i:'⛈',l:'大雨'},95:{i:'⛈',l:'雷雨'},99:{i:'⛈',l:'雷雨（強）'}};
-
+ 
 /* ════ RESTORE CHARS ════ */
 const RC='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-
+ 
 /* ════ DIAGNOSIS TABLE ════ */
 const DIAG=[
   {min:95,rank:'UR',badge:'UR',title:'遠征の神・降臨',msg:'もはや遠征はあなたの天命。全銀テ引き寄せが確約されています。推しもあなたに気付いているはずです。',tags:['遠征の神','URランク','全銀テ確定','推しと目が合う']},
@@ -535,7 +873,7 @@ const DIAG=[
   {min:25,rank:'N',badge:'N',title:'スーパー直前派',msg:'まだ大丈夫（信じましょう）。今すぐチケットの場所だけ確認してください。遠征の基本は「推しに会う」こと。',tags:['Nランク','直前派','チケット確認','現地調達']},
   {min:0,rank:'C',badge:'C',title:'伝説の突貫遠征者',msg:'行く気持ちが全てです。チケットと財布だけポケットに入れて出発してください。',tags:['Cランク','突貫遠征','精神力だけ','それでも行く']}
 ];
-
+ 
 /* ════ GLOBAL STATE ════ */
 const S={
   ac:'#E8547A',at:'#ffd6e3',ar:'232,84,122',al:'rgba(232,84,122,0.12)',aa:'#E8547A',ab:'#b03058',
@@ -550,7 +888,7 @@ const S={
   roomCode:'',compData:{},compMode:'host',
 };
 const LSK='enseipass_complete_v1';
-
+ 
 function saveS(){
   try{localStorage.setItem(LSK,JSON.stringify({ac:S.ac,ar:S.ar,at:S.at,al:S.al,aa:S.aa,ab:S.ab,cn:S.cn,venue:S.venue,budget:S.budget,dist:S.dist,trans:S.trans,hotel:S.hotel,seat:S.seat,vType:S.vType,aglTab:S.aglTab,packTab:S.packTab,checks:S.checks,theme:S.theme,stOpts:S.stOpts,vPrefs:[...S.vPrefs],hPrefs:[...S.hPrefs],history:S.history,cards:S.cards,lastDiag:S.lastDiag,restoreCode:S.restoreCode}));}catch(e){}
 }
@@ -571,7 +909,7 @@ function loadS(){
     if(S.hotel==='last')setHotel('last');
   }catch(e){}
 }
-
+ 
 /* ════ TAB SWITCHING ════ */
 function switchTab(id){
   document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
@@ -583,7 +921,7 @@ function switchTab(id){
   if(id==='me'){renderCards();renderHist();renderCumS();updMapColors();buildMap();}
   if(id==='go'){renderTrans();renderBkd();}
 }
-
+ 
 /* ════ ACCENT ════ */
 function setAccent(el){
   document.querySelectorAll('.cs').forEach(s=>{s.classList.remove('active');});
@@ -604,7 +942,7 @@ function applyA(c,r,t,l,n,aa,ab,restore){
   const rtA=document.getElementById('rtA');if(rtA)rtA.setAttribute('stroke',c);
   const rtL=document.getElementById('rtL');if(rtL)rtL.setAttribute('fill',c);
 }
-
+ 
 /* ════ VENUE ════ */
 let vBT=null;
 function onVI(){const q=document.getElementById('venueInput').value;S.venue=q;updSmV();buildVL(q);showVDD(q);saveS();}
@@ -644,7 +982,7 @@ function buildVL(venue){
 }
 function updSmV(){const e=document.getElementById('smV');if(e)e.textContent=S.venue;}
 function onBC(){S.budget=parseInt(document.getElementById('budgetInput').value)||0;const e=document.getElementById('smB');if(e)e.textContent='¥'+S.budget.toLocaleString();saveS();}
-
+ 
 /* ════ HOTEL ════ */
 function setHotel(s){
   S.hotel=s;const e=s==='early';
@@ -653,7 +991,7 @@ function setHotel(s){
   document.getElementById('btnE').classList.toggle('active',e);
   document.getElementById('btnL').classList.toggle('active',!e);
 }
-
+ 
 /* ════ TRANSPORT ════ */
 function selDist(btn,d){
   document.querySelectorAll('.db').forEach(b=>b.classList.remove('sel'));
@@ -681,7 +1019,7 @@ function renderBkd(){
   const tot=items.reduce((s,i)=>s+(i.a+i.b)/2,0);
   const e=document.getElementById('bTotal');if(e)e.textContent='¥'+Math.round(tot).toLocaleString();
 }
-
+ 
 /* ════ WEATHER ════ */
 function getWAdv(wmo,rain,temp){
   const a=[];
@@ -717,7 +1055,7 @@ async function fetchWeather(){
     showT('天気情報を取得しました');
   }catch(e){p.innerHTML='<div style="padding:24px;text-align:center;font-size:13px;color:var(--mt);">天気情報の取得に失敗しました。</div>';}
 }
-
+ 
 /* ════ JAPAN MAP ════ */
 let mapBuilt=false;
 function buildMap(){
@@ -766,7 +1104,7 @@ function updMapColors(){
   if(vl){const items=[...S.vPrefs];vl.innerHTML=items.length?`<div style="font-size:11px;font-family:var(--fm);color:var(--mt);margin-bottom:6px;letter-spacing:0.1em;">遠征済み</div><div style="display:flex;gap:6px;flex-wrap:wrap;">${items.map(n=>`<span style="font-size:10px;font-family:var(--fm);background:rgba(var(--ar),0.12);border:0.5px solid rgba(var(--ar),0.3);color:var(--at);padding:2px 8px;border-radius:4px;">${n}</span>`).join('')}</div>`:'';}
 }
 function clearMap(){if(!confirm('マップデータをリセットしますか？'))return;S.vPrefs.clear();S.hPrefs.clear();updMapColors();saveS();showT('マップをリセットしました');}
-
+ 
 /* ════ HISTORY ════ */
 function addHist(){
   const v=document.getElementById('hV').value.trim(),a=document.getElementById('hA').value.trim(),d=document.getElementById('hD').value,co=parseInt(document.getElementById('hCo').value)||0,m=document.getElementById('hM').value.trim();
@@ -787,7 +1125,7 @@ function renderCumS(){
   el.innerHTML=`<div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${tot}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">総遠征回数</div></div><div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${vs}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">会場数</div></div><div class="cs2"><div style="font-size:26px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">${as}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">推しの数</div></div><div class="cs2"><div style="font-size:20px;font-family:var(--fm);font-weight:300;color:var(--a);line-height:1.1;">¥${tc.toLocaleString()}</div><div style="font-size:10px;font-family:var(--fm);color:var(--mt);letter-spacing:0.1em;margin-top:4px;">累計支出</div></div>`;
   const smT=document.getElementById('smT');if(smT)smT.textContent=tot+'回';
 }
-
+ 
 /* ════ BINO ════ */
 function selSeat(btn,seat){
   document.querySelectorAll('.sbt').forEach(b=>b.classList.remove('sel'));
@@ -805,7 +1143,7 @@ function updBino(){
   const chips=(CDATA[S.seat]||{})[S.vType]||[];
   strip.innerHTML=chips.map(c=>`<span class="cch ${c.t}">${c.i} ${c.l}</span>`).join('');
 }
-
+ 
 /* ════ AFTERGLOW ════ */
 function swAgl(tab){
   S.aglTab=tab;
@@ -820,7 +1158,7 @@ function swAgl(tab){
     panel.innerHTML=items.map(it=>`<a href="${it.url}" target="_blank" rel="nofollow noopener" class="rsc"><div style="font-size:13px;font-weight:500;margin-bottom:3px;">${it.n}</div><div style="font-size:11px;color:var(--mt);line-height:1.65;">${it.d}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">${it.tags.map(t=>`<span style="font-size:9px;font-family:var(--fm);padding:2px 7px;border-radius:4px;background:var(--sf2);color:var(--mt);">${t}</span>`).join('')}</div></a>`).join('');
   }
 }
-
+ 
 /* ════ PACKING ════ */
 function renderPack(){
   const items=PITEMS[S.packTab];const c=document.getElementById('packList');if(!c)return;
@@ -862,7 +1200,7 @@ function swPack(tab){
   Object.entries(ids).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.classList.toggle('active',k===tab);});
   renderPack();
 }
-
+ 
 /* ════ STORY (Phase 3) ════ */
 function selTheme(btn,theme){
   document.querySelectorAll('.thb').forEach(b=>b.classList.remove('active'));
@@ -909,7 +1247,7 @@ function renderStory(){
 }
 function dlStory(){renderStory();const canvas=document.getElementById('storyCanvas');const a=document.createElement('a');a.download=`enseipass_${S.venue}_${S.theme}.png`;a.href=canvas.toDataURL('image/png');a.click();showT('ストーリー画像を保存しました');}
 function shareStoryX(){const t=`【遠征しおり】${S.venue} へ行きます！予算¥${S.budget.toLocaleString()} / 推し色：${S.cn} #EnseiPass #遠征`;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}`,'_blank');}
-
+ 
 /* ════ QR ════ */
 let qrIns=null;
 function genQR(url){
@@ -919,7 +1257,7 @@ function genQR(url){
 }
 function regenQR(){genQR(getURL());showT('QRコードを更新しました');}
 function dlQR(){const canvas=document.querySelector('#qrContainer canvas');if(!canvas){showT('QR生成中…');return;}const a=document.createElement('a');a.download='enseipass_qr.png';a.href=canvas.toDataURL('image/png');a.click();showT('QRコードを保存しました');}
-
+ 
 /* ════ TRADING CARDS (Phase 5) ════ */
 function calcRarity(card){
   let score=0;
@@ -1003,7 +1341,7 @@ function renderCards(){
 function dlCard(id){const card=S.cards.find(c=>c.id===id);if(!card)return;const canvas=drawCard(card);const a=document.createElement('a');a.download=`enseipass_card_${card.venue.slice(0,8)}_${card.rar.l}.png`;a.href=canvas.toDataURL('image/png');a.click();showT('カードを保存しました');}
 function shareCard(id){const card=S.cards.find(c=>c.id===id);if(!card)return;const t=`【ENSEI PASS ${card.rar.l}カード】${card.venue} / 推し色:${card.cn} #EnseiPass #遠征`;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}`,'_blank');}
 function delCard(id){S.cards=S.cards.filter(c=>c.id!==id);saveS();renderCards();showT('カードを削除しました');}
-
+ 
 /* ════ ULTIMATE DIAGNOSIS (Phase 5) ════ */
 function runDiag(){
   const all=Object.values(PITEMS).flat(),done=all.filter(i=>S.checks[i.id]).length,tot=all.length;
@@ -1029,7 +1367,7 @@ function runDiag(){
   if(score>=90)launchConfetti();
   showT(`✦ 遠征戦闘力 ${score} — ${result.rank}ランク！`);
 }
-
+ 
 /* ════ RESTORE CODE (Phase 5) ════ */
 function encodeRC(){
   const colors=['#E8547A','#5B8CDB','#52C27A','#9B6AD4','#F0A020','#3EC4D4','#FF6EB4'];
@@ -1080,7 +1418,7 @@ function restoreCode(){
   if(res)res.innerHTML=`<div style="background:rgba(80,220,160,0.08);border:0.5px solid rgba(80,220,160,0.3);border-radius:8px;padding:10px 12px;font-size:12px;"><div style="color:#80f0b8;font-family:var(--fm);margin-bottom:4px;">✦ 復元完了</div><div style="color:var(--mt);">会場: ${venue.name} / 推し色: ${names[ci]} / 予算: ¥${S.budget.toLocaleString()}</div></div>`;
   showT('✦ プランを復元しました！');
 }
-
+ 
 /* ════ COMPANION SYNC (Phase 5) ════ */
 const COMP_CH='enseipass_companion';
 let myRoom='';
@@ -1122,7 +1460,7 @@ function joinRoom(){
     }
   }catch(e){showT('参加に失敗しました');}
 }
-
+ 
 /* ════ CONFETTI ════ */
 function launchConfetti(){
   const cols=['var(--a)','#c8a0ff','#80d8ff','#ffd700','#80f0b8'];
@@ -1134,7 +1472,7 @@ function launchConfetti(){
     },i*40);
   }
 }
-
+ 
 /* ════ SHARE ════ */
 function encS(){
   const checks=Object.entries(S.checks).filter(([,v])=>v).map(([k])=>k).join(',');
@@ -1160,11 +1498,11 @@ function copyText(){
   const t=[`【ENSEI PASS COMPLETE — 遠征計画】`,`会場：${S.venue}`,`予算：¥${S.budget.toLocaleString()}`,`推し色：${S.cn}`,`コレクション：${S.cards.length}枚`,pw,``,`【持ち物チェック】`,...done,...todo].join('\n');
   navigator.clipboard.writeText(t).then(()=>showT('テキストをコピーしました'));
 }
-
+ 
 /* ════ TOAST ════ */
 let tt;
 function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2800);}
-
+ 
 /* ════ URL DECODE ════ */
 function decURL(){
   const p=new URLSearchParams(location.search);
@@ -1175,14 +1513,14 @@ function decURL(){
   if(p.has('tr'))S.trans=p.get('tr');
   if(p.has('ch')&&p.get('ch'))p.get('ch').split(',').filter(Boolean).forEach(id=>{S.checks[id]=true;});
 }
-
+ 
 /* ════ INIT ════ */
 document.addEventListener('DOMContentLoaded',()=>{
   // Set default dates
   const today=new Date();const nextWeek=new Date(today);nextWeek.setDate(today.getDate()+7);
   const wd=document.getElementById('wDate');if(wd)wd.value=nextWeek.toISOString().slice(0,10);
   const hd=document.getElementById('hD');if(hd)hd.value=today.toISOString().slice(0,10);
-
+ 
   loadS();
   decURL();
   updBino();
@@ -1194,10 +1532,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderTrans();
   renderBkd();
   swAgl(S.aglTab||'souvenir');
-
+ 
   // Initial QR (deferred)
   setTimeout(()=>{renderStory();genQR(getURL());genCode();},600);
-
+ 
   // Restore companion states
   try{window.addEventListener('storage',e=>{if(e.key&&e.key.startsWith(COMP_CH)){/* auto refresh possible */}});}catch(err){}
 });
