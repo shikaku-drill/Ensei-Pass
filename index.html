@@ -5398,7 +5398,7 @@ function delHist(id){
     const el=document.getElementById('histList');if(!el)return;
     const hist=S.history||[];
     if(!hist.length){
-      el.innerHTML='<div style="padding:24px;text-align:center;font-size:13px;color:var(--ink3);">まだ記録がありません。上のフォームから追加してください。</div>';
+      el.innerHTML='<div style="padding:24px;text-align:center;font-size:13px;color:var(--ink3);">まだ記録がありません。下のフォームから追加してください。</div>';
       return;
     }
     el.innerHTML=hist.map(e=>{
