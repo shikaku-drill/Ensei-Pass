@@ -1,0 +1,37 @@
+{
+  "name": "遠征パス — ライブ・推し活遠征サポート",
+  "short_name": "遠征パス",
+  "description": "推し活・ライブ遠征に特化した無料アプリ。会場別の宿・交通・持ち物・終電判定・遠征費までまとめて管理。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5efe6",
+  "theme_color": "#f1f0f4",
+  "lang": "ja",
+  "categories": [
+    "lifestyle",
+    "travel",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
