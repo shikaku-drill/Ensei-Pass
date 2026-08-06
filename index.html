@@ -17125,8 +17125,8 @@ window.epSyncVenueUI=function(){
    ※ PMTilesは数百MB規模になるため、GitHub Pagesではなく
      Cloudflare R2 などのオブジェクトストレージ配信を推奨します（CORS許可が必要）。 */
 const MAP_CONFIG = {
-  PMTILES: '',   // 例: '/tiles/japan-20260101.pmtiles'
-  STYLE:   '',   // 例: '/tiles/japan-20260101.json'
+  PMTILES: '',  'https://pub-e8db0a4d49c440329c727f2254187b5c.r2.dev/japan-20260101.pmtiles', // 例: '/tiles/japan-20260101.pmtiles'
+  STYLE:   '',  'https://pub-e8db0a4d49c440329c727f2254187b5c.r2.dev/japan-20260101.json',// 例: '/tiles/japan-20260101.json'
   MAPLIBRE_JS:  'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js',
   MAPLIBRE_CSS: 'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css',
   PMTILES_JS:   'https://unpkg.com/pmtiles@4.4.1/dist/pmtiles.js',
